@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>任务管理</title>
+    <link rel="stylesheet" href="../resource/css/style_blue.css"/>
+    <link rel="stylesheet" href="../resource/plugin/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../resource/css/style_2.0_blue.css"/>
+    <link rel="stylesheet" href="../resource/css/task.css"/>
+</head>
+<body>
+<div id="workOrder" style="height: 100%;">
+
+    <form id="redirectForm" action="stationPicAction_showPointMessage" target="_blank" method="post">
+        <input type="hidden" id="psKey" name="psKey" value="">
+        <input type="hidden" id="uuid" name="uuid" value="">
+        <input type="hidden" id="powerStationId" name="psId" value="">
+    </form>
+    <input type="hidden" id="selectPsId" value="108816">
+    <input type="hidden" id="curPage" value="1">
+
+    <!--------首页右下content-------->
+    <div id="map_wap_div" class="map_wap">
+
+        <div id="contentDiv" class="map_con clearfix">
+            <div class="map_con clearfix" style="padding-right: 20px">
+                <div id="faultPage_all" class="maxbox_show clearfix lch_tendency_ri">
+                    <div class="task_wrap">
+                        <h3 class="table_tit">个人任务管理列表</h3>
+                        <div class="task_sub_wrap">
+                            <div class="task_head_wrap">
+                                <table class="task_table_head">
+                                    <thead>
+                                    <tr>
+                                        <td class="task_tr01">任务ID</td>
+                                        <td class="task_tr02">任务名称</td>
+                                        <td class="task_tr03">创建时间</td>
+                                        <td class="task_tr04">办理人</td>
+                                        <td class="task_tr05">操作</td>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="task_bot_table_wrap">
+                                <table class="task_table">
+                                    <tbody id="task_list">
+                                    <!--<tr>-->
+                                        <!--<td>514</td>-->
+                                        <!--<td>经纪人审批</td>-->
+                                        <!--<td>2017-04-14 14:00</td>-->
+                                        <!--<td>xx</td>-->
+                                        <!--<td>-->
+                                        <!--<a class="task_link" id="task_manage" href="javascript:;">办理任务</a>-->
+                                        <!--<a class="task_link" id="task_watch" href="javascript:;">查看当前流程图</a>-->
+                                        <!--</td>-->
+                                    <!--</tr>-->
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <input type="hidden" value="psFaultPage" id="pageId">
+    </div>
+
+
+    <!--弹窗-->
+    <div class="mask_wrap">
+        <div class="mask"></div>
+        <div class="mask_content">
+            <h3 class="h5">办理任务</h3>
+            <span class="close_btn">&times;</span>
+
+            <form role="form" class="form-horizontal" id="form_task">
+                <div class="form-group">
+                    <label class="col-sm-1" for="vacation">工单编号</label>
+
+                    <div class="col-sm-11">
+                        <input class="form-control" id="tordernum" name="day" type="text" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1" for="vacation_reason">工单日期</label>
+
+                    <div class="col-sm-11">
+                        <input class="form-control" id="tdatetime" name="day" type="text" readonly="readonly"/>
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label class="col-sm-1" for="vacation_day">申请备注</label>
+
+                    <div class="col-sm-11">
+                        <textarea class="form-control" name="" id="topinition" rows="3" readonly="readonly"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1" for="vacation_day">处理意见</label>
+
+                    <div class="col-sm-11">
+                        <textarea class="form-control" name="" id="t_opinition" rows="3"></textarea>
+                    </div>
+                </div>
+                <button type="button"  class="btn btn-default">默认提交</button>
+            </form>
+
+            <div class="task_wrap">
+                <h3 class="table_tit h5">显示工单申请的批注信息</h3>
+                <table class="task_table">
+                    <thead>
+                    <tr>
+                        <td>时间</td>
+                        <td>批注人</td>
+                        <td>批注信息</td>
+                    </tr>
+                    </thead>
+                    <tbody id="opinitionList">
+                    <tr>
+                        <td>2017-04-14</td>
+                        <td>XX</td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/lib/ejs.js"></script>
+<script src="../resource/js/common/base.js"></script>
+<script src="../resource/js/common/esmpbase.js"></script>
+<script src="../resource/js/common/table_header.js"></script>
+<script src="../resource/js/powerManage/power_task.js"></script>
+
+
+</body>
+</html>

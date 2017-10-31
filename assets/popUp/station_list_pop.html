@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html style="overflow: hidden;">
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="../resource/css/style_blue.css"/>
+  <link rel="stylesheet" href="../resource/css/layui_custom.css"/>
+  <link rel="stylesheet" href="../resource/plugin/layui/css/layui.css"/>
+</head>
+<body style="height: 100%; overflow: auto;">
+<div id="popAnalysis" class="hddd clearfix">
+  <div class="map_con clearfix">
+    <div id="station_list_pop">
+      <div id="stationListTable">
+        <div class="fx_Setup_wrap">
+          <div class="task_sub_wrap">
+          <div class="task_head_wrap">
+            <table class="task_table_head">
+                <thead id="listTableHead">
+                    <th class="fault_tr01" style="width: 20%">
+                      <input type="checkbox" value="" id="checkAll">全选
+                    </th>
+                    <th class="fault_tr02" style="width: 20%">序号</th>
+                    <th class="fault_tr03" style="width: 20%">电站名称</th>
+                    <th class="fault_tr04" style="width: 20%">电站类型</th>
+                    <th class="fault_tr05" style="width: 20%">装机容量</th>
+                </thead>
+            </table>
+          </div>
+          <div class="task_bot_table_wrap">
+            <table class="task_table">
+              <tbody id="stationArray">
+                <tr>
+                  <td class="nbq_td02" style="width: 20%">
+                    <input type="checkbox" value="" >
+                  </td>
+                  <td class="nbq_td02" style="width: 20%">1</td>
+                  <td class="nbq_td02" style="width: 20%">四川会理30MW</td>
+                  <td class="nbq_td02" style="width: 20%">地面式</td>
+                  <td class="nbq_td02 " style="width: 20%">3.01万千瓦</td>
+                </tr>
+                <tr>
+                  <td class="nbq_td02" style="width: 20%">
+                    <input type="checkbox" value="" >
+                  </td>
+                  <td class="nbq_td02" style="width: 20%">2</td>
+                  <td class="nbq_td02" style="width: 20%">山东莒县40MW</td>
+                  <td class="nbq_td02" style="width: 20%">地面式</td>
+                  <td class="nbq_td02 " style="width: 20%">4万千瓦</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+</div>
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/allPsList/station_list_pop.js"></script>
+</body>
+</html>

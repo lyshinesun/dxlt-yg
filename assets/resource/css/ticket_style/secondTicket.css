@@ -1,0 +1,144 @@
+.delayTime input {
+  width: 70px
+}
+.delayTime {
+  padding-left: 2%
+}
+.confirm .sign {
+  /*padding-left: */
+}
+.taskList .signSec tr {
+  border-bottom: none;
+}
+.memberSign {
+  padding-left: 13%;
+  text-align: left;
+}
+.taskList tr td:last-child {
+  border: none;
+}
+.taskList tr:last-child {
+  /*border-bottom: none*/
+}
+.taskList input {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.taskList tr {
+  border-bottom: 1px solid 
+}
+.taskList .R {
+  width: 300px
+}
+.taskList .L {
+  width: 80px
+}
+.taskList td{
+  border-right: 1px solid;
+  text-align: center;
+}
+.taskList table {
+  width: 100%
+}
+.taskList {
+  border-top: 1px solid 
+}
+.sign {
+  padding-left: 13%;
+  text-align: left;
+}
+.startDate input, .endDate input, .sign input{
+  width: 30px
+}
+.startDate, .endDate{
+  padding: 0 26% 
+}
+.workPlace textarea,
+.workConditon textarea,
+.cautions textarea,
+.supplement textarea,
+.confirmSign textarea,
+.addOn textarea {
+  height: 40px;
+  width: 100%;
+  resize: vertical;
+}
+
+.totalNumSec {
+  padding-left:80%
+}
+.operatorsSec textarea {
+  width: 100%;
+  height: 80px;
+  resize: vertical;
+}
+.operators {
+  padding: 0;
+  width: 100%;
+  height: 80px
+}
+input[name="totalNum"] {
+  width: 28px
+}
+.formContainer {
+  margin: 10px 0px 20px;
+  border: 1px solid
+}
+.formHeader .right {
+  float: right;
+}
+.formHeader .left {
+  float: left;
+}
+.formHeader {
+  overflow: hidden;
+  padding: 0 40px
+}
+.inpt {
+  width: 120px;
+  border-bottom: 1px solid
+}
+.input::-ms-input-placeholder{
+  text-align: center;
+  color: red
+} 
+input::-webkit-input-placeholder{
+  text-align: center;
+  color: red
+} 
+.title {
+  padding: 15px 0;
+  text-align: center;
+}
+
+.formWrapper {
+  width: 800px;
+  /*height:1000px;*/
+  background-color: #fff;
+  margin: 15px auto;
+  padding: 20px 40px;
+  /*padding-bottom: 20px*/
+}
+.remark {
+  color: red;
+  font-size: 14px;
+}
+.textMiddle {
+  text-align: center;
+}
+.formInfo {
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 900;
+  font-family: '黑体'
+}
+.formNum {
+  float: right;
+}
+.dxlt {
+  float: left;
+}
+table {
+  width: 100%
+}

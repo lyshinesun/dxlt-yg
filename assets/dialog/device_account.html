@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>备品备件管理</title>
+    <link rel="stylesheet" href="../resource/plugin/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../resource/css/style_blue.css"/>
+    <link rel="stylesheet" href="../resource/css/pager.css"/>
+    <link rel="stylesheet" href="../resource/css/style_2.0_blue.css"/>
+    <link rel="stylesheet" href="../resource/css/fault.css"/>
+    <link rel="stylesheet" href="../resource/css/new_workorder.css"/>
+</head>
+<body>
+<div id="device_manage" style="height: 100%;">
+
+    <div class="map_wap">
+        <div class="map_con">
+            <div class="tendency_ri">
+                <div class="work_head clearfix" >
+                    <div class="order_hq fl" @click="popDevice($event)">
+                        <a href="javascript:;" id="create_device">新增设备</a>
+                        <a href="javascript:;" id="device_delete">删除设备</a>
+                        <a href="javascript:;" id="device_modify">修改设备</a>
+                    </div>
+                    <div class="fl dev_query_wrap">
+                        <select name="" id="device_type">
+                            <!--<option value="111">111</option>-->
+                        </select>
+                        <select name="" id="device_name">
+                            <!--<option value="111">111</option>-->
+                        </select>
+                        <input class="pl10" type="text" value="" id="eq_mac" placeholder="请输入设备类型编号">
+                        <a href="javascript:;" id="device_query" class="ml30" @click="queryClick">查询</a>
+                    </div>
+                </div>
+
+
+                <div class="task_sub_wrap">
+                    <div class="task_head_wrap">
+                        <table class="task_table_head">
+                            <thead id="tableHead">
+                            <tr>
+                                <th style="width: 5%;"></th>
+                                <th style="width: 5%;">序号</th>
+                                <th style="width: 5%">设备类型编号</th>
+                                <th style="width: 5%">存放地点</th>
+                                <th style="width: 5%">设备类型</th>
+                                <th style="width: 5%">设备名称</th>
+                                <th style="width: 5%">单位</th>
+                                <th style="width: 5%">品牌</th>
+                                <th style="width: 5%">型号</th>
+                                <th style="width: 5%">使用区域</th>
+                                <th style="width: 5%">描述</th>
+                                <th style="width: 5%">设备单价</th>
+                                <th style="width: 5%">图片</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="task_bot_table_wrap">
+                        <table class="task_table">
+                            <tbody id="dailyreportbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <!--分页-->
+            <div id="Paginationother" style="margin-right: 100px" class="pagination Page_other"></div>
+        </div>
+    </div>
+
+    <input type="hidden" value="10" id="pageId">
+
+</div>
+
+<!--devicelist模板-->
+<script type="text/template" id="device_tpl">
+    <% for(var i=0;i< devicelist.length; i++){%>
+    <tr>
+        <td style="width: 5%;">
+            <input type="radio" name="fdId" id="<%=devicelist[i].id%>"/>
+            <input type="hidden" value="<%=devicelist[i].id%>"/>
+        </td>
+        <td style="width: 5%;"><%=i+1%></td>
+        <td style="width: 5%;"><%=devicelist[i].fd_equipment_code%></td>
+        <td style="width: 5%;"><%=devicelist[i].fd_use_path%></td>
+        <td style="width: 5%;"><%=devicelist[i].fd_equipment_class_name%></td>
+        <td style="width: 5%;"><%=devicelist[i].fd_name%></td>
+        <td style="width: 5%;"><%=devicelist[i].fd_unit%></td>
+        <td style="width: 5%;">--</td>
+        <td style="width: 5%;"><%=devicelist[i].fd_equipment_model_code%></td>
+        <td style="width: 5%;">--</td>
+        <td style="width: 5%;"><%=devicelist[i].fd_desc%></td>
+        <td style="width: 5%;">--</td>
+        <td style="width: 5%;"><img style="width: 50px;height: 50px; margin: 10px" src="data:image/png;base64<%=devicelist[i].fd_pic%>" alt="" /></td>
+    </tr>
+    <% }%>
+
+</script>
+
+
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/lib/ejs.js"></script>
+<script src="../resource/js/common/base.js"></script>
+<script src="../resource/js/common/esmpbase.js"></script>
+<script src="../resource/js/common/table_header.js"></script>
+<script src="../resource/js/common/common_zh_CN.js"></script>
+<script src="../resource/plugin/layui/lay/dest/layui.all.js"></script>
+<script src="../resource/plugin/jq-cookie/jquery-cookie.js"></script>
+<script src="../resource/plugin/pager/pager.js"></script>
+<script src="../resource/plugin/validate/jquery.validate.js"></script>
+<script src="../resource/js/device_manage/device_manage.js"></script>
+
+</body>
+</html>

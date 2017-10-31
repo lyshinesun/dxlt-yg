@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>电站列表</title>
+    <link rel="stylesheet" href="resource/css/pager.css"/>
+    <link rel="stylesheet" href="resource/plugin/layer/skin/default/layer.css"/>
+    <link rel="stylesheet" href="resource/css/style_blue.css"/>
+</head>
+<body>
+
+<div id="power_list">
+
+    <div id="map_wap_div" class="map_wap">
+        <div class="map_select clearfix single_no_show">
+            <div class="map_select clearfix">
+                <div class="map_select_wrap fl">
+                    <div class="hd" id="map_select_wraphd">
+                        <a href="javascript:void(0)"><i class="map_seicon_1" title="电站名称"></i>
+                            <span class="secondnav_bg4">电站名称<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:void(0)"><i class="map_seicon_2" title="装机功率"></i>
+                            <span class="secondnav_bg4">装机功率<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:void(0)"><i class="map_seicon_3" title="类型"></i>
+                            <span class="secondnav_bg4">类型<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:void(0)"><i class="map_seicon_4" title="并网时间"></i>
+                            <span class="secondnav_bg4">并网时间<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:void(0)"><i class="map_seicon_5" title="地址确定选择"></i>
+                            <span class="secondnav_bg4">地址确定选择<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="contentDiv">
+            <div class="resize_div allsite" id="siteMoreDiv">
+                <div class="allsite_date clearfix" id="psX1list">
+                    <div class="allsite_datelf clearfix fl">
+                        <input id="new_datetimepicker_mask" class="Wdate fl dateRange" type="text" readonly="" value=""
+                               onfocus="WdatePicker({onpicked:function(){getClock();},mchanged:cMinFunc,isShowClear:false,isShowToday:false,readOnly:true,dateFmt:'yyyy/MM/dd HH:mm',maxDate:'%y/%M/%d %H:%m',lang:langFlag})"
+                               style="width:140px;margin-right:10px;">
+                        <input type="hidden" value="right" id="validate">
+                    </div>
+
+                    <div class="clearfixr fr">
+
+                        <div class="allsite_dateri fl clearfix" style="">
+                            <input type="checkbox" class="fl allsite_dateriCheckbox" id="setTime">
+                            <span class="fl reshdate">刷新时间</span>
+                        <span id="allsite_dateYear1" class="fl allsite_datej abcd" style="opacity: 0.7;">
+                            <em style="opacity: 0.7;"><i id="timeValue">5</i>min</em>
+                            <a href="javascript:;" class="allsite_dateUpBtn1"></a>
+                            <a href="javascript:;" class="allsite_dateDownBtn1"></a>
+                        </span>
+                        </div>
+                        <a href="javascript:;" id="change_size1" class="change_size change_size2 fl"><img
+                                src="resource/images/change_size2.png" alt=""></a>
+
+                    </div>
+
+                </div>
+
+                <div class="allsite_listTit">
+                    <table id="weekreport">
+                        <thead>
+                            <tr>
+                            <td class="allsite_listtd1 dztd01 allsite_listtd2">
+                                <div class="dzlb_box">展开</div>
+                            </td>
+                            <td class="allsite_listtd1 dztd02 allsite_listtd2">
+                                <div class="dzlb_box">序号</div>
+                            </td>
+                            <td class="over_hid dztd03">
+                                <div class="dzlb_box">
+                                    <span>电站名称</span>
+                                    <span class="bg_sort" name="sort">&nbsp;&nbsp;&nbsp;</span>
+                                </div>
+                            </td>
+                            <td class="over_hid dztd04">
+                                <div class="dzlb_box">
+                                    <span>装机功率</span>
+                                    <span class="bg_sort" name="sort">&nbsp;&nbsp;&nbsp;</span>
+                                </div>
+                            </td>
+                            <td class="over_hid dztd05">
+                                <div class="dzlb_box">功率
+                                    <span class="bg_sort" name="sort">&nbsp;&nbsp;&nbsp;</span></div>
+                            </td>
+                            <td class="over_hid dztd07">
+                                <div class="dzlb_box">日发电量
+                                    <span class="bg_sort" name="sort">&nbsp;&nbsp;&nbsp;</span>
+                                    <img src="resource/images/problem.png " class="tip img_tip"
+                                         original-title="日发电量：今日/昨日" style="vertical-align: middle" width="15"
+                                         height="15">
+                                </div>
+                            </td>
+                            <td class="over_hid dztd08">
+                                <div class="dzlb_box">PR值
+                                    <span class="bg_sort" name="sort">&nbsp;&nbsp;&nbsp;</span>
+                                    <img src="resource/images/problem.png " class="tip img_tip"
+                                         style="vertical-align: middle" width="15" height="15"
+                                         original-title="昨日PR/上月PR"></div>
+                            </td>
+                            <td class="over_hid dztd09">
+                                <div class="dzlb_box">等效小时
+                                    <span class="bg_sort" name="sort">&nbsp;&nbsp;&nbsp;</span>
+                                    <img src="resource/images/problem.png " class="tip img_tip"
+                                         style="vertical-align: middle" width="15" height="15" original-title="等效小时/">
+                                </div>
+                            </td>
+                            <td class="over_hid dztd010">
+                                <div class="dzlb_box">告警
+                                    <span class="bg_sort" name="sort">&nbsp;&nbsp;&nbsp;</span>
+                                    <img src="resource/images/problem.png " class="tip img_tip"
+                                         style="vertical-align: middle" width="15" height="15" ></div>
+                            </td>
+                            <td class="over_hid dztd011">
+                                <div class="dzlb_box">状态
+                                    <span class="bg_sort" name="sort">&nbsp;&nbsp;&nbsp;</span>
+                                    <img src="resource/images/problem.png " class="tip img_tip"
+                                         style="vertical-align: middle" width="15" height="15" original-title="通讯状态/">
+                                </div>
+                            </td>
+                            <td class="over_hid dztd012 expand_display_flag">
+                                <div class="dzlb_box">查看单元
+                                    <img src="resource/images/problem.png " class="tip img_tip"
+                                         style="vertical-align: middle" width="15" height="15" original-title="操作/">
+                                </div>
+                            </td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="resize_table_div allsite_list" style="overflow-y: auto; overflow-x: hidden; ">
+                    <div id="detailList">
+
+                    </div>
+                </div>
+
+
+                <!--下方告警和分页-->
+                <div class="allsite_page">
+                    <div class="w_100 tac">
+                        <div class="fl" style="padding-left: 10px;line-height: 31px;">
+                            <label style="font-weight: 900">告警：</label><span><img
+                                src="resource/images/allsite_list_icon1.png"
+                                style="width: 17px;padding-right: 3px;vertical-align: middle;"> 正常</span>
+                            <span><img src="resource/images/allsite_list_icon2.png"
+                                       style="width: 17px;padding-right: 3px;vertical-align: middle;"> 告警</span>
+                            <span><img src="resource/images/allsite_list_icon3.png"
+                                       style="width: 17px;padding-right: 3px;vertical-align: middle;"> 故障</span>
+                            <label style="font-weight: 900">状态：</label><span><img
+                                src="resource/images/allsite_list_icon1.png"
+                                style="width: 17px;padding-right: 3px;vertical-align: middle;"> 正常</span>
+                            <span><img src="resource/images/allsite_list_icon4.png"
+                                       style="width: 17px;padding-right: 3px;vertical-align: middle;"> 离线</span>
+                        </div>
+                        <div id="Paginationother" class="pagination fl"><span class="pagemessage">共 4 条，每页<select
+                                id="pageNum" onchange="doChangePage(true);">
+                            <option value="5">5</option>
+                            <option value="10" selected="">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>条</span><span class="current prev">上一页</span><span class="current">1</span><span
+                                class="current next">下一页</span><span class="page_jump">到第 <input id="pageChange"
+                                                                                                 class="pageNum"
+                                                                                                 type="text" value="1"
+                                                                                                 onkeyup="checkValue()"
+                                                                                                 onkeypress="jumptoPaged(event)"
+                                                                                                 autocomplete="off">页</span><span
+                                class="page_confirm"><input type="button" class="yg_sub" style="width: 30px"
+                                                            onclick="doPageJump(true)" value="Go"> </span></div>
+                        <div id="Searchresultother"></div>
+                        <div id="hiddenresultother" style="display: none;"></div>
+                    </div>
+                    <input id="totalCount" type="hidden" value="4">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/template" id="station_list_tpl">
+<% for(var i=0;i< powerList.length; i++){ %>
+<div class="allsite_list_td">
+    <table>
+        <tbody>
+        <tr class="allsite_list_td1">
+            <td class="allsite_listtd1 dztd01" tdv="1" tdw="108816" onclick="test(this,1);">
+                <div><a href="javascript:;">+</a></div>
+            </td>
+            <td class="dztd02" style="font-size:12px">
+                <div><%=i+1%></div>
+            </td>
+            <td class="dztd03">
+                <div id="psName_1" title="湖北广水I期20MW"><p class="psName_1"><%=powerList[i].fd_station_name%></p></div>
+            </td>
+            <td class="dztd04">
+                <div><p id="design_capacity_1"><%=powerList[i].fd_station_capacity%>MWp</p></div>
+            </td>
+            <td class="dztd05">
+                <div class="dzlb_box2"><p id="powerLoad_1"><%=powerList[i].fd_pw_curr%>kW</p>
+
+                    <div class="demo">
+                        <div class="progress_container bar_bg1">
+                            <div class="progress_bar tip" id="powerLoadBar_1" original-title=""
+                                 title="30.53%" style="width: 30.53%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="dztd07">
+                <div class="dzlb_box2"><p id="generatCapacity_1"><%=powerList[i].fd_power_day%>kWh</p>
+
+                    <div class="demo">
+                        <div class="progress_container bar_bg2">
+                            <div class="progress_bar tip" id="generatCapacityBar_1"
+                                 original-title="" title="100%" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="dztd08">
+                <div class="dzlb_box2"><p id="prScale_1"><%=powerList[i].pr%>%</p>
+
+                    <div class="demo">
+                        <div class="progress_container bar_bg1">
+                            <div class="progress_bar tip" id="prScaleBar_1" original-title=""
+                                 title="77.15%" style="width: 77.15%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="dztd09">
+                <div class="dzlb_box2"><p id="equivalentHours_1"><%=powerList[i].equivalenthour%>h</p>
+
+                    <div class="demo">
+                        <div class="progress_container bar_bg1">
+                            <div class="progress_bar tip" id="equivalentHoursBar_1"
+                                 original-title="" title="56.75%" style="width: 56.75%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="dztd010">
+                <div style="cursor:pointer;" onclick="goToPsFault(108816,1);"><p id="res_1"><img
+                        src="resource/images/allsite_list_icon1.png" alt=""></p>
+                </div>
+            </td>
+            <td class="dztd011">
+                <div id="stating_1" title=""><p id="state_1"><img
+                        src="resource/images/allsite_list_icon1.png" alt=""></p>
+                </div>
+            </td>
+            <td class="dztd012" style="cursor:pointer">
+                <div class="link_unit"><img src="resource/images/deep_icon_03.png" alt=""></div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="allsite_list_tb clearfix ab" id="tdwr_1"></div>
+</div>
+<% } %>
+</script>
+
+<script src="resource/js/jquery-1.8.3.min.js"></script>
+<script src="resource/js/lib/vlm.js"></script>
+<script src="resource/js/lib/vue.js"></script>
+<script src="resource/js/lib/ejs.js"></script>
+<script src="resource/plugin/layer/layer.min.js"></script>
+<script src="resource/plugin/jq-cookie/jquery-cookie.js"></script>
+<script src="resource/js/allPsList/station_list.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+.order_tit {
+    padding: 10px 0 10px 20px;
+}
+
+.device_tit{
+    padding: 10px 0 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.work_dis {
+    background-color: #eee;
+}
+
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+
+tr {
+    cursor: pointer;
+}
+
+.layui-form-select {
+    display: none;
+}
+
+.mr10{
+    margin-right: 10px;
+}
+
+.pl20{
+    padding-left: 20px !important;
+}
+
+.mr24{
+    margin-right: 24px !important;
+}
+
+.select_box {
+    width: 190px;
+    padding: 8px 0;
+    margin-top: 5px;
+}
+
+.fill_table {
+    position: relative;
+}
+
+.fill_table .plus,.fill_table .minus {
+    width: 18px;
+    height: 18px;
+    font-size: 17px;
+    color: #fff;
+    text-align: center;
+    line-height: 18px;
+    background-color: #009688;
+    cursor: pointer;
+}
+
+.fill_table .plus{
+    margin-right: 5px;
+}
+
+
+.layui-table {
+    text-align: center;
+}
+
+.layui-table td {
+    padding: 0;
+}
+
+.layui-table th{
+    text-align: center;
+}
+textarea{
+    display: block;
+}
+.task_inp {
+    width: 100%;
+    border: none;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.error{
+    color: #009688;
+}
+
+.pop_select {
+    width: 180px;
+    margin-left: 30px;
+    padding: 5px 0;
+    border: 1px solid #ccc;
+}

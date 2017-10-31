@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>电站报表</title>
+    <link rel="stylesheet" href="../resource/plugin/layer/skin/default/layer.css"/>
+    <link rel="stylesheet" href="../resource/css/pager.css"/>
+    <link rel="stylesheet" href="../resource/css/style_blue.css"/>
+    <link rel="stylesheet" href="../resource/plugin/JQueryzTree/css/zTreeStyle/zTreeStyle.css"/>
+    <link rel="stylesheet" href="../resource/css/style_2.0_blue.css"/>
+</head>
+<body>
+<div id="reportList" style="height: 100%;">
+    <!--------首页右下content-------->
+    <div id="map_wap_div" class="map_wap">
+        <div class="map_select clearfix single_no_show">
+            <div class="map_select clearfix">
+                <div class="map_select_wrap fl" style="height: auto;">
+                    <div class="hd" id="map_select_wraphd">
+                        <a href="javascript:;"><i class="map_seicon_1" title="电站名称"></i>
+                            <span class="secondnav_bg4">电站名称<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_2" title="装机功率"></i>
+                            <span class="secondnav_bg4">装机功率<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_3" title="类型"></i>
+                            <span class="secondnav_bg4">类型<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_4" title="并网时间"></i>
+                            <span class="secondnav_bg4">并网时间<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_5" title="地址确定选择"></i>
+                            <span class="secondnav_bg4">地址确定选择<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="contentDiv" class="map_con clearfix">
+            <div id="Searchresult"></div>
+            <div id="hiddenresult" style="display: none;"></div>
+            <div class="map_con_fl fl">
+                <div id="psDetail">
+                    <div id="basecolor" class="basecolor" style="display: none"></div>
+                    <ul class="treeDemoId" @click="changeStation($event)">
+                        <li id="gs" class="on" data->
+                            <a href="javascript:;" title="湖北广水II期20MW">湖北广水II期20MW</a>
+                        </li>
+                        <li id="lw"><a href="javascript:;" title="宁夏灵武50MW">宁夏灵武50MW</a></li>
+                        <li id="jx"><a href="javascript:;" title="山东莒县40MW">山东莒县40MW</a></li>
+                        <li id="hl"><a href="javascript:;" title="四川会理30MW">四川会理30MW</a></li>
+                        <li id="SDGM"><a href="javascript:;" title="山东高密">山东高密</a></li>
+                    </ul>
+                </div>
+                <div class="map_con_fl_page">
+                    <div class="map_con_fl_page_b" id="Pagination">
+                        <a class="fl pager_class_color prev"></a>
+                        <a class="map_con_fl_pageprev fl prev"></a>
+                        <a class="fl pager_class_color">1</a>
+                        <a class="fl pager_class_color next"></a>
+                        <a class="map_con_fl_pagenext fl next"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tendency_ri fl clearfix" style="margin-left: 10px">
+
+                <div class="tendency_ri_tit clearfix">
+                    <div class="clearfix fl">
+                        <div class="inputbox fl" style="width:170px;">
+                            <input id="dateInput" type="text" value="" readonly="readonly" class="Wdate fl dateRange"
+                                   style="width: 140px; margin-right: 10px; cursor: pointer;">
+                        </div>
+                        <div class="inputbox fl" style="width:50px;">
+                            <input type="button" class="yg_sub" @click="getReport" value="查询">
+                        </div>
+                    </div>
+                    <!--end-->
+                    <div class="form_option fr">
+                        <a href="javascript:;" class="fr yg-daochu" @click="exportReportList" style="margin-top:4px;">导出</a>
+                    </div>
+                </div>
+
+                <div class="report_box">
+                    <span id="report_name"></span>
+                    <span id="report_rl"></span>
+                </div>
+
+                <div style="position:relative;">
+                    <div id="tableHeader" style="position:absolute;top:0px;left: 0">
+                        <table id="headerTable" class="statementMoreTable">
+                            <thead id="tableHead"></thead>
+                        </table>
+                    </div>
+                    <div id="report_mess" class="report_tab_wrap" style="overflow-y: auto; overflow-x: hidden;">
+                        <table class="statementMoreTable" cellspacing="0" id="dailyreport">
+                            <thead id="tableHead_copy" class="hideHead" style="visibility: hidden"></thead>
+                            <tbody id="dailyreportbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--tree tpl-->
+<script type="text/template" id="powerTpl0">
+    <% for(var i=0;i< newNodes.length; i++){ %>
+    <li id="<%=newNodes[i].fdDevId%>" class="level0">
+        <span id="<%=newNodes[i].fdDevId%>_0<%=i%>_switch" title=""
+              class="button switch noline_docu"></span>
+        <a id="<%=newNodes[i].fdDevId%>_0<%=i%>_a" class="level0" title="<%=newNodes[i].fdDevName%>">
+            <span class="button ico_close" style="background:url(../resource/images/a_bwd.png) 0 0 no-repeat;"></span>
+            <span class="tit"><%=newNodes[i].fdDevName%></span>
+        </a>
+    </li>
+    <% } %>
+</script>
+
+
+<!--日模板-->
+<script type="text/template" id="powerReport_tpl_day">
+    <% for(var i=0;i< reportArr.length; i++){%>
+    <% if(i%3 == 0){%>
+    <tr>
+        <td rowspan="3"><%=reportArr[i].dataTime%></td>
+        <td><%=reportArr[i].fdPdcCurr%></td>
+        <td><%=reportArr[i].fdPower%></td>
+        <td><%=reportArr[i].fdPowerCurr%></td>
+        <td><%=reportArr[i].fdRadiaCurr%></td>
+        <td><%=reportArr[i].fdPwCurr%></td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <td><%=reportArr[i].fdRadiaReal%></td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+    </tr>
+    <% }else{ %>
+    <tr>
+        <td><%=reportArr[i].fdPdcCurr%></td>
+        <td><%=reportArr[i].fdPower%></td>
+        <td><%=reportArr[i].fdPowerCurr%></td>
+        <td><%=reportArr[i].fdRadiaCurr%></td>
+        <td><%=reportArr[i].fdPwCurr%></td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <td><%=reportArr[i].fdRadiaReal%></td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+    </tr>
+    <% } %>
+    <% }%>
+
+</script>
+
+<!--月模板-->
+<script type="text/template" id="powerReport_tpl_month">
+    <% for(var i=0;i< reportArr.length; i++){ %>
+    <% if(i%3 == 0){%>
+    <tr>
+        <td rowspan="3"><%=reportArr[i].dataTime%></td>
+        <td><%=reportArr[i].fdPdcCurr%></td>
+        <td><%=reportArr[i].fdPower%></td>
+        <td><%=reportArr[i].fdPowerCurr%></td>
+        <td><%=reportArr[i].fdPr1%></td>
+        <td><%=reportArr[i].fdPr2%></td>
+        <td><%=reportArr[i].fdPwCurr%></td>
+        <td><%=reportArr[i].fdRadiaCurr%></td>
+    </tr>
+    <% }else{ %>
+    <tr>
+        <td><%=reportArr[i].fdPdcCurr%></td>
+        <td><%=reportArr[i].fdPower%></td>
+        <td><%=reportArr[i].fdPowerCurr%></td>
+        <td><%=reportArr[i].fdPr1%></td>
+        <td><%=reportArr[i].fdPr2%></td>
+        <td><%=reportArr[i].fdPwCurr%></td>
+        <td><%=reportArr[i].fdRadiaCurr%></td>
+    </tr>
+    <% } %>
+    <% }%>
+
+</script>
+
+<!--年模板-->
+<script type="text/template" id="powerReport_tpl_year">
+    <% for(var i=0;i< reportArr.length; i++){ %>
+    <% if(i%3 == 0){%>
+        <tr>
+            <td rowspan="3"><%=reportArr[i].dataTime%></td>
+            <td><%=reportArr[i].fdPdcCurr%></td>
+            <td><%=reportArr[i].fdPower%></td>
+            <td><%=reportArr[i].fdPowerCurr%></td>
+            <td><%=reportArr[i].fdPr1%></td>
+            <td><%=reportArr[i].fdPr2%></td>
+            <td><%=reportArr[i].fdPwCurr%></td>
+            <td><%=reportArr[i].fdRadiaCurr%></td>
+        </tr>
+    <% }else{ %>
+        <tr>
+            <td><%=reportArr[i].fdPdcCurr%></td>
+            <td><%=reportArr[i].fdPower%></td>
+            <td><%=reportArr[i].fdPowerCurr%></td>
+            <td><%=reportArr[i].fdPr1%></td>
+            <td><%=reportArr[i].fdPr2%></td>
+            <td><%=reportArr[i].fdPwCurr%></td>
+            <td><%=reportArr[i].fdRadiaCurr%></td>
+        </tr>
+    <% } %>
+    <% }%>
+
+</script>
+
+
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/lib/ejs.js"></script>
+<script src="../resource/js/common/base.js"></script>
+<script src="../resource/js/common/esmpbase.js"></script>
+<script src="../resource/js/slide-js.js"></script>
+<script src="../resource/plugin/layer/layer.min.js"></script>
+<script src="../resource/js/common/common.js"></script>
+<script src="../resource/js/common/echarts.min.js"></script>
+<script src="../resource/plugin/My97DatePicker/WdatePicker.js"></script>
+<script src="../resource/js/media.js"></script>
+<script src="../resource/js/common/common_zh_CN.js"></script>
+<script src="../resource/js/common/DateUtil.js"></script>
+<script src="../resource/plugin/easydialog/easydialog.min.js"></script>
+<script src="../resource/plugin/pager/pager.js"></script>
+<script src="../resource/plugin/jquery-select/js/select2.min.js"></script>
+<script src="../resource/js/showTreeImg.js"></script>
+<script src="../resource/js/jquery.minicolors2.js"></script>
+<script src="../resource/js/stationReport/report_list.js"></script>
+
+
+</body>
+</html>

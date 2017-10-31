@@ -1,0 +1,143 @@
+.remarkLine input {
+	width: 80%
+}
+.taskList tr td:last-child {
+	border: none;
+}
+.taskList tr:last-child {
+	border-bottom: none
+}
+.taskList input {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+.taskList tr {
+	border-bottom: 1px solid 
+}
+.taskList .LR {
+	width: 80px
+}
+.taskList td{
+	border-right: 1px solid;
+	text-align: center;
+}
+.taskList table {
+	width: 100%
+}
+.forthLine {
+	height: 100px
+}
+input[type='checkbox'] {
+	width: 20px;
+	height: 20px;
+	background: rgba(0, 0 ,0, 0);
+}
+.guardType>input, .guardType>span {
+	vertical-align: middle;
+}
+.thirdLine table tr {
+	text-align: center;
+	height: 100%
+}
+.thirdLine table {
+	width: 80%;
+	line-height: 60PX;
+	margin: auto 10%; 
+}
+.thirdLine {
+	height: 60PX;
+}
+.pBottom {
+	position: absolute;
+	bottom: 0;
+	right: 8px
+}
+.secondLineLeft, .secondLineRight {
+	position: relative;
+	height: 80px
+}
+.secondLine table, .remarkLine table {
+	width: 100%
+} {
+	width: 100%;
+}
+.secondLine input {
+	width: 28px
+}
+.commandDate {
+	width: 80px
+}
+.borderRight {
+	border-right: 1px solid
+}
+.textMiddle {
+	text-align: center;
+}
+.firstLineRight input {
+	width: 28px
+}
+.firstLineLeft input {
+	width: 100%
+}
+.firstLineLeft tr td {
+	width: 25%
+}
+.firstLineLeft tr {
+}
+.firstLineRight, .secondLineRight {
+	float: right;
+	width: 50%
+}
+
+.firstLineLeft, .secondLineLeft {
+	float: left;
+	width: 50%;
+	border-right: 1px solid
+}
+.secondLine, .thirdLine , .forthLine, .taskList, .remarkLine, .lastLine{
+	border-top: 1px solid
+}
+.formContainer {
+	margin: 20px 40px;
+	border: 1px solid
+}
+.formHeader .right {
+	float: right;
+}
+.formHeader .left {
+	float: left;
+}
+.formHeader {
+	overflow: hidden;
+	padding: 0 40px
+}
+.inpt {
+	width: 120px;
+	border-bottom: 1px solid
+}
+.input::-ms-input-placeholder{
+	text-align: center;
+	color: red
+} 
+input::-webkit-input-placeholder{
+	text-align: center;
+	color: red
+} 
+.title {
+	padding: 15px 0;
+	text-align: center;
+}
+
+.formWrapper {
+	width: 800px;
+	/*height:1000px;*/
+	background-color: #fff;
+	margin: 15px auto;
+	padding-bottom: 20px
+}
+.remark {
+	color: red;
+	font-size: 14px;
+}
+

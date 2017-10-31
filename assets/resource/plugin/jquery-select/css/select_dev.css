@@ -1,0 +1,54 @@
+.station_box {
+    width: 180px;
+    height: 30px;
+    background: none;
+    font-size: 14px;
+    color: #d8d8d8;
+    position: relative;
+}
+.selected_span{
+    color: #FFFFFF;
+    line-height: 36px;
+    padding: 4px;
+    display: block;
+    cursor: pointer;
+}
+b.arrow_blow{
+    border-color: #888 transparent transparent transparent;
+    border-style: solid;
+    border-width: 5px 4px 0 4px;
+    height: 0;
+    right: 10px;
+    margin-left: -4px;
+    position: absolute;
+    top: 50%;
+    width: 0;
+}
+.choose_wrap{
+    display: none;
+    border-top: none;
+    width: 180px;
+    background-color: #333;
+    border-radius: 4px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top:40px;
+    z-index: 1051;
+}
+.station_search_inp{
+    border: 1px solid #fff;
+    padding: 4px;
+    margin: 5px 10px;
+}
+.station_per_ul li{
+    color: #fff;
+    padding: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.station_per_ul li:hover,.station_per_ul li.selected{
+    background-color: #6BD8FF;
+}

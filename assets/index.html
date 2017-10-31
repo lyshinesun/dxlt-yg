@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>东旭蓝天</title>
+    <link rel="stylesheet" href="resource/css/style_blue.css"/>
+    <link rel="stylesheet" href="resource/plugin/layer/skin/default/layer.css"/>
+    <link rel="stylesheet" href="resource/css/index.css"/>
+
+</head>
+<body>
+
+<div id="power_index">
+    <!--------左边-------->
+    <div class="side_nav">
+        <!--<ul>-->
+            <!--<li>-->
+                <!--<em class="nav_icon"></em>-->
+                <!--<span class="nav_link">日常办公</span>-->
+                <!--<i class="nav_right"></i>-->
+                <!--<span class="cameo_line"></span>-->
+
+                <!--<div class="sub_nav">-->
+                    <!--<a id="powerOverview" href="javascript:;"><span>电站总览</span></a>-->
+                    <!--<a id="powerMap" href="javascript:;"><span>电站地图</span></a>-->
+                    <!--<a id="station_index" href="javascript:;"><span>电站首页</span></a>-->
+                <!--</div>-->
+            <!--</li>-->
+
+            <!--<li>-->
+                <!--<em class="nav_icon xj"></em>-->
+                <!--<span class="nav_link">巡检处理</span>-->
+                <!--<i class="nav_right"></i>-->
+                <!--<span class="cameo_line"></span>-->
+
+                <!--<div class="sub_nav">-->
+                    <!--<a id="powerList" href="javascript:;"><span>电站列表</span></a>-->
+                    <!--<a id="station_msg" href="javascript:;"><span>电站信息</span></a>-->
+                    <!--<a id="station_dataCurve" href="javascript:;"><span>数据曲线</span></a>-->
+                    <!--<a id="station_connection" href="javascript:;"><span>一次接线图</span></a>-->
+                    <!--<a id="station_unit" href="javascript:;"><span>电站单元</span></a>-->
+                    <!--<a id="station_inverter" href="javascript:;"><span>逆变器</span></a>-->
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<em class="nav_icon report"></em>-->
+                <!--<span class="nav_link">运维报表</span>-->
+                <!--<i class="nav_right"></i>-->
+                <!--<span class="cameo_line"></span>-->
+
+                <!--<div class="sub_nav">-->
+                    <!--<a id="stationReport" href="javascript:;"><span>电站报表</span></a>-->
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li id="powerManage">-->
+                <!--<em class="nav_icon product"></em>-->
+                <!--<span class="nav_link">生产管理</span>-->
+                <!--<i class="nav_right"></i>-->
+                <!--<span class="cameo_line"></span>-->
+
+                <!--<div class="sub_nav">-->
+                    <!--<a id="power_manage" href="javascript:;"><span>告警管理</span></a>-->
+                    <!--<a id="power_workorder" href="javascript:;"><span>消缺管理</span></a>-->
+                    <!--<a id="power_task" href="javascript:;"><span>任务管理</span></a>-->
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li id="powerAnalysis">-->
+                <!--<em class="nav_icon analysis"></em>-->
+                <!--<span class="nav_link">智能分析</span>-->
+                <!--<i class="nav_right"></i>-->
+                <!--<span class="cameo_line"></span>-->
+
+                <!--<div class="sub_nav">-->
+                    <!--<a id="power_diagnose" href="javascript:;"><span>故障诊断</span></a>-->
+                <!--</div>-->
+            <!--</li>-->
+        <!--</ul>-->
+    </div>
+
+    <!--------首页右头部-------->
+    <div class="index_top clearfix">
+
+        <img class="head_log" src="resource/images/images_blue/logo.png" alt="">
+        <div class="index_top_right fr clearfix" style="margin-right: 15px">
+            <table style="">
+                <tr>
+                    <td>
+                        <span class="active">
+                            <i class="active_icon fl"></i>
+                            <div class="fl active_txt">
+                                <ul id="notice_list">
+                                    <li>光伏电站运管系统v1.0版本</li>
+                                </ul>
+                            </div>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="line"></span>
+                    </td>
+                    <td id="alarm_wrap">
+                        <div>
+                            <div class="clock" title="提示消息">
+                                <div id="clock_num"></div>
+                                <div class="yg-tophide flicker" style="display:none;">
+                                    <div class="hide-topbj"></div>
+                                    <div class="hide-centerbj">
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:;">
+                                                    <span id="order_num" v-text="fault_num"></span>
+                                                    <span>故障提醒</span>
+                                                </a>
+                                                <audio id="alarm_audio" src="resource/audio/notify.wav"></audio>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="hide-bottombj"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>提示消息</div>
+                    </td>
+                    <td>
+                        <span class="line"></span>
+                    </td>
+                    <td>
+                        <div>
+                            <a class="userCenter" title="用户中心"></a>
+                        </div>
+                        <div>
+                            <a href="javascript:;">东旭蓝天</a>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="line"></span>
+                    </td>
+                    <td @click="modifyPass">
+                        <div>
+                            <a class="userCenter" title="修改密码"></a>
+                        </div>
+                        <div>
+                            <a href="javascript:;">修改密码</a>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="line"></span>
+                    </td>
+                    <td id="logOut" @click="logOut">
+                        <div>
+                            <span class="close"><a href="javascript:;" title="退出"><span></span></a></span>
+                        </div>
+                        <div><a href="javascript:;">退出</a></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!--首页右半部分-->
+    <div class="index_right" style="padding-left: 170px;">
+
+        <!--------首页右下content-------->
+        <iframe src="powerOverview.html" class="index_ifm_siz" frameborder="no" width="100%" height="100%"
+                id="index_frame" >
+        </iframe>
+    </div>
+
+</div>
+<script type="text/template" id="nav_content_tpl">
+    <ul>
+        <% for(var i=0;i< menuList.length; i++){ %>
+            <li>
+                <em class="nav_icon <%=menuList[i].icon%>"></em>
+                <span class="nav_link"><%=menuList[i].name%></span>
+                <i class="nav_right"></i>
+                <span class="cameo_line"></span>
+                <% if(menuList[i].list.length >0){ %>
+                    <div class="sub_nav">
+                        <% for(var j=0;j< menuList[i].list.length; j++){ var subList=menuList[i].list; %>
+                            <% if(subList[j].url.indexOf('dialog') !=-1){%>
+                                <a id="<%=subList[j].url.substring(7).replace('.html','')%>" href="javascript:;"><span><%=subList[j].name%></span></a>
+                            <% }else{ %>
+                                <a id="<%=subList[j].url.replace('.html','')%>" href="javascript:;"><span><%=subList[j].name%></span></a>
+                            <% } %>
+                        <% } %>
+                    </div>
+                <% } %>
+            </li>
+        <% } %>
+        <!--<li id="powerManage">-->
+        <!--<em class="nav_icon product"></em>-->
+        <!--<span class="nav_link">工单管理</span>-->
+        <!--<i class="nav_right"></i>-->
+        <!--<span class="cameo_line"></span>-->
+
+        <!--<div class="sub_nav">-->
+            <!--<a id="new_power_task" href="javascript:;"><span>任务管理</span></a>-->
+            <!--<a id="new_power_workorder" href="javascript:;"><span>工单填报</span></a>-->
+        <!--</div>-->
+        <!--</li>-->
+    </ul>
+</script>
+
+<script src="resource/js/jquery-1.8.3.min.js"></script>
+<script src="resource/js/lib/vlm.js"></script>
+<script src="resource/js/lib/ejs.js"></script>
+<script src="resource/js/lib/vue.js"></script>
+<script src="resource/js/common/common_zh_CN.js"></script>
+<script src="resource/js/media.js"></script>
+<script src="resource/plugin/layer/layer.min.js"></script>
+<script src="resource/js/index.js"></script>
+
+</body>
+</html>

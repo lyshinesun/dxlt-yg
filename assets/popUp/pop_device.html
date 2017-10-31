@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新增设备弹窗</title>
+    <link rel="stylesheet" href="../resource/plugin/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../resource/plugin/upload/webuploader.css"/>
+    <link rel="stylesheet" href="../resource/css/new_workorder/work_pop_common.css"/>
+</head>
+<body>
+
+<div class="new_task_dialog">
+    <h2 class="device_tit">新增备品备件</h2>
+    <form class="layui-form" action="" id="device_form">
+        <table class="layui-table">
+            <colgroup>
+                <col width="100">
+                <col width="280">
+                <col width="100">
+                <col>
+            </colgroup>
+            <tbody id="fill_tbody">
+            <tr>
+                <td>设备类型编号</td>
+                <td><input id="fd_equipment_code" class="task_inp" autocomplete="off" type="text" name="device01" required data-msg-required="不能为空" value=""></td>
+                <td>存放地点</td>
+                <td><input id="fd_use_path" class="task_inp" autocomplete="off" type="text" name="device02" required data-msg-required="不能为空"  value=""></td>
+            </tr>
+            <tr>
+                <td>设备类型</td>
+                <td>
+                    <select class="pop_select" name="" id="device_type" required data-msg-required="不能为空">
+                        <option value="">请选择设备类型</option>
+                        <option value="一般性备件">一般性备件</option>
+                        <option value="消耗性备品">消耗性备品</option>
+                        <option value="易损件备件">易损件备件</option>
+                    </select>
+                </td>
+                <td>设备名称</td>
+                <td>
+                    <select name="" id="fd_name" required data-msg-required="不能为空"></select>
+                </td>
+            </tr>
+            <tr>
+                <td>单位</td>
+                <td><input id="fd_unit" class="task_inp" autocomplete="off" type="text" name="device05" required data-msg-required="不能为空"  value=""></td>
+                <td>品牌</td>
+                <td><input id="fd_brand" class="task_inp" autocomplete="off" type="text" name="device06" required data-msg-required="不能为空"  value=""></td>
+            </tr>
+            <tr>
+                <td>型号</td>
+                <td><input id="fd_equipment_model_code" class="task_inp" autocomplete="off" type="text" name="device07" required data-msg-required="不能为空"  value=""></td>
+                <td>使用区域</td>
+                <td><input id="fd_region" class="task_inp" autocomplete="off" type="text" name="device08" required data-msg-required="不能为空"  value=""></td>
+            </tr>
+            <tr>
+                <td>描述</td>
+                <td><input id="fd_desc" class="task_inp" autocomplete="off" type="text" name="device09" required data-msg-required="不能为空"  value=""></td>
+                <td>设备单价</td>
+                <td><input id="fd_price" class="task_inp" autocomplete="off" type="text" name="device10" required data-msg-required="不能为空"  value=""></td>
+            </tr>
+            <tr>
+                <td>图片</td>
+                <td>
+                    <input class="btn btn-default" type="file" id="upFile" />
+                    <input id="imgOne" name="imgOne" type="hidden"/>
+                    <!--<input id="fd_img" class="task_inp" autocomplete="off" type="file" name="device11" required data-msg-required="不能为空"  value="">-->
+
+                </td>
+                <td>设备唯一标识</td>
+                <td><input id="fd_mac" class="task_inp" autocomplete="off" type="text" name="device12" required data-msg-required="不能为空"  value=""></td></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="device_add">确定</button>
+            </div>
+        </div>
+
+    </form>
+
+    <!--<form>-->
+
+        <!--&lt;!&ndash;文件选择input&ndash;&gt;-->
+        <!--<h3>文件选择：</h3>-->
+        <!--<input class="btn btn-default" type="file" id="upFile" />-->
+
+        <!--&lt;!&ndash;文件选择input中已选择文件重置(采用form表单的reset重置按钮重置)&ndash;&gt;-->
+        <!--<h3>重置文件选择：</h3>-->
+        <!--<input class="btn btn-default" type="reset" id="reBtn" value="清空" />-->
+
+        <!--&lt;!&ndash;提交压缩后的base64文件数据给后台&ndash;&gt;-->
+        <!--<h3>传给后台</h3>-->
+        <!--<input class="btn btn-default" type="button" id="upTo" value="提交"/>-->
+
+        <!--&lt;!&ndash;后台所要获取的文件base64&ndash;&gt;-->
+        <!--<h3>后台获取base64文件数据：(一个隐藏域)</h3>-->
+        <!--<input id="imgOne" name="imgOne" type="hidden"/>-->
+
+        <!--&lt;!&ndash;所选文件压缩前预览&ndash;&gt;-->
+        <!--<h3>压缩前预览：</h3>-->
+        <!--<img src="" id="preview"/>-->
+
+        <!--&lt;!&ndash;所选文件压缩后预览&ndash;&gt;-->
+        <!--<h3>压缩后预览：</h3>-->
+        <!--<img src="" id="nextview"/>-->
+
+    <!--</form>-->
+
+</div>
+
+</body>
+
+<script src="../resource/js/jquery-1.10.2.min.js"></script>
+<script src="../resource/plugin/layer/layer.min.js"></script>
+<script src="../resource/plugin/layui/lay/dest/layui.all.js"></script>
+
+<script src="../resource/plugin/upload/tools.js"></script>
+<script src="../resource/plugin/upload/pictureHandle.js"></script>
+
+</html>
+
+

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>一次接线图</title>
+    <link rel="stylesheet" href="../resource/plugin/layer/skin/default/layer.css"/>
+    <link rel="stylesheet" href="../resource/plugin/easydialog/easydialog.css"/>
+    <link rel="stylesheet" href="../resource/plugin/asyncbox/skins/default.css"/>
+    <link rel="stylesheet" href="../resource/css/zoom-detect.css"/>
+    <link rel="stylesheet" href="../resource/plugin/easydialog/easydialog.css"/>
+    <link rel="stylesheet" href="../resource/css/style_blue.css"/>
+    <link rel="stylesheet" href="../resource/plugin/jquery-autocomplete/jquery.autocomplete.css">
+    <link rel="stylesheet" href="../resource/plugin/jquery-select/css/select2.css"/>
+    <link rel="stylesheet" href="../resource/css/jquery.minicolors.css"/>
+    <link rel="stylesheet" href="../resource/css/style_2.0_blue.css"/>
+</head>
+<body>
+<div id="stationConnection">
+    <!--------首页右下content-------->
+    <div id="map_wap_div" class="map_wap">
+        <div class="map_select clearfix single_no_show">
+            <div class="map_select clearfix">
+                <div class="map_select_wrap fl" style="height: auto;">
+                    <div class="hd" id="map_select_wraphd">
+                        <a href="javascript:;"><i class="map_seicon_1" title="电站名称"></i>
+                            <span class="secondnav_bg4">电站名称<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_2" title="装机功率"></i>
+                            <span class="secondnav_bg4">装机功率<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_3" title="类型"></i>
+                            <span class="secondnav_bg4">类型<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_4" title="并网时间"></i>
+                            <span class="secondnav_bg4">并网时间<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_5" title="地址确定选择"></i>
+                            <span class="secondnav_bg4">地址确定选择<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="contentDiv" class="map_con clearfix">
+            <div class="map_con clearfix">
+                <div id="Searchresult"></div>
+                <div id="hiddenresult" style="display: none;"></div>
+                <div class="map_con_fl fl">
+                    <div id="psDetail">
+                        <div id="basecolor" class="basecolor" style="display: none"></div>
+                        <ul class="treeDemoId" @click="getPerSvg($event)">
+                            <!-- 老接口目前只有这几个电站 -->
+                            <!-- <li id="gs" class="on"><a href="javascript:;" title="湖北广水II期20MW">湖北广水II期20MW</a></li>
+                            <li id="lw"><a href="javascript:;" title="宁夏灵武50MW">宁夏灵武50MW</a></li>
+                            <li id="jx"><a href="javascript:;" title="山东莒县40MW">山东莒县40MW</a></li>
+                            <li id="hl"><a href="javascript:;" title="四川会理30MW">四川会理30MW</a></li> -->
+                            <li v-for="station in stationList" :id="station.fdStationCode" :class="station.fdStationCode == stationId ? 'on' : ''"  >
+                                <a href="javascript:;" class="sta_tit" :title="station.fdStationName" v-text="station.fdStationName"></a>
+                            </li>
+                        </ul>
+                        <input id="totalCount" type="hidden" value="4">
+                    </div>
+                    <div class="map_con_fl_page">
+                        <div class="map_con_fl_page_b" id="Pagination">
+                            <a class="fl pager_class_color prev"></a>
+                            <a class="map_con_fl_pageprev fl prev"></a>
+                            <a class="fl pager_class_color">1</a>
+                            <a class="fl pager_class_color next"></a>
+                            <a class="map_con_fl_pagenext fl next"></a>
+                        </div>
+                    </div>
+                </div>
+                <div id="tendencyDiv" class="tendency_ri fl clearfix">
+                    <div class="tendencyChart">
+                        <div class="tendencyChart_tit" style="background-color:#ffffff">
+                            <span id="wiring_ps_name" v-text="stationName"></span>主接线图
+
+                            <div class="clearfix fr form-group3" style="right:267px;">
+                                <div class="minicolors">
+                                    <input type="hidden" id="hidden-input" class="demo fl"
+                                           value="#000000" size="7">
+                                </div>
+                            </div>
+                            <div style="position:absolute;top:6px;right:-1px;">
+                                <div class="clearfix fr">
+                                    <div class="allsite_dateri fl clearfix" style="margin-right:40px;">
+                                        <input type="checkbox" class="fl allsite_dateriCheckbox" name="setTime"
+                                               checked="" id="setTime" onclick="refreshTime();">
+                                        <span class="fl reshdate" style="font-weight: normal">刷新时间</span>
+                            <span id="allsite_dateYear1" class="fl allsite_datej abcd" style="opacity: 0.7;">
+											<em style="opacity: 0.7;"><i id="timeValue">1</i>min</em>
+											<a href="javascript:;" class="allsite_dateUpBtn1"></a>
+											<a href="javascript:;" class="allsite_dateDownBtn1"></a>
+                        				</span>
+
+                                    </div>
+                                    <a href="javascript:;" id="change_size" class="change_size change_size2 fl"
+                                       style="margin-top:0px;"><img src="../resource/images/change_size2.png"
+                                                                    alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tendencyChart_con svgtend" id="svg_change_color">
+                            <div id="svgDiv"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" value="psFaultPage" id="pageId">
+    </div>
+
+</div>
+
+
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/lib/ejs.js"></script>
+<script src="../resource/js/common/base.js"></script>
+<script src="../resource/js/common/esmpbase.js"></script>
+<script src="../resource/js/slide-js.js"></script>
+<script src="../resource/plugin/layer/layer.min.js"></script>
+<script src="../resource/js/common/common.js"></script>
+<script src="../resource/js/media.js"></script>
+<script src="../resource/js/common/common_zh_CN.js"></script>
+<script src="../resource/js/common/DateUtil.js"></script>
+<script src="../resource/plugin/easydialog/easydialog.min.js"></script>
+<script src="../resource/plugin/jquery-select/js/select2.min.js"></script>
+<script src="../resource/js/jquery.minicolors2.js"></script>
+<script src="../resource/js/allPsList/station_connection.js"></script>
+
+</body>
+</html>

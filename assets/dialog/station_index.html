@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>电站首页</title>
+    <link rel="stylesheet" href="../resource/plugin/jquery-select/css/select_dev.css"/>
+    <link rel="stylesheet" href="../resource/css/style_2.0_blue.css"/>
+</head>
+<body>
+<div id="singleDet" style="height: 100%;">
+
+    <!--------首页右下content-------->
+    <div class="map_wrap">
+        <!---右边框架---->
+        <div class="map_select clearfix just_single_show" style="margin-top: 10px;">
+            <div class="index_scr_sel fl">
+                <div class="station_box" @click="searchStation">
+                    <span class="selected_span" :data-selCode="stationId" v-text="firstStationName"></span><b class="arrow_blow"></b>
+                    <div class="choose_wrap">
+                        <ul class="station_per_ul" id="station_per_ul">
+                            <!--<li data-stationId="gs">湖北广水I期20MW</li>-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="admin_right">
+            <div class="admin_right_main">
+                <div class="index_main">
+                    <div class="index_left fl">
+                        <div class="index_left_main">
+                            <div class="index_left_top" style="height: 55%;">
+                                <div class="index_left_top_main">
+                                    <div class="index_left_top_top">
+                                        <div class="index_top_title clearfix">
+                                            <div class="index_top_title_text fl">发电趋势</div>
+                                            <div class="index_top_menu fl">
+                                                <div class="index_top_menu_title"><span
+                                                        id="powerSelectDate">日</span><b></b>
+                                                </div>
+                                                <ul @click="powerTrendDateType($event)">
+                                                    <li data-dateType="1">日</li>
+                                                    <li data-dateType="2">月</li>
+                                                    <li data-dateType="3">年</li>
+                                                </ul>
+                                                <input type="hidden" id="selqushi" name="selqushi" value="1"/>
+                                            </div>
+                                            <input id="dateInput" type="text" value="" readonly="readonly" class="Wdate fl dateRange">
+                                        </div>
+                                        <div class="index_left_top_top_echarts" id="index_top_echarts"></div>
+                                    </div>
+                                    <div class="index_left_top_bottom">
+                                        <ul>
+                                            <li class="clearfix">
+                                                <div class="index_num_list_main">
+                                                    <div class="index_num_con clearfix">
+                                                        <div class="clearfix index_num_con_mian">
+                                                            <img src="../resource/images/images_tab/num_ico1.png"/>
+
+                                                            <div class="distab">
+                                                                <div class="distab_main">
+                                                                    <div class="distab_main_con">
+                                                                        <div class="distab_t1">当前功率</div>
+                                                                        <div class="distab_t2 distab_blue">
+                                                                            <span id="currentpower"
+                                                                                  v-text="fd_all_pw"></span>
+                                                                            <i id="currentUnit"
+                                                                               v-text="fd_all_pw_unit"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="index_num_bottomtitle"><font>装机功率</font>
+                                                            <span id="designCapacity"
+                                                                  v-text="fd_all_intercon_cap">--</span><i
+                                                                    id="designUnit">kW</i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="clearfix">
+                                                <div class="index_num_list_main">
+                                                    <div class="index_num_con clearfix">
+                                                        <div class="clearfix index_num_con_mian">
+                                                            <img src="../resource/images/images_tab/num_ico2.png"/>
+
+                                                            <div class="distab">
+                                                                <div class="distab_main">
+                                                                    <div class="distab_main_con">
+                                                                        <div class="distab_t1">今日发电</div>
+                                                                        <div class="distab_t2 distab_red"><span
+                                                                                id="todaypower"
+                                                                                v-text="fd_all_power_day">0</span><i
+                                                                                id="todayUnit"
+                                                                                v-text="fd_all_power_day_unit"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="index_num_bottomtitle"><font>累计发电</font><span
+                                                                id="totalpower" v-text="fd_all_power">0</span><i
+                                                                id="totalUnit" v-text="fd_all_power_unit"></i></div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="clearfix">
+                                                <div class="index_num_list_main">
+                                                    <div class="index_num_con clearfix">
+                                                        <div class="clearfix index_num_con_mian">
+                                                            <img src="../resource/images/images_tab/mei.png"/>
+
+                                                            <div class="distab">
+                                                                <div class="distab_main">
+                                                                    <div class="distab_main_con">
+                                                                        <div class="distab_t1">节约标准煤</div>
+                                                                        <div class="distab_t2 distab_violet"><span
+                                                                                id="todayincome"
+                                                                                v-text="fd_coal_reduce">--</span><i
+                                                                                id="toincomeUnit"
+                                                                                v-text="fd_coal_reduce_unit"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="index_num_bottomtitle"><font>累计节约</font><span
+                                                                id="totalincome" v-text="fd_all_coal_reduce">--</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="clearfix">
+                                                <div class="index_num_list_main">
+                                                    <div class="index_num_con clearfix">
+                                                        <div class="clearfix index_num_con_mian">
+                                                            <img src="../resource/images/images_tab/num_ico4.png"/>
+
+                                                            <div class="distab">
+                                                                <div class="distab_main">
+                                                                    <div class="distab_main_con">
+                                                                        <div class="distab_t1">CO<span
+                                                                                style="font-size:12px !important;font-family:Microsoft YaHei;color:#16498a;">2</span>
+                                                                            &nbsp;减排
+                                                                        </div>
+                                                                        <div class="distab_t2 distab_green"><span
+                                                                                id="totalco2"
+                                                                                v-text="fd_all_co2_reduce">--</span><i
+                                                                                id="totalco2Unit"
+                                                                                v-text="fd_all_co2_reduce_unit"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="index_num_bottomtitle font_style">
+                                                            <font>等效植树</font><span
+                                                                id="totaltree" v-text="fd_tree_reduce"></span></div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="index_left_bottom">
+                                <div class="index_left_bottom_pad"></div>
+                                <div class="index_left_bottom_main">
+                                    <div class="index_left_bottom_list fl">
+                                        <div class="index_left_bottom_list_main">
+                                            <div class="index_left_bottom_list_top clearfix">
+                                                <div class="index_ranking_title">逆变器发电分析</div>
+                                                <div class="fl index_ranking_sel">
+                                                    <div class="index_ranking_value"
+                                                         style="width:60px !important;"><span
+                                                            style="width:60px !important;">月</span><b></b></div>
+                                                    <ul @click="outputDateType($event)">
+                                                        <li data-inverter="1">月</li>
+                                                        <li data-inverter="2">年</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="index_left_bottom_list_bottom clearfix" id="index_left_bottom_list_bottom1">
+                                                <div align="center"
+                                                     style="height: 100%;width: 100%;background-color: transparent; position: absolute"
+                                                     class="loadingDiv">
+                                                    <img style="left: 45%; top: 45%; position: absolute"
+                                                         src="../resource/images/loading.gif"/>
+                                                </div>
+                                                <div class="column_echarts" id="echarts3"></div>
+
+                                                <input type="hidden" id="selopdt" name="selopdt" value="1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="index_left_bottom_list fl">
+                                        <div class="index_left_bottom_list_main">
+                                            <div class="index_left_bottom_list_top clearfix">
+                                                <div class="index_ranking_title"><span id="genPlanName">当年发电计划</span>
+                                                </div>
+                                                <div class="fl index_ranking_sel">
+                                                    <div class="index_ranking_value index_rank_style">
+                                                        <span>年</span><b></b>
+                                                    </div>
+                                                    <ul @click="capabilityTrendDateType($event)">
+                                                        <li data-schedule="2">月</li>
+                                                        <li data-schedule="1">年</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="index_left_bottom_list_bottom clearfix" id="index_left_bottom_list_bottom2">
+                                                <div class="column_echarts" id="echarts4"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="index_right_new fr">
+                        <div class="index_right_imgslide">
+                            <div class="index_weather_list clearfix">
+                                <ul>
+                                    <li>
+                                        <div class="index_weather_eca" id="gaugeChart"></div>
+                                    </li>
+                                    <li>
+                                        <div class="index_weather_wd">
+                                            <div class="index_weather_wd_icon"><img
+                                                    src="../resource/images/wd_icon1.png" alt=""/></div>
+                                            <div class="index_weather_wd_text">
+                                                <div class="index_weather_wd_text_box1">
+                                                    <div>电池板温度</div>
+                                                </div>
+                                                <div class="index_weather_wd_text_box2">
+                                                    <div style="font-size: 26px"><span id="batteryPlateCom"
+                                                                                       style="font-size: 26px"
+                                                                                       v-text="fdboardtemperature">--</span>℃
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li style="background: none">
+                                        <div class="index_weather_wd">
+                                            <div class="index_weather_wd_icon"><img
+                                                    src="../resource/images/wd_icon2.png" alt=""/></div>
+                                            <div class="index_weather_wd_text">
+                                                <div class="index_weather_wd_text_box1">
+                                                    <div>环境温度</div>
+                                                </div>
+                                                <div class="index_weather_wd_text_box2">
+                                                    <div style="font-size: 26px"><span id="environmentCom"
+                                                                                       style="font-size: 26px"
+                                                                                       v-text="fdboardtemperature">--</span>℃
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="index_weather_xian"></div>
+                            <div class="index_weather_list clearfix">
+                                <ul id="weatherUl"></ul>
+                            </div>
+                        </div>
+                        <div class="index_right_pad"></div>
+                        <div class="index_right_echarts">
+                            <div class="index_right_list_main clearfix">
+                                <div class="index_right_echarts_left fl">
+                                    <div class="index_right_echarts_title">告警</div>
+                                    <a href="#" title="导出" class="fr yg-daochu-sgps daochu1"
+                                       style="margin-top:8px; position: absolute; z-index: 9999999; left: 163px;"
+                                       onclick="exportAlertExcel();"></a>
+
+                                    <div class="index_right_echarts_mian" id="echarts"></div>
+                                    <div class="index_right_echarts_list" style="padding-left: 1%">
+                                        <ul>
+                                            <li class="clearfix">
+                                                <div class="echarts_ico blue"></div>
+                                                <div class="echarts_title_index">告警总数</div>
+                                                <div class="echarts_num blue_color">
+                                                    <span id="warntotal" style="cursor: pointer;"></span>
+                                                </div>
+                                            </li>
+                                            <li class="clearfix">
+                                                <div class="echarts_ico orange"></div>
+                                                <div class="echarts_title_index">未确认</div>
+                                                <div class="echarts_num light_blue_color">
+                                                    <span id="waitWarn" style="cursor: pointer;"></span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="index_right_echarts_left fl">
+                                    <div class="index_right_echarts_title">工单</div>
+                                    <a href="#" class="fr yg-daochu-sgps daochu2" title="导出"
+                                       style="margin-top:8px; position: absolute; z-index: 9999999; left: 444px;"
+                                       onclick="exportOrderExcel();"></a>
+
+                                    <div class="index_right_echarts_mian" id="echarts2"></div>
+                                    <div class="index_right_echarts_list" style="padding-left: 1%">
+                                        <ul>
+                                            <li class="clearfix">
+                                                <div class="echarts_ico blue"></div>
+                                                <div class="echarts_title_index">工单总数</div>
+                                                <div class="echarts_num blue_color"><span id="worktotal"
+                                                                                          style="cursor: pointer;"
+                                                                                          onclick="toFaultOrderPage()"></span>
+                                                </div>
+                                            </li>
+                                            <li class="clearfix">
+                                                <div class="echarts_ico orange"></div>
+                                                <div class="echarts_title_index">未处理</div>
+                                                <div class="echarts_num light_blue_color"><span id="waitWork"
+                                                                                                style="cursor: pointer;"
+                                                                                                onclick="toFaultOrderPage()"></span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="index_right_pad"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!---右边框架---->
+    </div>
+</div>
+<script type="tetx/template" id="station_filter_tpl">
+    <%for(var i=0;i< newStationList.length; i++){ %>
+    <li data-stationId="<%=newStationList[i].fdStationCode%>"><%=newStationList[i].fdStationName%></li>
+    <%} %>
+</script>
+
+<script type="text/template" id="weatherTpl">
+    <% for(var i=0;i< newWeatherArr.length; i++){ %>
+    <li>
+        <div class="index_wea_wrap">
+            <div class="index_wea_con">
+                <div class="index_wea_con_t1"><span class="curMonthAdd1"><%=newWeatherArr[i].monthNum%></span>月<span
+                        class="curDateAdd1"><%=newWeatherArr[i].dayNum%></span>日
+                </div>
+                <div class="index_wea_con_icon"><img id="todayAdd1Img"
+                                                     src="../resource/images/weather/<%=newWeatherArr[i].imgType%>.png"
+                                                     alt=""/></div>
+                <div class="index_wea_con_t2"><span id="todayAdd1Highc"><%=newWeatherArr[i].high_future%></span>~<span
+                        id="todayAdd1Lowc"><%=newWeatherArr[i].low_future%></span>℃
+                </div>
+                <div class="index_wea_con_t3" id="todayAdd1WthName"><%=newWeatherArr[i].weather%></div>
+            </div>
+        </div>
+    </li>
+    <% } %>
+</script>
+
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/lib/ejs.js"></script>
+<script src="../resource/js/common/base.js"></script>
+<script src="../resource/js/common/esmpbase.js"></script>
+<script src="../resource/js/slide-js.js"></script>
+<script src="../resource/plugin/layer/locale/layer_zh_CN.js"></script>
+<script src="../resource/plugin/layer/layer.min.js"></script>
+<script src="../resource/js/common/common.js"></script>
+<script src="../resource/js/common/echarts.min.js"></script>
+<script src="../resource/plugin/My97DatePicker/WdatePicker.js"></script>
+<script src="../resource/js/common/common_zh_CN.js"></script>
+<script src="../resource/js/common/DateUtil.js"></script>
+<script src="../resource/plugin/easydialog/easydialog.min.js"></script>
+<script src="../resource/js/media.js"></script>
+<script src="../resource/plugin/jq-cookie/jquery-cookie.js"></script>
+<script src="../resource/js/allPsList/station_index.js"></script>
+
+<script>
+    $(function () {
+        $(".index_weather_wd_text").height($(".index_weather_list ul li").height() - 47);
+    })
+    $(window).resize(function () {
+        $(".index_weather_wd_text").height($(".index_weather_list ul li").height() - 47);
+    })
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="resource/css/style_2.0_blue.css"/>
+</head>
+
+<body>
+
+<div class="admin_right" id="power_yg">
+    <div class="admin_right_main">
+        <div class="index_main">
+            <div class="index_left fl">
+                <div class="index_left_main">
+                    <div class="index_left_top">
+                        <div class="index_left_top_main">
+                            <div class="index_left_top_top" style="height: 70%">
+                                <div class="index_top_title clearfix">
+                                    <div class="index_top_title_text fl">发电趋势</div>
+                                    <div class="index_top_menu fl">
+                                        <div class="index_top_menu_title"><span id="powerSelectDate">日</span><b></b>
+                                        </div>
+                                        <ul @click="powerTrendDateType($event)">
+                                            <li data-dateType="1">日</li>
+                                            <li data-dateType="2">月</li>
+                                            <li data-dateType="3">年</li>
+                                        </ul>
+                                        <input type="hidden" id="selqushi" name="selqushi" value="1"/>
+                                    </div>
+                                    <input id="dateInput" type="text" value="" readonly="readonly" class="Wdate fl dateRange">
+
+                                </div>
+                                <div class="index_left_top_top_echarts" id="index_top_echarts"></div>
+                            </div>
+                            <div class="index_left_top_bottom">
+                                <ul>
+                                    <li class="clearfix">
+                                        <div class="index_num_list_main">
+                                            <div class="index_num_con clearfix">
+                                                <div class="clearfix index_num_con_mian">
+                                                    <img src="resource/images/images_tab/num_ico1.png"/>
+                                                    <div class="distab">
+                                                        <div class="distab_main">
+                                                            <div class="distab_main_con">
+                                                                <div class="distab_t1">当前功率</div>
+                                                                <div class="distab_t2 distab_blue">
+                                                                    <span id="currentpower" v-text="fd_all_pw"></span>
+                                                                    <i id="currentUnit" v-text="fd_all_pw_unit"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="index_num_bottomtitle"><font>装机功率</font>
+                                                    <span id="designCapacity" v-text="fd_all_intercon_cap"></span><i
+                                                            id="designUnit">万kW</i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <div class="index_num_list_main">
+                                            <div class="index_num_con clearfix">
+                                                <div class="clearfix index_num_con_mian">
+                                                    <img src="resource/images/images_tab/num_ico2.png"/>
+
+                                                    <div class="distab">
+                                                        <div class="distab_main">
+                                                            <div class="distab_main_con">
+                                                                <div class="distab_t1">今日发电</div>
+                                                                <div class="distab_t2 distab_red"><span id="todaypower"
+                                                                                                        v-text="fd_all_power_day">0</span><i
+                                                                        id="todayUnit"
+                                                                        v-text="fd_all_power_day_unit"></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="index_num_bottomtitle"><font>累计发电</font><span
+                                                        id="totalpower" v-text="fd_all_power">0</span><i id="totalUnit"
+                                                                                                         v-text="fd_all_power_unit"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <div class="index_num_list_main">
+                                            <div class="index_num_con clearfix">
+                                                <div class="clearfix index_num_con_mian">
+                                                    <img src="resource/images/images_tab/num_ico3.png"/>
+
+                                                    <div class="distab">
+                                                        <div class="distab_main">
+                                                            <div class="distab_main_con">
+                                                                <div class="distab_t1">今日收入</div>
+                                                                <div class="distab_t2 distab_violet"><span
+                                                                        id="todayincome"
+                                                                        v-text="fd_make_money">--</span><i
+                                                                        id="toincomeUnit"
+                                                                        v-text="fd_make_money_unit"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="index_num_bottomtitle"><font>累计收入</font><span
+                                                        id="totalincome" v-text="fd_all_make_money">--</span></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <div class="index_num_list_main">
+                                            <div class="index_num_con clearfix">
+                                                <div class="clearfix index_num_con_mian">
+                                                    <img src="resource/images/images_tab/num_ico4.png"/>
+
+                                                    <div class="distab">
+                                                        <div class="distab_main">
+                                                            <div class="distab_main_con">
+                                                                <div class="distab_t1">CO<span
+                                                                        style="font-size:12px !important;font-family:Microsoft YaHei;color:#16498a;">2</span>
+                                                                    &nbsp;减排
+                                                                </div>
+                                                                <div class="distab_t2 distab_green"><span id="totalco2"
+                                                                                                          v-text="fd_co2_reduce">--</span><i
+                                                                        id="totalco2Unit"
+                                                                        v-text="fd_co2_reduce_unit"></i></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="index_num_bottomtitle font_style"><font>等效植树</font><span
+                                                        id="totaltree" v-text="fd_tree_reduce"></span></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="index_left_bottom">
+                        <div class="index_left_bottom_pad"></div>
+                        <div class="index_left_bottom_main">
+                            <div class="index_left_bottom_list fl">
+                                <div class="index_left_bottom_list_main">
+                                    <div class="index_left_bottom_list_top clearfix">
+                                        <div class="index_ranking_title">发电排名</div>
+                                        <div class="fl index_ranking_sel">
+                                            <div class="index_ranking_value" style="width:60px !important;"><span
+                                                    style="width:60px !important;" id="selDate_fd">日</span><b></b></div>
+                                            <ul @click="outputDateType($event)">
+                                                <li dateTabType="1">日</li>
+                                                <li dateTabType="2">月</li>
+                                                <li dateTabType="3">年</li>
+                                            </ul>
+                                        </div>
+                                        <div class="fl index_ranking_sel">
+                                            <div class="index_ranking_value index_rank_style"><span>前五名</span><b></b>
+                                            </div>
+                                            <ul @click="outputOrderType($event)">
+                                                <li data-sortType="1">前五名</li>
+                                                <li data-sortType="2">后五名</li>
+                                            </ul>
+                                        </div>
+                                        <div class="index_rank_all fl" @click="showAll_power">查看所有</div>
+                                    </div>
+                                    <div class="index_left_bottom_list_bottom clearfix">
+                                        <div class="column_echarts" id="echarts3"></div>
+
+                                        <input type="hidden" id="selopdt" name="selopdt" value="1">
+                                        <input type="hidden" id="selopot" name="selopot" value="1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="index_left_bottom_list fl">
+                                <div class="index_left_bottom_list_main">
+                                    <div class="index_left_bottom_list_top clearfix">
+                                        <div class="index_ranking_title">性能排名</div>
+                                        <div class="fl index_ranking_sel">
+                                            <div class="index_ranking_value index_rank_style"><span>月</span><b></b>
+                                            </div>
+                                            <ul @click="capabilityTrendDateType($event)">
+                                                <li data-prType="2">月</li>
+                                                <li data-prType="3">年</li>
+                                            </ul>
+                                        </div>
+                                        <div class="fl index_ranking_sel">
+                                            <div class="index_ranking_value index_rank_style"><span>前五名</span><b></b>
+                                            </div>
+                                            <ul @click="capabilityTrendOrderType($event)">
+                                                <li data-prRankType="1">前五名</li>
+                                                <li data-prRankType="2">后五名</li>
+                                            </ul>
+                                            <!-- 设置选择的性能排名时间和排名维度以及切换 -->
+                                            <input type="hidden" id="selcapdt" name="selcapdt" value="2">
+                                            <input type="hidden" id="selcapot" name="selcapot" value="1">
+                                            <input type="hidden" id="capLenged" name="capLenged" value="1">
+                                        </div>
+                                        <div class="fl index_ranking_sel">
+                                            <div class="index_ranking_value index_rank_style">
+                                                <span>kWh/kWp</span><b></b></div>
+                                            <ul @click="capabilityTrendSwithType($event)">
+                                                <li data-equalorPr="1">kWh/kWp</li>
+                                                <li data-equalorPr="2">PR</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="index_left_bottom_list_bottom clearfix">
+                                        <div class="column_echarts" id="echarts4"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="index_right fr">
+                <div class="index_right_imgslide">
+                    <div class="index_right_list_main clearfix">
+                        <div class="index_right_list_title"><a href="#" onclick="return false;">公司文化</a></div>
+                        <div class="index_right_slide">
+                            <div class="bannerPane">
+                                <section class="slider">
+                                    <div class="flexslider">
+                                        <ul class="slides" id="news"></ul>
+                                    </div>
+                                </section>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="index_right_pad"></div>
+                <div class="index_right_echarts" style="height:32%;">
+                    <div class="index_right_list_main clearfix">
+                        <div class="index_right_echarts_left fl">
+                            <div class="index_right_echarts_title">告警</div>
+                            <div class="index_right_echarts_mian" id="echarts"></div>
+                            <div class="index_right_echarts_list">
+                                <ul>
+                                    <li class="clearfix">
+                                        <div class="echarts_ico blue"></div>
+                                        <div class="echarts_title_index">告警总数</div>
+                                        <div class="echarts_num blue_color">
+                                            <span id="warntotal" style="cursor: pointer;"></span>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <div class="echarts_ico light_blue"></div>
+                                        <div class="echarts_title_index">未处理</div>
+                                        <div class="echarts_num light_blue_color">
+                                            <span id="waitWarn" style="cursor: pointer;"></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="index_right_echarts_left fl">
+                            <div class="index_right_echarts_title">工单</div>
+                            <div class="index_right_echarts_mian" id="echarts2"></div>
+                            <div class="index_right_echarts_list">
+                                <ul>
+                                    <li class="clearfix">
+                                        <div class="echarts_ico blue"></div>
+                                        <div class="echarts_title_index">工单总数</div>
+                                        <div class="echarts_num blue_color">
+                                            <span id="worktotal" style="cursor: pointer;"></span>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <div class="echarts_ico light_blue"></div>
+                                        <div class="echarts_title_index">未处理</div>
+                                        <div class="echarts_num light_blue_color">
+                                            <span id="waitWork" style="cursor: pointer;"></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="index_right_pad"></div>
+                <div class="index_right_list">
+                    <div class="index_right_list_main">
+                        <div class="index_right_list_title">值班信息</div>
+                        <div class="index_right_list_con">
+                            <ul>
+                                <div class="index_right_list_pad"></div>
+                                <li>
+                                    <div class="clearfix"><span>值班人员:</span><font v-text="dutyPserson"></font></div>
+                                </li>
+                                <div class="index_right_list_pad"></div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="resource/js/jquery-1.8.3.min.js"></script>
+<script src="resource/js/lib/vlm.js"></script>
+<script src="resource/js/lib/vue.js"></script>
+<script src="resource/js/lib/ejs.js"></script>
+<script src="resource/js/slide-js.js"></script>
+
+<script src="resource/js/common/common.js"></script>
+<script src="resource/js/common/echarts.min.js"></script>
+
+<script src="resource/js/media.js"></script>
+<script src="resource/plugin/My97DatePicker/WdatePicker.js"></script>
+<script src="resource/js/common/jquery.flexslider.js"></script>
+<script src="resource/js/common/common_zh_CN.js"></script>
+<script src="resource/js/psOverview/index.js"></script>
+</body>
+</html>
+

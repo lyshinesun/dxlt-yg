@@ -1,0 +1,40 @@
+.layui_dialog {
+  position: relative;
+}
+.layui-layer-btn.layui-layer-btn-c{
+  position: absolute;
+  bottom: 10px
+}
+.layui-layer-iframe .layui-layer-btn, .layui-layer-page .layui-layer-btn {
+  padding-top: 10px;
+}
+.layui-layer-btn {
+  background-color: #f3f3f3;
+  border-top: 1px solid #d8d8d8;
+  padding: 10px 10px 12px;
+  border-radius: 2px 2px 2px 2px;
+}
+.layui-layer-btn-c {
+    text-align: center;
+}
+.layui-layer-btn .layui-layer-btn0 {
+  border-color: #3d88c2 !important;
+  background-color: #3d88c2 !important;
+  color: #fff
+}
+.layui-layer-btn a {
+	display: inline-block;
+	vertical-align: top;
+  height: 28px;
+  line-height: 28px;
+  margin: 0 6px;
+  padding: 0 15px;
+  border: 1px solid #dedede;
+  background-color: #f1f1f1;
+  color: #333;
+  border-radius: 2px;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+}
+

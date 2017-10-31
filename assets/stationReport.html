@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>电站报表</title>
+    <link rel="stylesheet" href="resource/css/style_2.0_blue.css"/>
+</head>
+<body>
+
+<div id="reportPage" class="adminbox">
+    <div class="analysis_box">
+        <div class="analysis_title clearfix">
+            <div class="analysis_title_main1 clearfix">
+                <span>电站报表</span>
+                <font></font>
+            </div>
+        </div>
+        <div class="analysis_list clearfix" id="reportContent">
+            <ul>
+                <li>
+                    <div class="analysis_list_img">
+                        <img src="resource/images/report/1.png">
+
+                        <div class="analysis_list_triangle"></div>
+                        <div class="analysis_show_title">
+                            <a href="javascript:;">运行日报</a>
+                        </div>
+                    </div>
+                    <div class="analysis_list_bottom"><span>运行日报<em></em><a class="check_rep_list" data-reportType="day" href="javascript:;">查看</a></span>
+                    </div>
+                </li>
+                <li>
+                    <div class="analysis_list_img"><img src="resource/images/report/2.png">
+
+                        <div class="analysis_list_triangle"></div>
+                        <div class="analysis_show_title"><a href="javascript:;">运行月报</a>
+                        </div>
+                    </div>
+                    <div class="analysis_list_bottom"><span>运行月报<em></em><a class="check_rep_list" data-reportType="month" href="javascript:;">查看</a></span>
+                    </div>
+                </li>
+                <li>
+                    <div class="analysis_list_img">
+                        <img src="resource/images/report/3.png">
+
+                        <div class="analysis_list_triangle"></div>
+                        <div class="analysis_show_title"><a href="javascript:;">运行年报</a></div>
+                    </div>
+                    <div class="analysis_list_bottom"><span>运行年报<em></em><a class="check_rep_list" data-reportType="year" href="javascript:;">查看</a></span>
+                    </div>
+                </li>
+                <li>
+                    <div class="analysis_list_img"><img src="resource/images/report/4.png">
+
+                        <div class="analysis_list_triangle"></div>
+                        <div class="analysis_show_title">
+                            <a href="javascript:;">集团发电量报表</a>
+                        </div>
+                    </div>
+                    <div class="analysis_list_bottom">
+                        <span>集团发电量报表<em></em><a href="javascript:;" class="check_rep_list" data-reportType="company">查看</a></span>
+                    </div>
+                </li>
+
+                <!--详细报表-->
+                <div id="station_main_report">
+                    <li>
+                        <div class="analysis_list_img">
+                            <img src="resource/images/report/1.png">
+
+                            <div class="analysis_list_triangle"></div>
+                            <div class="analysis_show_title">
+                                <a href="javascript:;">电站运行日报</a>
+                            </div>
+                        </div>
+                        <div class="analysis_list_bottom"><span>电站运行日报<em></em><a class="check_rep_list_det" data-reportType="day" href="javascript:;">查看</a></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="analysis_list_img"><img src="resource/images/report/2.png">
+
+                            <div class="analysis_list_triangle"></div>
+                            <div class="analysis_show_title"><a href="javascript:;">电站运行月报</a>
+                            </div>
+                        </div>
+                        <div class="analysis_list_bottom"><span>电站运行月报<em></em><a class="check_rep_list_det" data-reportType="month" href="javascript:;">查看</a></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="analysis_list_img">
+                            <img src="resource/images/report/3.png">
+
+                            <div class="analysis_list_triangle"></div>
+                            <div class="analysis_show_title"><a href="javascript:;">电站运行年报</a></div>
+                        </div>
+                        <div class="analysis_list_bottom"><span>电站运行年报<em></em><a class="check_rep_list_det" data-reportType="year" href="javascript:;">查看</a></span>
+                        </div>
+                    </li>
+                </div>
+
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="resource/js/jquery-1.8.3.min.js"></script>
+<script>
+    $('.check_rep_list').click(function () {
+        var url = '';
+        if ($(this).attr('data-reportType') == 'company') {
+            url = 'dialog/company_report.html';
+        } else {
+            url = 'dialog/ten_report/report_dmy.html?reportType=' + $(this).attr('data-reportType');
+        }
+        $('#index_frame', parent.document).attr('src', url);
+
+    });
+
+    $('.check_rep_list_det').click(function () {
+        var url = 'dialog/report_list.html?reportType=' + $(this).attr('data-reportType');;
+
+        $('#index_frame', parent.document).attr('src', url);
+
+    });
+</script>
+
+</body>
+</html>

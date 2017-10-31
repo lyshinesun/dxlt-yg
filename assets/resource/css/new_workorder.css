@@ -1,0 +1,42 @@
+
+.task_sub_wrap {
+    margin-top: 50px;
+}
+
+.task_sub_wrap td {
+    height: 35px;
+    cursor: pointer;
+}
+
+.work_head a {
+    display: inline-block;
+    padding: 0 10px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+
+}
+
+.work_head a:hover {
+    background-color: #24c6c6;
+    border: 1px solid #fff;
+    color: #fff;
+}
+
+input[name='fdId'] {
+    width: 18px;
+    height: 18px;
+}
+
+.dev_query_wrap select, .dev_query_wrap input {
+    width: 180px;
+    margin-left: 30px;
+    padding: 5px 0;
+    border: 1px solid #ccc;
+}
+
+.pl10{
+    padding-left: 10px !important;
+}

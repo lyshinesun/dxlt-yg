@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>电站地图</title>
+    <link rel="stylesheet" href="resource/css/style_blue.css">
+</head>
+
+<body>
+
+<div id="powerMap">
+    <div class="map_select clearfix">
+        <div class="map_select_wrap fl">
+            <div class="hd" id="map_select_wraphd">
+                <a href="javascript:void(0)"><i class="map_seicon_1" title=电站名称></i>
+                    <span class="secondnav_bg4">电站名称<i class="secondnav_bgIcon2"></i></span>
+                </a>
+                <a href="javascript:void(0)"><i class="map_seicon_2" title=装机功率></i>
+                    <span class="secondnav_bg4">装机功率<i class="secondnav_bgIcon2"></i></span>
+                </a>
+                <a href="javascript:void(0)"><i class="map_seicon_3" title=类型></i>
+                    <span class="secondnav_bg4">类型<i class="secondnav_bgIcon2"></i></span>
+                </a>
+                <a href="javascript:void(0)"><i class="map_seicon_4" title=并网时间></i>
+                    <span class="secondnav_bg4">并网时间<i class="secondnav_bgIcon2"></i></span>
+                </a>
+                <a href="javascript:void(0)"><i class="map_seicon_5" title=地址确定选择></i>
+                    <span class="secondnav_bg4">地址确定选择<i class="secondnav_bgIcon2"></i></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="map_con clearfix">
+        <div class="map_con_fl fl" id="liebiao">
+            <div id="powerList">
+                <!--<ul @click="getMapByUser($event)">-->
+                    <!--<li id="gs" class="on"><a href="javascript:;" title="湖北广水II期20MW">湖北广水II期20MW</a></li>-->
+                    <!--<li id="lw"><a href="javascript:;" title="宁夏灵武50MW">宁夏灵武50MW</a></li>-->
+                    <!--<li id="jx"><a href="javascript:;" title="山东莒县40MW">山东莒县40MW</a></li>-->
+                    <!--<li id="hl"><a href="javascript:;" title="四川会理30MW">四川会理30MW</a></li>-->
+                <!--</ul>-->
+            </div>
+            <div class="map_con_fl_page">
+                <div class="map_con_fl_page_b" id="Pagination"><a class="fl pager_class_color prev"></a><a class="map_con_fl_pageprev fl prev"></a><a class="fl pager_class_color">1</a><a class="fl pager_class_color next"></a><a class="map_con_fl_pagenext fl next"></a></div>
+            </div>
+        </div>
+
+        <!--地图区域-->
+        <div id="station_map" class="fl tendency_ri" style="padding: 0">
+            <div id="power_map" style="height: 100%;"></div>
+        </div>
+        <!--地图区域end-->
+    </div>
+</div>
+
+<script type="text/template" id="stationList">
+    <ul>
+        <% for(var i=0;i< newStationList.length; i++){ %>
+        <% if(i == 0){ %>
+        <li id="<%=newStationList[i].fdStationCode%>" class="on"
+            data-fd_city="<%=newStationList[i].fdCity%>">
+            <a href="javascript:;" title="<%=newStationList[i].fdStationName%>">
+                <%=newStationList[i].fdStationName%>
+            </a>
+        </li>
+        <% }else{ %>
+        <li id="<%=newStationList[i].fdStationCode%>"
+            data-fd_city="<%=newStationList[i].fdCity%>">
+            <a href="javascript:;" title="<%=newStationList[i].fdStationName%>">
+                <%=newStationList[i].fdStationName%>
+            </a>
+        </li>
+        <% } %>
+        <% } %>
+    </ul>
+</script>
+
+
+<script src="resource/js/jquery-1.8.3.min.js"></script>
+<script src="resource/js/lib/vlm.js"></script>
+<script src="resource/js/lib/vue.js"></script>
+<script src="resource/js/lib/ejs.js"></script>
+<script src="resource/plugin/jq-cookie/jquery-cookie.js"></script>
+<script src="http://api.map.baidu.com/api?v=2.0&ak=MhuuVxziXcOqWUAZ5vVEd4GBUdnZj0yO"></script>
+<script src="resource/js/powerMap/map.js"></script>
+
+</body>
+</html>
+

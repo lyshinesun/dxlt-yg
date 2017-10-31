@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title></title>
+    <link rel="stylesheet" href="../resource/plugin/layer/skin/default/layer.css"/>
+    <link rel="stylesheet" href="../resource/css/style1.0.css"/>
+</head>
+<body>
+<form action="" id="searchConditionsForm">
+    <div class="" id="shbao">
+        <div class="report_con faultDetailOnly">
+            <h1>故障详细</h1>
+            <table style="border-collapse: separate; border-spacing: 0px;">
+                <input type="hidden" value="" name="params.ps_id" id="psId">
+                <tr>
+                    <td>
+                        <label>设备类型:</label>
+                        <span>
+                            <div id="device_type" class="w160">线路保护</div>
+                        </span>
+
+                    </td>
+                    <td>
+                        <label>故障名称:</label>
+
+                        <div id="fault_name" class="w160" style="width: 180px !important;"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>故障设备:</label>
+
+                        <div id="fault_equipment" class="w160"></div>
+                    </td>
+                    <td>
+                        <label>故障编号:</label>
+
+                        <div id="fault_code" class="w160"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>故障类型:</label>
+
+                        <div id="fault_type" class="w160"></div>
+                    </td>
+                    <td>
+                        <label>故障级别:</label>
+
+                        <div id="fault_level" class="w160"></div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <label>故障来源:</label>
+
+                        <div id="fault_source" class="w160">系统提示</div>
+                    </td>
+                    <td>
+                        <label>发生时间:</label>
+                        <input type="hidden" name="params.repair_time_type">
+
+                        <div id="processing_time" class="w160"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <label style="height: 77px;line-height: 77px;">故障详细:</label>
+                        <textarea name="params.fault_desc" id="fault_desc" cols="30" rows="10" style="border: none"
+                                  readonly></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <label style="height: 77px;line-height: 77px;">处理意见:</label>
+                        <textarea name="params.opinion" id="deal_opinion" cols="30" rows="10" style="border: none"
+                                  readonly></textarea>
+                    </td>
+
+                </tr>
+                <!--end -->
+                <tr id="pic_tr" style="display: none">
+                    <td colspan="2">
+                        <label>故障图片:</label>
+
+                        <div class="yg-imglist2 clearfix" style="padding-top:5px;">
+                            <ol class="pic_container">
+                            </ol>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <a href="javascript:;" class="report_btn">关闭</a>
+    </div>
+</form>
+</body>
+
+
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script>
+    $('.report_btn').click(function () {
+        parent.layer.closeAll();
+    });
+</script>
+</html>
+
+

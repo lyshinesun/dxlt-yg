@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>消缺管理</title>
+    <link rel="stylesheet" href="../resource/plugin/layer/skin/default/layer.css"/>
+    <link rel="stylesheet" href="../resource/plugin/easydialog/easydialog.css"/>
+    <link rel="stylesheet" href="../resource/plugin/asyncbox/skins/default.css"/>
+    <link rel="stylesheet" href="../resource/css/zoom-detect.css"/>
+    <link rel="stylesheet" href="../resource/css/pager.css"/>
+    <link rel="stylesheet" href="../resource/plugin/easydialog/easydialog.css"/>
+    <link rel="stylesheet" href="../resource/css/style_blue.css"/>
+    <link rel="stylesheet" href="../resource/plugin/jquery-autocomplete/jquery.autocomplete.css">
+    <link rel="stylesheet" href="../resource/plugin/JQueryzTree/css/zTreeStyle/zTreeStyle.css"/>
+    <link rel="stylesheet" href="../resource/plugin/jquery-select/css/select2.css"/>
+    <link rel="stylesheet" href="../resource/css/jquery.minicolors.css"/>
+    <link rel="stylesheet" href="../resource/css/style_2.0_blue.css"/>
+	<link rel="stylesheet" href="../resource/plugin/bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="../resource/css/task.css"/>
+</head>
+<body>
+<div id="workOrder" style="height: 100%;">
+
+    <form id="redirectForm" action="stationPicAction_showPointMessage" target="_blank" method="post">
+        <input type="hidden" id="psKey" name="psKey" value="">
+        <input type="hidden" id="uuid" name="uuid" value="">
+        <input type="hidden" id="powerStationId" name="psId" value="">
+    </form>
+    <input type="hidden" id="selectPsId" value="108816">
+    <input type="hidden" id="curPage" value="1">
+
+    <!--------首页右下content-------->
+    <div id="map_wap_div" class="map_wap">
+        <div class="map_select clearfix single_no_show">
+            <div class="map_select clearfix">
+                <div class="map_select_wrap fl" style="height: auto;">
+                    <div class="hd" id="map_select_wraphd">
+                        <a href="javascript:;"><i class="map_seicon_1" title="电站名称"></i>
+                            <span class="secondnav_bg4">电站名称<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_2" title="装机功率"></i>
+                            <span class="secondnav_bg4">装机功率<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_3" title="类型"></i>
+                            <span class="secondnav_bg4">类型<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_4" title="并网时间"></i>
+                            <span class="secondnav_bg4">并网时间<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_5" title="地址确定选择"></i>
+                            <span class="secondnav_bg4">地址确定选择<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="contentDiv" class="map_con clearfix">
+            <div class="map_con clearfix" style="padding-right: 20px">
+                <div id="Searchresult"></div>
+                <div id="hiddenresult" style="display: none;"></div>
+                <div class="map_con_fl fl">
+                    <div id="psDetail">
+                        <div id="basecolor" class="basecolor" style="display: none"></div>
+                        <ul class="treeDemoId">
+                            <li id="lp108816" class="on">
+                                <a href="#" onclick="workOrder.treeAction(this)" title="湖北广水I期20MW">湖北广水I期20MW</a>
+                                <input type="hidden" class="psId" value="gs"><input type="hidden" class="psName"
+                                                                                        value="湖北广水I期20MW">
+                                <ul id="power_sec_Ul" class="ztree"></ul>
+                            </li>
+                            <li id="lp109189" class="">
+                                <a href="#" onclick="workOrder.treeAction(this)" title="宁夏灵武50MW">宁夏灵武50MW</a>
+                                <input type="hidden" class="psId" value="lw"><input type="hidden" class="psName"
+                                                                                        value="宁夏灵武50MW">
+                                <ul id="tps109189" class="ztree" style="display:none;"></ul>
+                            </li>
+                            <li id="lp109190" class="">
+                                <a href="#" onclick="workOrder.treeAction(this)" title="山东莒县40MW">山东莒县40MW</a>
+                                <input type="hidden" class="psId" value="jx"><input type="hidden" class="psName"
+                                                                                        value="山东莒县40MW">
+                                <ul id="tps109190" class="ztree" style="display:none;"></ul>
+                            </li>
+                            <li id="lp109192" class="">
+                                <a href="#" onclick="workOrder.treeAction(this)" title="四川会理30MW">四川会理30MW</a>
+                                <input type="hidden" class="psId" value="hl"><input type="hidden" class="psName"
+                                                                                        value="四川会理30MW">
+                                <ul id="tps109192" class="ztree" style="display:none;"></ul>
+                            </li>
+
+
+                        </ul>
+                        <input id="totalCount" type="hidden" value="4">
+                    </div>
+                    <div class="map_con_fl_page">
+                        <div class="map_con_fl_page_b" id="Pagination">
+                            <a class="fl pager_class_color prev"></a>
+                            <a class="map_con_fl_pageprev fl prev"></a>
+                            <a class="fl pager_class_color">1</a>
+                            <a class="fl pager_class_color next"></a>
+                            <a class="map_con_fl_pagenext fl next"></a>
+                        </div>
+                    </div>
+                </div>
+                <div id="faultPage_all" class="maxbox_show tendency_ri fr clearfix lch_tendency_ri">
+                    <div class="yg-qxtop clearfix">
+                        <div class="yg-qxtitle fl">时间范围:</div>
+                        <div class="clearfix fl" style="position: relative;">
+                            <div class="date_btn quick_date fl" style="width:220px;">
+                                <input id="dateHid" type="hidden" value="">
+                                <span id="quick_date1"></span>-<span id="quick_date2"></span>
+                            </div>
+                            <span class="date_btn fl"> <img
+                                    src="../resource/images/date_btn.jpg"
+                                    alt=""> </span>
+
+                            <div class="dateWrap dateWrap_tit2_wrap" id="dateWrap_id" style="left:15px;">
+                                <div class="dateWrap_tit hd">
+                                    <h1 style="font-size: 14px">快捷选择</h1>
+                                    <ul class="clearfix dateWrap_tit2">
+                                        <li class="on">日</li>
+                                        <li>周</li>
+                                        <li>月</li>
+                                        <li>季</li>
+                                        <li class="nomar">年</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bd ate_togg">
+                                    <ul class="active">
+                                        <div class="inputbox">
+                                            <div>
+                                                <span style="width:35px;display: inline-block;">从</span><input
+                                                    id="start" readonly="readonly" class="Wdate" type="text" value=""
+                                                    onfocus="WdatePicker({dateFmt:'yyyy-MM-dd 00:00',isShowClear:false,readOnly:true, maxDate:'%y-%M-%d',lang:'zh_cn'})"
+                                                    style="width:85%;">
+                                            </div>
+                                            <div>
+                                                <span style="width:35px;display: inline-block;">到</span><input id="end" readonly="" class="Wdate" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd 23:59',isShowClear:false,readOnly:true, maxDate:'%y-%M-%d',lang:'zh_cn'})" style="width:85%;">
+                                            </div>
+                                        </div>
+                                        <a href="javascript:;" class="wrap_su" data-dateType="twoday">确认</a>
+                                    </ul>
+                                    <ul>
+                                        <div class="inputbox">
+                                            <input id="week" readonly="" class="Wdate" type="text"
+                                                   onfocus="WdatePicker({isShowWeek:true,onpicked:funccc,errDealMode:3,isShowClear:false,readOnly:true,maxDate:'%y-%M-%d',lang:'zh_cn'})">
+                                        </div>
+                                        <a href="javascript:;" class="wrap_su" data-dateType="week">确认</a>
+                                    </ul>
+                                    <ul>
+                                        <div class="inputbox">
+                                            <input id="month" readonly="" class="Wdate" type="text"
+                                                   onfocus="WdatePicker({dateFmt:'yyyy-MM',isShowClear:false,readOnly:true,maxDate:'%y-%M-%d',lang:'zh_cn'})">
+                                        </div>
+                                        <a href="javascript:;" class="wrap_su" data-dateType="month">确认</a>
+                                    </ul>
+                                    <ul>
+                                        <div class="inputbox">
+                                            <input type="text" id="jidu" onclick="WdatePicker({dateFmt:'yyyy年M季度', isQuarter:true,isShowClear:false,readOnly:true, isShowOK:false,disabledDates:['....-0[5-9]-..','....-1[0-2]-..'], startDate:'%y-01-01',maxDate:'%y-%M-%d',lang:sysLang})" class="Wdate" readonly="">
+                                        </div>
+                                        <a href="javascript:;" class="wrap_su" data-dateType="month">确认</a>
+                                    </ul>
+                                    <ul>
+                                        <div class="inputbox">
+
+                                            <input id="year" class="Wdate" readonly="" type="text"
+                                                   onfocus="WdatePicker({isShowClear:false,readOnly:true,dateFmt:'yyyy年',maxDate:'%y-%M-%d',lang:'zh_cn'})">
+                                        </div>
+                                        <a href="javascript:;" class="wrap_su" data-dateType="year">确认</a>
+                                    </ul>
+                                </div>
+                                <input type="hidden" name="currenttime" id="currenttime">
+                            </div>
+                        </div>
+                        <div class="yg_topform2 fl" style="margin-left:5px; margin-right:5px;">
+                            故障编号:&nbsp;&nbsp;
+                            <input type="text" id="fault_code" class="yg_toptext" value="" placeholder="故障编号">
+                        </div>
+                        <div class="yg_topform2 fl" style="margin-left:5px; margin-right:5px;">
+                            工单编号:&nbsp;&nbsp;
+                            <input type="text" id="workorder_name" class="inputText yg_toptext" value="" placeholder="工单编号">
+                        </div>
+                        <div class="yg_fomsub fl" style="margin-left:0px;">
+                            <input type="submit" onclick="workOrder.init();" class="yg_sub" value="查询">
+                        </div>
+                        <div class="clearfix fr" style="position: relative;">
+
+                            <div class="allsite_dateri fl clearfix" style="margin-right:30px; padding-left:0px;">
+                                <input type="checkbox" onclick="refreshTime_point();" id="setTime_point"
+                                       class="fl allsite_dateriCheckbox">
+                                <span class="fl reshdate">刷新时间</span>
+                        <span id="allsite_dateYear1" class="fl allsite_datej abcd" style="opacity: 0.7;">
+					                <em style="opacity: 0.7;"><i id="point_time">5</i>min</em> <a href="javascript:;"
+                                                                                                  class="allsite_dateUpBtn1"></a> <a
+                                href="javascript:;" class="allsite_dateDownBtn1"></a> </span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="yg-qxtop2 clearfix">
+                        <div class="ygtop2-left fl" id="wo_state" style="width:auto">
+                            <label id="wait"><input type="radio" onclick="workOrder.init();" name="flag" value="0" checked="" id="waitFlag">待处理 </label>
+                            <label id="process"><input type="radio" onclick="workOrder.init();" name="flag" value="1" id="processFlag">已处理 </label>
+                            <label id="over"><input type="radio" onclick="workOrder.init();" name="flag" value="2" id="overFlag">已办结 </label>
+                        </div>
+                    </div>
+
+                    <div class="problem_con2 clearfix">
+                        <div id="gjgl_boxheight" class="problem_con_table_order fl lch_problem_con_table">
+                            <div id="tabDiv">
+                                <div class="lch_refreshTB" id="refreshTB">
+                                    <div class="scgl_tab">
+                                        <div class="nbq_tab_top">
+                                            <table>
+                                                <thead>
+                                                    <tr style="background:none !important;" class="problem_con">
+                                                        <th class="xqgl_td2">
+                                                            <a style="cursor: default" href="javascript:;">工单编号</a>
+                                                        </th>
+                                                        <th class="xqgl_td4">
+                                                            <a style="cursor: default" href="javascript:;">故障编号</a>
+                                                        </th>
+                                                        <th class="xqgl_td5">
+                                                            <a style="cursor: default" href="javascript:;">申报原因</a>
+                                                        </th>
+                                                        <th class="xqgl_td6">
+                                                            <a style="cursor: default" href="javascript:;">申报日期</a>
+                                                        </th>
+                                                        <th class="xqgl_td7">
+                                                            <a style="cursor: default" href="javascript:;">工单状态</a>
+                                                        </th>
+                                                        <th class="xqgl_td8">
+                                                            <a style="cursor: default" href="javascript:;">操作</a>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                        <div class="nbq_tab_bottom_xqgl" style="height: 354px;">
+                                            <table width="100%" class="table_style_hl">
+                                                <tbody id="wo_table"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input id="ListCount" type="hidden" value="5">
+
+                            </div>
+                            <div class="bottom_page">
+                                <div id="Paginationother" class="pagination Page_other fr"><span class="pagemessage">共 5 条，每页<select id="pageNum" onchange="doChangePage(true);"><option value="5">5</option><option value="10" selected="">10</option><option value="15">15</option><option value="20">20</option></select>条</span><span class="current prev">上一页</span><span class="current">1</span><span class="current next">下一页</span><span class="page_jump">到第 <input id="pageChange" class="pageNum" type="text" value="1" onkeyup="checkValue()" onkeypress="jumptoPaged(event)" autocomplete="off">页</span><span class="page_confirm"><input type="button" class="yg_sub" style="width: 30px" onclick="doPageJump(true)" value="Go"> </span></div>
+                            </div>
+                            <div id="Searchresultother"></div>
+                            <div id="hiddenresultother" style="display: none;"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <input type="hidden" value="psFaultPage" id="pageId">
+    </div>
+
+	    <!--弹窗-->
+    <div class="mask_wrap">
+        <div class="mask"></div>
+        <div class="mask_content">
+            <h3 class="h5">查看审批记录</h3>
+            <span class="close_btn">&times;</span>
+
+            <form role="form" class="form-horizontal" action="" method="">
+                <div class="form-group">
+                    <label class="col-sm-1" for="vacation">故障编号</label>
+
+                    <div class="col-sm-11">
+                        <input class="form-control" id="pfaultnum" name="day" type="text" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1" for="vacation_reason">申请日期</label>
+
+                    <div class="col-sm-11">
+                        <input class="form-control" id="pdatetime" name="day" type="text" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-1" for="vacation_day">备注</label>
+
+                    <div class="col-sm-11">
+                        <textarea class="form-control" name="" id="popinition" rows="3" readonly="readonly"></textarea>
+                    </div>
+                </div>
+                <!--<button type="submit" class="btn btn-default">默认提交</button>-->
+            </form>
+
+            <div class="task_wrap">
+                <h3 class="table_tit h5">显示工单请的批注信息</h3>
+                <table class="task_table">
+                    <thead>
+                    <tr>
+                        <td>时间</td>
+                        <td>批注人</td>
+                        <td>批注信息</td>
+                    </tr>
+                    </thead>
+                    <tbody id="workList">
+                    <tr >
+                        <td>2017-04-14</td>
+                        <td>XX</td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/lib/ejs.js"></script>
+<script src="../resource/plugin/My97DatePicker/WdatePicker.js"></script>
+<script src="../resource/js/common/base.js"></script>
+<script src="../resource/js/common/esmpbase.js"></script>
+<script src="../resource/plugin/layer/layer.min.js"></script>
+<script src="../resource/js/media.js"></script>
+<script src="../resource/js/common/common_zh_CN.js"></script>
+<script src="../resource/js/common/DateUtil.js"></script>
+<script src="../resource/plugin/pager/pager.js"></script>
+<script src="../resource/js/powerManage/work_order.js"></script>
+
+
+</body>
+</html>

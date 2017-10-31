@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>日月年报表</title>
+    <link rel="stylesheet" href="../../resource/plugin/layer/skin/default/layer.css"/>
+    <link rel="stylesheet" href="../../resource/css/pager.css"/>
+    <link rel="stylesheet" href="../../resource/css/style_blue.css"/>
+    <link rel="stylesheet" href="../../resource/css/style_2.0_blue.css"/>
+</head>
+<body>
+<div id="report_dmy" style="height: 100%;">
+    <!--------首页右下content-------->
+    <div id="map_wap_div" class="map_wap">
+
+        <div id="contentDiv" class="map_con clearfix">
+
+            <div class="tendency_ri fl clearfix" style="margin-left: 10px">
+
+                <div class="tendency_ri_tit clearfix">
+                    <div class="clearfix fl">
+                        <div class="inputbox fl" style="width:170px;">
+                            <input id="dateInput" type="text" value="" readonly="readonly" class="Wdate fl dateRange"
+                                   style="width: 140px; margin-right: 10px; cursor: pointer;">
+                        </div>
+                        <div class="inputbox fl" style="width:50px;">
+                            <input type="button" class="yg_sub" @click="getReport" value="查询">
+                        </div>
+                    </div>
+                    <!--end-->
+                    <div class="form_option fr">
+                        <a href="javascript:;" class="fr yg-daochu" @click="exportReportList"
+                           style="margin-top:4px;">导出</a>
+                    </div>
+                </div>
+
+                <div class="report_box">
+                    <span id="report_name" style="font-size: 16px"></span>
+                </div>
+
+                <div style="position:relative;">
+                    <div id="tableHeader" style="position:absolute;top:0px;left: 0">
+                        <table id="headerTable" class="statementMoreTable">
+                            <thead id="tableHead"></thead>
+                        </table>
+                    </div>
+                    <div id="report_mess" class="report_tab_wrap" style="overflow-y: auto; overflow-x: hidden;">
+                        <table class="statementMoreTable" cellspacing="0" id="dailyreport">
+                            <thead id="tableHead_copy" class="hideHead" style="visibility: hidden"></thead>
+                            <tbody id="dailyreportbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!--日模板-->
+<script type="text/template" id="powerReport_tpl_day">
+    <% for(var i=0;i< reportArr.length; i++){%>
+    <tr>
+        <td><%=i+1%></td>
+        <td><%=reportArr[i].fd_station_name%></td>
+        <td><%=reportArr[i].fd_station_capacity%></td>
+        <td><%=reportArr[i].fd_power_day%></td>
+        <td><%=reportArr[i].equivalenthour%></td>
+        <td><%=reportArr[i].yearpower%></td>
+        <td><%=reportArr[i].fd_power_curr%></td>
+        <td><%=reportArr[i].fdRadiaReal%></td>
+    </tr>
+    <% }%>
+
+</script>
+
+<!--月模板-->
+<script type="text/template" id="powerReport_tpl_month">
+    <% for(var i=0;i< reportArr.length; i++){%>
+    <tr>
+        <td><%=i+1%></td>
+        <td><%=reportArr[i].fd_station_name%></td>
+        <td><%=reportArr[i].fd_station_capacity%></td>
+        <td><%=reportArr[i].fd_intercon_cap%></td>
+        <td><%=reportArr[i].equivalenthour%></td>
+        <td>--</td>
+        <td><%=reportArr[i].fd_power_day%></td>
+        <td><%=reportArr[i].yearpower%></td>
+        <td><%=reportArr[i].fd_power_curr%></td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <td><%=reportArr[i].fd_radia_curr%></td>
+        <td><%=reportArr[i].lastyearpowercurr%></td>
+        <td></td>
+        <% }%>
+
+</script>
+
+<!--年模板-->
+<script type="text/template" id="powerReport_tpl_year">
+    <% for(var i=0;i< reportArr.length; i++){%>
+    <tr>
+        <td><%=reportArr[i].fd_station_name%></td>
+        <td>--</td>
+        <td>--</td>
+        <td><%=reportArr[i].fd_power_curr%></td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+        <td>--</td>
+    </tr>
+    <% }%>
+
+</script>
+
+
+<script src="../../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../../resource/js/lib/vlm.js"></script>
+<script src="../../resource/js/lib/vue.js"></script>
+<script src="../../resource/js/lib/ejs.js"></script>
+<script src="../../resource/js/common/base.js"></script>
+<script src="../../resource/js/common/esmpbase.js"></script>
+<script src="../../resource/js/slide-js.js"></script>
+<script src="../../resource/plugin/layer/layer.min.js"></script>
+<script src="../../resource/js/common/common.js"></script>
+<script src="../../resource/js/common/echarts.min.js"></script>
+<script src="../../resource/plugin/My97DatePicker/WdatePicker.js"></script>
+<script src="../../resource/js/media.js"></script>
+<script src="../../resource/js/common/common_zh_CN.js"></script>
+<script src="../../resource/js/common/DateUtil.js"></script>
+<script src="../../resource/plugin/easydialog/easydialog.min.js"></script>
+<script src="../../resource/plugin/pager/pager.js"></script>
+<script src="../../resource/plugin/jquery-select/js/select2.min.js"></script>
+<script src="../../resource/js/stationReport/new_report_dmy.js"></script>
+
+
+</body>
+</html>

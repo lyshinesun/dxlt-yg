@@ -1,0 +1,90 @@
+
+.pagination a {
+    text-decoration: none;
+    border: 0px solid #AAE;
+    color: #a3a3a3; ;
+}
+
+.pagination a,.pagination span {
+    display: inline-block;
+    padding:0 12px;
+    line-height:26px;
+    height:26px;
+    margin-right: 3.5px;
+    margin-bottom: 4px;
+    border-radius:2px;
+}
+
+/*1366分辨率下 分页控件样式修改wangli*/
+@media only screen and (max-width: 1500px) and (min-width:1000px) {
+    .pagination a,.pagination span {
+        display: inline-block;
+        /*2016 09 09 将padding由12px改为7px*/
+        padding:0 5px;
+        line-height:26px;
+        height:26px;
+        margin-right: 3px;
+        margin-bottom: 4px;
+        border-radius:2px;
+    }
+}
+/*2016 09 02 wangli 样式移动到style.css中*/
+/*.pagination .current {*/
+/*background: #ff9966;*/
+/*color: #fff;*/
+/*border: 0px solid #AAE;*/
+/*}*/
+
+.pagination .current.prev,.pagination .current.next {
+    color:#a3a3a3;
+    border-color: #999;
+    background: #fff;
+}
+.pagination .pagemessage{
+    color: #a3a3a3;
+    padding:0 3px;
+    border-color: #999;
+    background: #fff;
+}
+
+.pagination .pagemessage select{
+    color: #999;
+    padding:0 3px;
+    border-color: #999;
+    background: #fff;
+    border: 1px solid #d8d8d8;
+    margin:0 5px 0 5px;
+}
+
+.p3 { padding:1px;}
+
+
+/*start 2016 07 06 添加跳页样式*/
+.pagination .page_jump{
+    color: #999;
+    padding:0 3px;
+    border-color: #999;
+    background: #fff;
+}
+
+.pagination .page_confirm{
+    color: #999;
+    padding:0 3px;
+    border-color: #999;
+    background: #fff;
+}
+
+.addWidth{
+    width:40px;
+}
+
+.pagination .pageNum {
+    color: #999;
+    padding: 0 3px;
+    border-color: #999;
+    background: #fff;
+    border: 1px solid #d8d8d8;
+    margin: 0 5px 0 5px;
+    width: 25px;
+}
+/*end 2016 07 06*/

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>出库管理</title>
+    <link rel="stylesheet" href="../resource/plugin/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../resource/css/style_blue.css"/>
+    <link rel="stylesheet" href="../resource/css/pager.css"/>
+    <link rel="stylesheet" href="../resource/css/style_2.0_blue.css"/>
+    <link rel="stylesheet" href="../resource/css/fault.css"/>
+    <link rel="stylesheet" href="../resource/css/new_workorder.css"/>
+</head>
+<body>
+<div id="out_stock" style="height: 100%;">
+
+    <div class="map_wap">
+        <div class="map_con">
+            <div class="tendency_ri">
+                <div class="work_head clearfix" >
+                    <div class="order_hq fl" @click="popDevice($event)">
+                        <a href="javascript:;" id="create_device">新增出库单</a>
+                        <a href="javascript:;" id="device_delete">删除出库单</a>
+                        <a href="javascript:;" id="device_modify">修改出库单</a>
+                    </div>
+                    <div class="fl dev_query_wrap">
+                        <select name="" id="device_type">
+                            <!--<option value="111">111</option>-->
+                        </select>
+                        <select name="" id="device_name">
+                            <!--<option value="111">111</option>-->
+                        </select>
+                        <input class="pl10" type="text" value="" id="eq_mac" placeholder="请输入设备唯一码">
+                        <a href="javascript:;" id="device_query" class="ml30" @click="queryClick">查询</a>
+                    </div>
+                    <a href="javascript:;" @click="exportStockList()">导出</a>
+                </div>
+
+
+                <div class="task_sub_wrap">
+                    <div class="task_head_wrap">
+                        <table class="task_table_head">
+                            <thead id="tableHead">
+                            <tr>
+                                <th style="width: 5%;"></th>
+                                <th style="width: 5%;">序号</th>
+                                <th style="width: 15%">出库单编号</th>
+                                <th style="width: 15%">出库类型</th>
+                                <th style="width: 10%">领用人</th>
+                                <th style="width: 15%">出库时间</th>
+                                <th style="width: 10%">经办人</th>
+                                <th>详情</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="task_bot_table_wrap">
+                        <table class="task_table">
+                            <tbody id="dailyreportbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <!--分页-->
+            <div id="Paginationother" style="margin-right: 100px" class="pagination Page_other"></div>
+        </div>
+    </div>
+
+    <input type="hidden" value="10" id="pageId">
+
+</div>
+
+<!--stocklist模板-->
+<script type="text/template" id="stock_tpl">
+    <% for(var i=0;i< stocklist.length; i++){%>
+    <tr>
+        <td style="width: 5%;">
+            <input type="radio" name="fdId" id="<%=stocklist[i].id%>"/>
+            <input type="hidden" value="<%=stocklist[i].id%>"/>
+        </td>
+        <td style="width: 5%;"><%=i+1%></td>
+        <td style="width: 15%;"><%=stocklist[i].fd_code%></td>
+        <td style="width: 15%;"><%=stocklist[i].fd_order_class_name%></td>
+        <td style="width: 10%;"><%=stocklist[i].fd_user%></td>
+        <td style="width: 15%;"><%=stocklist[i].fd_log_date%></td>
+        <td style="width: 10%;"><%=stocklist[i].fd_operator%></td>
+        <td><%=stocklist[i].fd_desc%></td>
+    </tr>
+    <% }%>
+
+</script>
+
+
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/lib/ejs.js"></script>
+<script src="../resource/js/common/base.js"></script>
+<script src="../resource/js/common/esmpbase.js"></script>
+<script src="../resource/js/common/table_header.js"></script>
+<script src="../resource/js/common/common_zh_CN.js"></script>
+<script src="../resource/plugin/layui/lay/dest/layui.all.js"></script>
+<script src="../resource/plugin/jq-cookie/jquery-cookie.js"></script>
+<script src="../resource/plugin/pager/pager.js"></script>
+<script src="../resource/plugin/validate/jquery.validate.js"></script>
+<script src="../resource/js/device_manage/out_stock.js"></script>
+
+</body>
+</html>

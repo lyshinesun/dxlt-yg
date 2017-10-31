@@ -1,0 +1,46 @@
+body {
+    background-color: #f9f9f7;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+/*头部start*/
+
+.index_top_right div {
+    text-align: center;
+    height: 25px;
+    line-height: 10px;
+}
+
+.index_top_right tr {
+    height: 49px;
+}
+
+.index_top_right td {
+    height: 49px;
+    padding-left: 9px;
+    padding-right: 9px;
+    padding-top: 8px;
+}
+
+.index_top_right .line {
+    border-left: 1px solid #a8bec9;
+    padding: 11px 0px 3px 0px;
+}
+
+
+/*头部end*/
+
+/*生产管理->智能告警设置弹窗内按钮的样式*/
+body .analysis-class .layui-layer-btn .layui-layer-btn0 {
+    background:#f1f1f1;
+    color: #333;
+    border: 1px solid #dedede;
+}
+body .analysis-class .layui-layer-btn .layui-layer-btn1 {
+    border-color: #4898d5;
+    background-color: #2e8ded;
+    color: #fff;
+}

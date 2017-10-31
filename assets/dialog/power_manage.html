@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>告警管理</title>
+    <link rel="stylesheet" href="../resource/plugin/layer/skin/default/layer.css"/>
+    <link rel="stylesheet" href="../resource/plugin/easydialog/easydialog.css"/>
+    <link rel="stylesheet" href="../resource/plugin/asyncbox/skins/default.css"/>
+    <link rel="stylesheet" href="../resource/css/zoom-detect.css"/>
+    <link rel="stylesheet" href="../resource/css/pager.css"/>
+    <link rel="stylesheet" href="../resource/plugin/easydialog/easydialog.css"/>
+    <link rel="stylesheet" href="../resource/css/style_blue.css"/>
+    <link rel="stylesheet" href="../resource/plugin/jquery-autocomplete/jquery.autocomplete.css">
+    <link rel="stylesheet" href="../resource/plugin/JQueryzTree/css/zTreeStyle/zTreeStyle.css"/>
+    <link rel="stylesheet" href="../resource/plugin/jquery-select/css/select2.css"/>
+    <link rel="stylesheet" href="../resource/css/jquery.minicolors.css"/>
+    <link rel="stylesheet" href="../resource/css/style_2.0_blue.css"/>
+</head>
+<body>
+<div id="warnManage" style="height: 100%;">
+
+    <form id="redirectForm" action="stationPicAction_showPointMessage" target="_blank" method="post">
+        <input type="hidden" id="psKey" name="psKey" value="">
+        <input type="hidden" id="uuid" name="uuid" value="">
+        <input type="hidden" id="powerStationId" name="psId" value="">
+    </form>
+    <input type="hidden" id="selectPsId" value="108816">
+    <input type="hidden" id="curPage" value="1">
+
+    <!--------首页右下content-------->
+    <div id="map_wap_div" class="map_wap">
+        <div class="map_select clearfix single_no_show">
+            <div class="map_select clearfix">
+                <div class="map_select_wrap fl" style="height: auto;">
+                    <div class="hd" id="map_select_wraphd">
+                        <a href="javascript:;"><i class="map_seicon_1" title="电站名称"></i>
+                            <span class="secondnav_bg4">电站名称<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_2" title="装机功率"></i>
+                            <span class="secondnav_bg4">装机功率<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_3" title="类型"></i>
+                            <span class="secondnav_bg4">类型<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_4" title="并网时间"></i>
+                            <span class="secondnav_bg4">并网时间<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_5" title="地址确定选择"></i>
+                            <span class="secondnav_bg4">地址确定选择<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="contentDiv" class="map_con clearfix">
+            <div class="map_con_fl fl">
+                <div id="psDetail">
+                    <div id="basecolor" class="basecolor" style="display: none"></div>
+
+                    <ul class="treeDemoId" id="station_per_ul">
+                        <!--<li id="gs" class="on">-->
+                        <!--<a href="javascript:;" title="湖北广水II期20MW">湖北广水II期20MW</a>-->
+                        <!--</li>-->
+                    </ul>
+
+                    <input id="totalCount" type="hidden" value="4">
+                </div>
+                <div class="map_con_fl_page">
+                    <div class="map_con_fl_page_b" id="Pagination">
+                        <a class="fl pager_class_color prev"></a>
+                        <a class="map_con_fl_pageprev fl prev"></a>
+                        <a class="fl pager_class_color">1</a>
+                        <a class="fl pager_class_color next"></a>
+                        <a class="map_con_fl_pagenext fl next"></a>
+                    </div>
+                </div>
+            </div>
+            <div id="faultPage_all" class="tendency_ri fl clearfix">
+                <div class="yg-qxtop clearfix">
+                    <div class="yg-qxtitle fl">时间范围:</div>
+                    <div class="clearfix fl" style="position: relative;">
+                        <div class="date_btn quick_date fl" style="width:220px;">
+                            <input id="dateHid" type="hidden" value="">
+                            <span id="quick_date1"></span>-<span id="quick_date2"></span>
+                        </div>
+                        <span class="date_btn fl"> <img
+                                src="../resource/images/date_btn.jpg"
+                                alt=""> </span>
+
+                        <div class="dateWrap dateWrap_tit2_wrap" id="dateWrap_id" style="left:15px;">
+                            <div class="dateWrap_tit hd">
+                                <h1>快捷选择</h1>
+                                <ul class="clearfix dateWrap_tit2">
+                                    <li class="on">日</li>
+                                    <li>周</li>
+                                    <li>月</li>
+                                    <li>季</li>
+                                    <li class="nomar">年</li>
+                                </ul>
+                            </div>
+
+                            <div class="bd ate_togg">
+                                <ul class="active">
+                                    <div class="inputbox">
+                                        <div>
+                                            <span style="width:35px;display: inline-block;">从</span><input
+                                                id="start" readonly="readonly" class="Wdate" type="text" value=""
+                                                onfocus="WdatePicker({dateFmt:'yyyy-MM-dd 00:00',isShowClear:false,readOnly:true, maxDate:'%y-%M-%d',lang:'zh_cn'})"
+                                                style="width:85%;">
+                                        </div>
+                                        <div>
+                                            <span style="width:35px;display: inline-block;">到</span><input id="end" readonly="" class="Wdate" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd 23:59',isShowClear:false,readOnly:true, maxDate:'%y-%M-%d',lang:'zh_cn'})" style="width:85%;">
+                                        </div>
+                                    </div>
+                                    <a href="javascript:;" class="wrap_su" data-dateType="twoday">确认</a>
+                                </ul>
+                                <ul>
+                                    <div class="inputbox">
+                                        <input id="week" readonly="" class="Wdate" type="text"
+                                               onfocus="WdatePicker({isShowWeek:true,onpicked:funccc,errDealMode:3,isShowClear:false,readOnly:true,maxDate:'%y-%M-%d',lang:'zh_cn'})">
+                                    </div>
+                                    <a href="javascript:;" class="wrap_su" data-dateType="week">确认</a>
+                                </ul>
+                                <ul>
+                                    <div class="inputbox">
+                                        <input id="month" readonly="" class="Wdate" type="text"
+                                               onfocus="WdatePicker({dateFmt:'yyyy-MM',isShowClear:false,readOnly:true,maxDate:'%y-%M-%d',lang:'zh_cn'})">
+                                    </div>
+                                    <a href="javascript:;" class="wrap_su" data-dateType="month">确认</a>
+                                </ul>
+                                <ul>
+                                    <div class="inputbox">
+                                        <input type="text" id="jidu" onclick="WdatePicker({dateFmt:'yyyy年M季度', isQuarter:true,isShowClear:false,readOnly:true, isShowOK:false,disabledDates:['....-0[5-9]-..','....-1[0-2]-..'], startDate:'%y-01-01',maxDate:'%y-%M-%d',lang:sysLang})" class="Wdate" readonly="">
+                                    </div>
+                                    <a href="javascript:;" class="wrap_su" data-dateType="month">确认</a>
+                                </ul>
+                                <ul>
+                                    <div class="inputbox">
+
+                                        <input id="year" class="Wdate" readonly="" type="text"
+                                               onfocus="WdatePicker({isShowClear:false,readOnly:true,dateFmt:'yyyy年',maxDate:'%y-%M-%d',lang:'zh_cn'})">
+                                    </div>
+                                    <a href="javascript:;" class="wrap_su" data-dateType="year">确认</a>
+                                </ul>
+                            </div>
+                            <input type="hidden" name="currenttime" id="currenttime">
+                        </div>
+                    </div>
+                    <div class="yg_topform2 fl" style="margin-left:5px; margin-right:5px;">
+                        故障编号:&nbsp;&nbsp;
+                        <input type="text" id="fault_code" class="yg_toptext" value="" placeholder="故障编号">
+                    </div>
+                    <div class="yg_topform2 fl" style="margin-left:5px; margin-right:5px;">
+                        故障名称:&nbsp;&nbsp;
+                        <input type="text" id="fault_name" class="inputText yg_toptext" value="" placeholder="故障名称">
+                    </div>
+                    <div class="yg_fomsub fl" style="margin-left:0px;">
+                        <input type="submit" class="yg_sub" value="查询" @click="search">
+                    </div>
+                    <div class="clearfix fr" style="position: relative;">
+
+                        <div class="allsite_dateri fl clearfix" style="margin-right:30px; padding-left:0px;">
+                            <input type="checkbox" onclick="refreshTime_point();" id="setTime_point"
+                                   class="fl allsite_dateriCheckbox">
+                            <span class="fl reshdate">刷新时间</span>
+                    <span id="allsite_dateYear1" class="fl allsite_datej abcd" style="opacity: 0.7;">
+                                <em style="opacity: 0.7;"><i id="point_time">5</i>min</em> <a href="javascript:;"
+                                                                                              class="allsite_dateUpBtn1"></a> <a
+                            href="javascript:;" class="allsite_dateDownBtn1"></a> </span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="yg-qxtop2 clearfix">
+                    <div class="ygtop2-left fl" style="width:auto">
+                        <label id="fault_num"><input type="checkbox" @click="checkFaultType()" name="faultType"
+                                                     value="1" checked="">事件: <b style="color:red;"
+                                                                                  id="fault" v-text="incidentNum">0</b></label>
+                        <label id="warn_num"><input type="checkbox" @click="checkFaultType()" name="faultType"
+                                                    value="2" checked="">告警 : <b style="color:red;"
+                                                                                 id="warn" v-text="warnNum">0</b></label>
+                        <label id="prompt_num"><input type="checkbox" @click="checkFaultType()" name="faultType"
+                                                      value="3">
+                            位置信号 : <b style="color:red;" id="prompt" v-text="positionNum">0</b></label>
+                        <label id="advice_num"><input type="checkbox" @click="checkFaultType()" name="faultType"
+                                                      value="4">
+                            普通遥信 : <b style="color:red;" id="advice" v-text="signalNum">0</b></label>
+
+                    </div>
+                    <div class="fr clearfix">
+                        <a href="#" class="fr yg-daochu" style="margin-top:4px;" onclick="exportToExcel();">导出</a>
+                        <input type="hidden" id="isOperate" value="1">
+                        <a href="javascript:;" class="fr problem"
+                           style="margin-right:10px;">申报故障</a>
+                        <a href="javascript:;" class="fr problem deal"
+                           style="margin-right: 10px; background-color: rgb(192, 192, 192);"
+                           id="batchCloseBtn">批量关闭</a>
+                        <!--<a href="javascript:;" class="fr problem deal"-->
+                           <!--style="margin-right: 10px;display: block;background-color:#C0C0C0" id="batchConfirmBtn">转消缺票</a>-->
+                    </div>
+                </div>
+
+                <div class="problem_con_back problem_con clearfix" id="gjgl_boxheight">
+                    <div class="problem_con_table fl">
+                        <div id="tabDiv">
+                            <div class="nbq_tab">
+                                <div class="nbq_tab_top" style="position: absolute;left:0;top:0;width: 100%;">
+                                    <table id="faultTableHead">
+                                        <thead>
+                                        <tr style="height: 39px">
+                                            <th class="gaojing_td1">
+                                                <input type="checkbox"
+                                                       id="checkAllItems"
+                                                       name="checkAllItems"
+                                                       @click="checkSelectItemsAndColor($event,'batchIds')">
+                                            </th>
+                                            <th class="gaojing_td2">故障类型</th>
+                                            <th class="gaojing_td3">
+                                                <div style="position:relative;">
+                                                    <a href="javascript:;" chooseindex="2">故障级别<em
+                                                            class="proTriangle"></em></a>
+                                                    <input type="hidden" name="params.faultLevel">
+                                                    <ul>
+                                                        <li onclick="searchByCond(this,'')" style="cursor:pointer;">
+                                                            <a href="javaScript:void(0);">全部</a></li>
+                                                        <li onclick="searchByCond(this,1)" style="cursor:pointer;">
+                                                            <a href="javaScript:void(0);">重要</a></li>
+                                                        <li onclick="searchByCond(this,2)" style="cursor:pointer;">
+                                                            <a href="javaScript:void(0);">次要</a></li>
+                                                        <li onclick="searchByCond(this,3)" style="cursor:pointer;">
+                                                            <a href="javaScript:void(0);">一般</a></li>
+                                                        <li onclick="searchByCond(this,4)" style="cursor:pointer;">
+                                                            <a href="javaScript:void(0);">轻微</a></li>
+                                                    </ul>
+                                                </div>
+                                            </th>
+                                            <th class="gaojing_td4">故障名称</th>
+                                            <th class="gaojing_td5">设备间隔</th>
+                                            <th class="gaojing_td6">设备名称</th>
+                                            <th class="gaojing_td7">
+                                                <div style="position:relative;">
+                                                    <a href="javascript:;">未关闭<em class="proTriangle"></em></a>
+                                                    <input type="hidden" name="params.processStatus">
+                                                    <ul>
+                                                        <li onclick="searchByCond(this,'8')"
+                                                            style="cursor:pointer;"><a href="javaScript:void(0);">未关闭</a>
+                                                        </li>
+                                                        <li onclick="searchByCond(this,'')" id="processStatus_all"
+                                                            style="cursor:pointer;"><a
+                                                                href="javaScript:void(0);">全部</a></li>
+                                                        <li onclick="searchByCond(this,1)" style="cursor:pointer;">
+                                                            <a href="javaScript:void(0);">未确认</a></li>
+                                                        <li onclick="searchByCond(this,2)" style="cursor:pointer;">
+                                                            <a href="javaScript:void(0);">待处理</a></li>
+                                                        <li onclick="searchByCond(this,3)" style="cursor:pointer;">
+                                                            <a href="javaScript:void(0);">处理中</a></li>
+                                                        <li onclick="searchByCond(this,4)" style="cursor:pointer;">
+                                                            <a href="javaScript:void(0);">已解决</a></li>
+                                                        <li onclick="searchByCond(this,9)" style="cursor:pointer;">
+                                                            <a href="javaScript:void(0);">已关闭</a></li>
+                                                    </ul>
+                                                </div>
+                                            </th>
+                                            <th class="gaojing_td8">发生时间</th>
+                                            <th class="gaojing_td9">操作</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+
+                                </div>
+                                <div class="nbq_tab_bottom_gaojing">
+                                    <div class="lch_refreshTB" id="refreshTB">
+                                        <input type="hidden" id="faultDeviceNameLink" value="true">
+                                        <input type="hidden" name="advice_1" id="advice_1" value="0">
+                                        <input type="hidden" name="prompt_1" id="prompt_1" value="34673">
+                                        <input type="hidden" name="fault_1" id="fault_1" value="0">
+                                        <table>
+                                            <tbody style="width:100%;" id="warn_tbody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="page-div" style="position: absolute;left: 0px;bottom: 0px;">
+                            <div id="Paginationother" class="pagination Page_other"></div>
+                        </div>
+                    </div>
+
+                    <div class="problem_con_more fr" style="overflow: auto; height:100%;">
+                        <ul class="pcmore_ul">
+                            <li>
+                                <span>故障名称</span>
+                                <em id="faultName" style="white-space:nowrap;text-overflow:ellipsis;" title=""></em>
+                            </li>
+                            <li>
+                                <span>故障编号</span>
+                                <em id="faultCode"></em>
+                            </li>
+                            <li>
+                                <span>发生时间</span><em id="updateTime"></em>
+                            </li>
+                            <li>
+                                <span>故障来源</span><em id="faultSrc"></em>
+                            </li>
+                            <li>
+                                <span>申报人</span><em id="creater"></em>
+                            </li>
+                        </ul>
+                        <div class="problem_dialog">
+
+                            <div class="problem_dialogB">
+                                <div class="boxlists clearfix">
+                                    <div class="boxlists-left fl">
+                                        <div class="boxxian"></div>
+                                        <ul id="status_warn">
+                                            <li><span style="margin-top:0px;"></span></li>
+                                            <li><span></span></li>
+                                            <li><span></span></li>
+                                            <li><span></span></li>
+                                            <li><span></span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="boxlists-right fr">
+                                        <ul>
+                                            <li class="clearfix">
+                                                <div class="clearfix" style="padding-top: 8px">
+                                                    <span class="boxt1 fl" style="display: block;">未确认</span>
+
+                                                    <div class="clearfix fr" style="width: 70%">
+                                                        <span class="boxt2" title=""></span>
+                                                        <input class="fault_box" readonly="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="clearfix">
+                                                <div class="clearfix" style="padding-top: 8px">
+                                                    <span class="boxt1 fl" style="display: block;">待处理</span>
+
+                                                    <div class="clearfix fr" style="width: 70%">
+                                                        <span class="boxt2" title=""></span>
+                                                        <input class="fault_box" readonly="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="clearfix">
+                                                <div class="clearfix" style="padding-top: 8px">
+                                                    <span class="boxt1 fl" style="display: block;">处理中</span>
+
+                                                    <div class="clearfix fr" style="width: 70%">
+                                                        <span class="boxt2" title="" style="width: 195px;"></span>
+                                                        <input class="fault_box" readonly="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="clearfix">
+                                                <div class="clearfix" style="padding-top: 8px">
+                                                    <span class="boxt1 fl" style="display: block;">已解决</span>
+
+                                                    <div class="clearfix fr" style="width: 70%">
+                                                        <span class="boxt2" title="" style="width: 195px;"></span>
+                                                        <input class="fault_box" readonly="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="clearfix">
+                                                <div class="clearfix" style="padding-top: 8px">
+                                                    <span class="boxt1 fl" style="display: block;">已关闭</span>
+
+                                                    <div class="clearfix fr" style="width: 70%">
+                                                        <span class="boxt2" title="" style="width: 195px;"></span>
+                                                        <input class="fault_box" readonly="">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" value="psFaultPage" id="pageId">
+    </div>
+
+</div>
+
+<script type="tetx/template" id="station_filter_tpl">
+    <%for(var i=0;i< newStationList.length; i++){ %>
+    <% if(i==4){ %>
+    <li id="<%=newStationList[i].fd_station_code.toLowerCase()%>" class="on">
+        <a href="javascript:;" title="<%=newStationList[i].fd_station_name%>" class="sta_tit"><%=newStationList[i].fd_station_name%></a>
+    </li>
+    <%}else{ %>
+    <li id="<%=newStationList[i].fd_station_code.toLowerCase()%>">
+        <a href="javascript:;" title="<%=newStationList[i].fd_station_name%>" class="sta_tit"><%=newStationList[i].fd_station_name%></a>
+    </li>
+    <%} %>
+    <%} %>
+</script>
+
+
+<!--tree tpl-->
+<script type="text/template" id="powerTpl0">
+    <% for(var i=0;i< newNodes.length; i++){ %>
+    <li id="<%=newNodes[i].id%>" class="level0"
+        data-isdata="<%=newNodes[i].isdata%>"
+        data-fd_tablename="<%=newNodes[i].fd_tablename%>"
+        data-fd_code="<%=newNodes[i].fd_code%>">
+        <span id="<%=newNodes[i].id%>_0<%=i%>_switch" title=""
+              class="button level0 switch <%=newNodes[i].treeIcon%>"></span>
+        <a id="<%=newNodes[i].id%>_0<%=i%>_a" class="level0" title="<%=newNodes[i].fd_name%>">
+            <% if(newNodes[i].icon == '' ){ %>
+            <span class="button ico_close"></span>
+            <% }else{ %>
+            <span class="button ico_close" style="background:url(<%=newNodes[i].icon%>) 0 0 no-repeat;"></span>
+            <% } %>
+            <span class="tit"><%=newNodes[i].name%></span>
+        </a>
+    </li>
+    <% } %>
+</script>
+
+
+
+
+<!--故障table-->
+<script type="text/template" id="warn_tpl">
+<% for(var i=0; i< resTr.length; i++){ %>
+<tr class="problem_color">
+    <input class="gaojing_code" type="hidden" value="<%=resTr[i].fd_alarm_code%>"/>
+    <input class="fault_code" type="hidden" value="<%=resTr[i].fd_fault_code%>"/>
+    <td class="gaojing_td1"><input type="checkbox" name="batchIds" value=""></td>
+    <td class="gaojing_td2"><span><%=resTr[i].fd_alarm_state_str%></span></td>
+    <td class="gaojing_td3"><span><%=resTr[i].fd_alarm_level_str%></span></td>
+    <td class="gaojing_td4"><%=resTr[i].fd_name%></td>
+    <td class="gaojing_td5"><%=resTr[i].fd_dev_parent_name%></td>
+    <td class="gaojing_td6"><a href="javascript:;"><%=resTr[i].fd_dev_name%></a></td>
+    <td class="gaojing_td7" id="process_status<%=i%>" data-status="<%=resTr[i].fd_order_state%>"><span><%=resTr[i].fd_order_state_str%></span></td>
+    <td class="gaojing_td8"><%=resTr[i].fd_start_date%></td>
+    <td class="gaojing_td9">
+        <a href="javascript:;" class="manage_01">
+            <img src="../resource/images/cha.png" title="详细">
+        </a>
+        <% if(resTr[i].fd_order_state == 0 && resTr[i].fd_state == 1){ %>
+            <a href="javascript:;" class="manage_02">
+                <img src="../resource/images/confirm_icon.png" title="转消缺票">
+            </a>
+        <% }%>
+        <% if(resTr[i].fd_state == 1){ %>
+            <a href="javascript:;" class="manage_03">
+                <img src="../resource/images/faultDelete_icon.png" title="关闭">
+            </a>
+        <% }%>
+    </td>
+</tr>
+
+<% } %>
+</script>
+
+
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/lib/ejs.js"></script>
+<script src="../resource/js/common/base.js"></script>
+<script src="../resource/js/common/esmpbase.js"></script>
+<script src="../resource/js/slide-js.js"></script>
+<script src="../resource/plugin/layer/layer.min.js"></script>
+<script src="../resource/js/common/common.js"></script>
+<script src="../resource/plugin/My97DatePicker/WdatePicker.js"></script>
+<script src="../resource/js/media.js"></script>
+<script src="../resource/js/common/common_zh_CN.js"></script>
+<script src="../resource/js/common/DateUtil.js"></script>
+<script src="../resource/plugin/easydialog/easydialog.min.js"></script>
+<script src="../resource/plugin/pager/pager.js"></script>
+<script src="../resource/plugin/jquery-select/js/select2.min.js"></script>
+<script src="../resource/js/showTreeImg.js"></script>
+<script src="../resource/js/jquery.minicolors2.js"></script>
+<script src="../resource/plugin/jq-cookie/jquery-cookie.js"></script>
+<script src="../resource/js/powerManage/warn_manage.js"></script>
+
+
+</body>
+</html>

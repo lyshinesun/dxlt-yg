@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="../resource/css/style_blue.css"/>
+  <link rel="stylesheet" href="../resource/css/layui_custom.css"/>
+  <link rel="stylesheet" href="../resource/plugin/layui/css/layui.css"/>
+</head>
+<body>
+<div id="popAnalysis" class="hddd clearfix">
+  <div class="map_con clearfix">
+    <div id="" class="">
+      <div class="layui-layer-title" style="cursor: move;">
+      </div>
+      <div id="paramSetPage" class="layui-layer-content">
+        <div class="fx_Setup_wrap">
+          <form>
+            <table>
+              <tbody>
+                <tr>
+                  <td class="fx_Setup_left">
+                    <div>
+                      <span>告警名称:</span>
+                    </div>
+                  </td>
+                  <td class="fx_Setup_rightTitle">
+                    <input type="text" name="fault_name" readonly="" class="fx_Setup_minipt" v-model="analysisForm.fdFaultName" @change="formChange">
+                  </td>
+                </tr>
+                <tr>
+                  <td class="fx_Setup_left">
+                    <div>
+                      <span>开启状态:</span>
+                    </div>
+                  </td>
+                  <td class="fx_Setup_rightTitle">
+                    <div class="fx_Setup_radio">
+                      <label><input type="radio" name="fault_state" :checked="analysisForm.fdFaultStatu == '1'" @change="formChange" id='statusOn'>开启</label>
+                      <label><input type="radio" name="fault_state" :checked="analysisForm.fdFaultStatu == '0'" @change="formChange" id="statusOff">屏蔽</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="fx_Setup_left">
+                    <div>
+                      <span>执行频率:</span>
+                    </div>
+                  </td>
+                  <td class="fx_Setup_rightTitle">
+                    <div class="fx_Setup_select" v-text="analysisForm.fdFreq + '分钟/次'">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="fx_Setup_left">
+                    <div>
+                      <span>起判条件:</span>
+                    </div>
+                  </td>
+                  <td class="fx_Setup_rightTitle">
+                    <div class="fx_Setup_rightlistmain">
+                      <div class="fx_Setup_rightlist">
+                        <section v-if='fdType==1 || fdType==3 || fdType==4 || fdType==5 || fdType==6 ||fdType==8'>
+                          电站功率/负载&gt;
+                         <input type="text" id="rule_content_0_7_2" maxlength="8" name="rule_content_0_7_2" class="fx_Setup_ipt2" v-model="analysisForm.fdArg1" @change="formChange">
+                          <span>%</span>
+                          <input type="hidden" id="rule_content_unit_0" name="rule_content_unit_0" value="%">
+                          <span id="rule_content_0_7_error_tips" style="color: red"></span>
+                        </section>
+                        <section v-if='fdType==2 || fdType==7'>
+                          <input type="text" class="fx_Setup_ipt2 time-picker" v-model="analysisForm.fdArg1" @change="formChange">
+                          -
+                          <input type="text" class="fx_Setup_ipt2 time-picker" v-model="analysisForm.fdArg2" @change="formChange">
+                        </section>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="fx_Setup_left">
+                    <div>
+                      <span>判断规则:</span>
+                    </div>
+                  </td>
+                  <td class="fx_Setup_rightTitle">
+                    <div class="fx_Setup_rightlistmain">
+                      <section v-if='fdType==1'>
+                        <div class="fx_Setup_rightlist">
+                          <span style="margin-right: 10px;">
+                          逆变器停止运行：
+                          </span>
+                          <span>交流功率归一化</span>
+                          <span>&lt;</span>
+                          <input type="text" id="rule_content_1_8_2" maxlength="8" name="rule_content_1_8_2" class="fx_Setup_ipt2" v-model="analysisForm.fdArg2" @change="formChange">
+                          <span>%</span>
+                          <input type="hidden" id="rule_content_unit_1" name="rule_content_unit_1" value="%">
+                          <span id="rule_content_1_0_error_tips" style="color: red"></span>
+                        </div>
+                      </section>
+                      <section v-if='fdType==2'>
+                        <div class="fx_Setup_rightlist">
+                          <span style="margin-right: 10px;"></span>
+                          <span>中断持续时间（分钟）</span>
+                          <span>=</span>
+                          <input type="text" maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg3" @change="formChange">
+                          <span>min</span>
+                        </div>
+                      </section>
+                      <section v-if='fdType==3 || fdType==4'>
+                        <div class="fx_Setup_rightlist">
+                          <span style="margin-right: 10px;">第N路电流为零或偏低：</span>
+                          <span v-if="fdType==3">第N路电流</span>
+                          <span v-if="fdType==4">汇流板N路电流</span>
+                          <span>&lt;</span>
+                          <input type="text" maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg2" @change="formChange">
+                          <span>A</span>
+                          <input type="hidden">
+                          <span style="color: red"></span>
+                        </div>
+                      </section>
+                      <section v-if='fdType==5'>
+                        <div class="fx_Setup_rightlist">
+                          <span style="margin-right: 10px;">汇流箱运行稳定性一般：</span>
+                          <input type="text" maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg2" @change="formChange">
+                          <span>%</span>
+                          <span>&lt;</span>
+                          <span>汇流箱输入离散率</span>
+                          <span>&lt;=</span>
+                          <input type="text" maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg3" @change="formChange">
+                          <span>%</span>
+                          <input type="hidden" value="%">
+                          <span style="color: red"></span>
+                        </div>
+                        <div class="fx_Setup_rightlist">
+                          <span style="margin-right: 10px;">汇流箱运行稳定性较差：</span>
+                          <input type="text"  maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg4" @change="formChange">
+                          <span>%</span>
+                          <span>&lt;</span>
+                          <span>汇流箱输入离散率</span>
+                          <span>&lt;=</span>
+                          <input type="text" maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg5" @change="formChange">
+                          <span>%</span>
+                          <input type="hidden" value="%">
+                          <span style="color: red"></span>
+                        </div>
+                        <div class="fx_Setup_rightlist">
+                          <span style="margin-right: 10px;">汇流箱运行稳定性差：</span>
+                          <span>汇流箱输入离散率</span>
+                          <span>&gt;</span>
+                          <input type="text" maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg6" @change="formChange">
+                          <span>%</span>
+                          <input type="hidden" value="%">
+                          <span style="color: red"></span>
+                        </div>
+                      </section>
+                      <section v-if='fdType==6'>
+                        <div class="fx_Setup_rightlist">
+                          <span style="margin-right: 10px;">逆变器运行稳定性一般：</span>
+                          <input type="text" maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg2" @change="formChange">
+                          <span>%</span>
+                          <span>&lt;</span>
+                          <span>逆变器输入离散率</span>
+                          <span>&lt;=</span>
+                          <input type="text" maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg3" @change="formChange">
+                          <span>%</span>
+                          <input type="hidden" value="%">
+                          <span style="color: red"></span>
+                        </div>
+                        <div class="fx_Setup_rightlist">
+                          <span style="margin-right: 10px;">逆变器运行稳定性较差：</span>
+                          <input type="text"  maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg4" @change="formChange">
+                          <span>%</span>
+                          <span>&lt;</span>
+                          <span>逆变器输入离散率</span>
+                          <span>&lt;=</span>
+                          <input type="text" maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg5" @change="formChange">
+                          <span>%</span>
+                          <input type="hidden" value="%">
+                          <span style="color: red"></span>
+                        </div>
+                        <div class="fx_Setup_rightlist">
+                          <span style="margin-right: 10px;">逆变器运行稳定性差：</span>
+                          <span>逆变器输入离散率</span>
+                          <span>&gt;</span>
+                          <input type="text" maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg6" @change="formChange">
+                          <span>%</span>
+                          <input type="hidden" value="%">
+                          <span style="color: red"></span>
+                        </div>
+                      </section>
+                      <section v-if='fdType==7'>
+                        <div class="fx_Setup_rightlist">
+                          <span style="margin-right: 10px;">
+                          电站停止运行：
+                          </span>
+                          <span>电站功率/负载</span>
+                          <span>&lt;</span>
+                          <input type="text" id="rule_content_1_8_2" maxlength="8" name="rule_content_1_8_2" class="fx_Setup_ipt2" v-model="analysisForm.fdArg3" @change="formChange">
+                          <span>%</span>
+                          <input type="hidden" id="rule_content_unit_1" name="rule_content_unit_1" value="%">
+                          <span id="rule_content_1_0_error_tips" style="color: red"></span>
+                        </div>
+                      </section>
+                      <section v-if='fdType==8'>
+                        <div class="fx_Setup_rightlist">
+                          <span style="margin-right: 10px;">电站运行稳定性一般：</span>
+                          <input type="text" maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg2" @change="formChange">
+                          <span>%</span>
+                          <span>&lt;</span>
+                          <span>逆变器输出离散率</span>
+                          <span>&lt;=</span>
+                          <input type="text" maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg3" @change="formChange">
+                          <span>%</span>
+                          <input type="hidden" value="%">
+                          <span style="color: red"></span>
+                        </div>
+                        <div class="fx_Setup_rightlist">
+                          <span style="margin-right: 10px;">电站运行稳定性较差：</span>
+                          <input type="text"  maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg4" @change="formChange">
+                          <span>%</span>
+                          <span>&lt;</span>
+                          <span>逆变器输出离散率</span>
+                          <span>&lt;=</span>
+                          <input type="text" maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg5" @change="formChange">
+                          <span>%</span>
+                          <input type="hidden" value="%">
+                          <span style="color: red"></span>
+                        </div>
+                        <div class="fx_Setup_rightlist">
+                          <span style="margin-right: 10px;">电站运行稳定性差：</span>
+                          <span>逆变器输出离散率</span>
+                          <span>&gt;</span>
+                          <input type="text" maxlength="8" class="fx_Setup_ipt2" v-model="analysisForm.fdArg6" @change="formChange">
+                          <span>%</span>
+                          <input type="hidden" value="%">
+                          <span style="color: red"></span>
+                        </div>
+                      </section>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        </div>
+      </div>
+    </div> 
+  </div>
+</div>
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/plugin/layer/layer.min.js"></script>
+<script src="../resource/js/allPsList/pop_analysis.js"></script>
+
+</body>
+</html>

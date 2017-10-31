@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>逆变器</title>
+    <link rel="stylesheet" href="../resource/plugin/layer/skin/default/layer.css"/>
+    <link rel="stylesheet" href="../resource/plugin/easydialog/easydialog.css"/>
+    <link rel="stylesheet" href="../resource/plugin/asyncbox/skins/default.css"/>
+    <link rel="stylesheet" href="../resource/css/zoom-detect.css"/>
+    <link rel="stylesheet" href="../resource/css/pager.css"/>
+    <link rel="stylesheet" href="../resource/plugin/easydialog/easydialog.css"/>
+    <link rel="stylesheet" href="../resource/css/style_blue.css"/>
+    <link rel="stylesheet" href="../resource/plugin/jquery-autocomplete/jquery.autocomplete.css">
+    <link rel="stylesheet" href="../resource/plugin/JQueryzTree/css/zTreeStyle/zTreeStyle.css"/>
+    <link rel="stylesheet" href="../resource/plugin/jquery-select/css/select2.css"/>
+    <link rel="stylesheet" href="../resource/css/jquery.minicolors.css"/>
+    <link rel="stylesheet" href="../resource/css/style_2.0_blue.css"/>
+</head>
+<body>
+<div id="stationInverter" style="height: 100%;">
+
+    <!--------首页右下content-------->
+    <div id="map_wap_div" class="map_wap">
+        <div class="map_select clearfix single_no_show">
+            <div class="map_select clearfix">
+                <div class="map_select_wrap fl" style="height: auto;">
+                    <div class="hd" id="map_select_wraphd">
+                        <a href="javascript:;"><i class="map_seicon_1" title="电站名称"></i>
+                            <span class="secondnav_bg4">电站名称<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_2" title="装机功率"></i>
+                            <span class="secondnav_bg4">装机功率<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_3" title="类型"></i>
+                            <span class="secondnav_bg4">类型<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_4" title="并网时间"></i>
+                            <span class="secondnav_bg4">并网时间<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_5" title="地址确定选择"></i>
+                            <span class="secondnav_bg4">地址确定选择<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="contentDiv" class="map_con clearfix" style="padding-right: 20px">
+            <div id="Searchresult"></div>
+            <div id="hiddenresult" style="display: none;"></div>
+            <div class="map_con_fl fl">
+                <div id="psDetail">
+                    <div id="basecolor" class="basecolor" style="display: none"></div>
+                    <ul class="treeDemoId" @click="changeStation($event)">
+                        <li v-for="station in stationList" :id="station.fdStationCode" :class="station.fdStationCode == stationId ? 'on' : ''" >
+                            <a href="javascript:;" class="sta_tit" :title="station.fdStationName" v-text="station.fdStationName"></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="map_con_fl_page">
+                    <div class="map_con_fl_page_b" id="Pagination">
+                        <a class="fl pager_class_color prev"></a>
+                        <a class="map_con_fl_pageprev fl prev"></a>
+                        <a class="fl pager_class_color">1</a>
+                        <a class="fl pager_class_color next"></a>
+                        <a class="map_con_fl_pagenext fl next"></a>
+                    </div>
+                </div>
+            </div>
+            <div id="siteMoreDiv" class="tendency_ri fl clearfix">
+                <div class="allsite_date clearfix">
+                    <div class="allsite_datelf clearfix fl">
+
+                        <input id="new_datetimepicker_mask" class="Wdate fl" type="text" readonly="" value="" style="width:140px;margin-right:10px;">
+                        <div class="clearfix fl" style="margin-top: 8px;">显示归一化数据:</div>
+                        <div class="clearfix fl" style="position: relative;margin-top: 5px;">
+                            <input type="checkbox" id="checkbox_c1" class="chk_3" @click="changeGYH();"><label for="checkbox_c1" id="chLable"></label></div>
+                    </div>
+                    <div class="clearfix fr">
+
+                        <div class="allsite_dateri fl clearfix" style="margin-right:30px;">
+
+
+                            <input type="checkbox" class="fl allsite_dateriCheckbox" id="setTime" @click="refreshTime_psUnit">
+
+                            <span class="fl reshdate">刷新时间</span>
+                            <span id="allsite_dateYear1" class="fl allsite_datej abcd" style="opacity: 0.7;">
+                            <em style="opacity: 0.7;"><i id="timeValue">5</i>min</em>
+                            <a href="javascript:;" class="allsite_dateUpBtn1"></a>
+                            <a href="javascript:;" class="allsite_dateDownBtn1"></a>
+                        </span>
+                        </div>
+
+
+                        <a href="javascript:;" id="change_size" class="change_size change_size2 fl3"><img src="https://img.isolarcloud.com/webapp/resources/portal/images/change_size2.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="cell_charts clearfix">
+                    <div class=" fl" style="width: 50%; height: 100%;" id="designCapacity"></div>
+                    <div class=" fl" style="width: 50%; height: 100%;"  id="power"></div>
+                </div>
+                <div class="cell_table2">
+                    <div class="nbq_tab">
+                        <div class="nbq_tab_top">
+                            <table width="100%" border="1" cellspacing="0" cellpadding="0">
+                                <tbody>
+                                    <tr class="allPsList_evenTrColor">
+                                        <th width="8%">逆变器</th>
+                                        <th width="10%">装机容量</th>
+                                        <th width="9%">PR</th>
+                                        <th width="9%">直流功率</th>
+                                        <th width="9%">交流功率</th>
+                                        <th width="9%">日发电量</th>
+                                        <th width="9%">总发电量</th>
+                                        <th class="nbq_td08" width="9%">告警</th>
+                                        <th class="nbq_td09" width="9%">通讯</th>
+                                        <th class="nbq_td10" width="10%">查看汇流箱/组串</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="nbq_tab_bottom">
+                            <table id="psBlock" width="100%" border="1" cellspacing="0" cellpadding="0">
+                                <tbody>
+                                <!--table 内容-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--分页-->
+                <div class="page-div">
+                    <div class="fl" style="padding-left: 10px;line-height: 31px;">
+                        <label style="font-weight: 900">告警:</label><span><img src="../resource/images/allsite_list_icon1.png" style="width: 17px;padding-right: 3px;vertical-align: middle;"> 正常</span>
+                        <span><img src="../resource/images/allsite_list_icon2.png" style="width: 17px;padding-right: 3px;vertical-align: middle;"> 告警</span>
+                        <span><img src="../resource/images/allsite_list_icon3.png" style="width: 17px;padding-right: 3px;vertical-align: middle;"> 故障</span>
+                        &nbsp;&nbsp;<label style="font-weight: 900">通讯:</label><span><img src="../resource/images/allsite_list_icon1.png" style="width: 17px;padding-right: 3px;vertical-align: middle;"> 正常</span>
+                        <span><img src="../resource/images/allsite_list_icon4.png" style="width: 17px;padding-right: 3px;vertical-align: middle;"> 离线</span>
+                    </div>
+                    <div id="Paginationother" class="pagination Page_other"></div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" value="psFaultPage" id="pageId">
+    </div>
+
+</div>
+
+<!--tree tpl-->
+<script type="text/template" id="powerTpl0">
+    <% for(var i=0;i< newNodes.length; i++){ %>
+    <li id="<%=newNodes[i].id%>" class="level0"
+        data-isdata="<%=newNodes[i].isdata%>"
+        data-fd_tablename="<%=newNodes[i].fd_tablename%>"
+        data-fd_code="<%=newNodes[i].fd_code%>">
+        <span id="<%=newNodes[i].id%>_0<%=i%>_switch" title=""
+              class="button level0 switch <%=newNodes[i].treeIcon%>"></span>
+        <a id="<%=newNodes[i].id%>_0<%=i%>_a" class="level0" title="<%=newNodes[i].fd_name%>">
+            <% if(newNodes[i].icon == '' ){ %>
+            <span class="button ico_close"></span>
+            <% }else{ %>
+            <span class="button ico_close" style="background:url(<%=newNodes[i].icon%>) 0 0 no-repeat;"></span>
+            <% } %>
+            <span class="tit"><%=newNodes[i].name%></span>
+        </a>
+    </li>
+    <% } %>
+</script>
+
+
+<script type="text/template" id="station_unit_tpl">
+    <% for(var i=0;i< unitArr.length; i++){ %>
+    <tr>
+        <td class="nbq_td01" width="8%">
+            <a style="cursor: pointer; color: #1c87ba"><%=unitArr[i].fd_name%></a>
+        </td>
+        <td class="nbq_td02" width="10%"><%=unitArr[i].fd_intercon_cap%>kW</td>
+        <td class="nbq_td03" width="9%"><%=unitArr[i].pr%>%
+            <div class="demo">
+                <div class="progress_container bar_bg1">
+                    <div class="progress_bar tip " original-title="85.00%" style="width: 85%;"></div>
+                </div>
+            </div>
+        </td>
+        <td class="nbq_td04" width="9%"><%=unitArr[i].fd_pw_curr%>kW
+            <div class="demo">
+                <div class="progress_container bar_bg1">
+                    <div class="progress_bar tip " original-title="22.58%" style="width: 22.58%;"></div>
+                </div>
+            </div>
+        </td>
+        <td class="nbq_td05" width="9%"><%=unitArr[i].fd_pdc_curr%>kW
+            <div class="demo">
+                <div class="progress_container bar_bg1">
+                    <div class="progress_bar tip " original-title="22.2%" style="width: 22.2%;"></div>
+                </div>
+            </div>
+        </td>
+        <td class="nbq_td06" width="9%"><%=unitArr[i].fd_power%>kWh
+            <div class="demo">
+                <div class="progress_container bar_bg2">
+                    <div class="progress_bar tip " original-title="40.36%" style="width: 40.36%;"></div>
+                </div>
+            </div>
+        </td>
+        <td class="nbq_td07" width="9%">--</td>
+        <td class="nbq_td08" width="9%">
+            <img src="../resource/images/allsite_list_icon1.png">
+
+        </td>
+        <td class="nbq_td09" width="9%">
+            <img src="../resource/images/allsite_list_icon1.png">
+        </td>
+        <td class="nbq_td10" width="10%" style="cursor:pointer">
+            <img src="../resource/images/deep_icon_07.png" alt="">
+            <input type="checkbox" checked="checked" value="<%=unitArr[i].fd_name%>" name="batchIds" style="display: none;" data-devid="<%=unitArr[i].fd_dev_id%>">
+        </td>
+    </tr>
+
+    <% }%>
+
+</script>
+
+
+
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/lib/ejs.js"></script>
+<script src="../resource/js/common/base.js"></script>
+<script src="../resource/js/common/esmpbase.js"></script>
+<script src="../resource/js/slide-js.js"></script>
+<script src="../resource/plugin/layer/layer.min.js"></script>
+<script src="../resource/js/common/common.js"></script>
+<script src="../resource/js/common/echarts.min.js"></script>
+<script src="../resource/plugin/My97DatePicker/WdatePicker.js"></script>
+<script src="../resource/js/media.js"></script>
+<script src="../resource/js/common/common_zh_CN.js"></script>
+<script src="../resource/js/common/DateUtil.js"></script>
+<script src="../resource/plugin/easydialog/easydialog.min.js"></script>
+<script src="../resource/plugin/pager/pager.js"></script>
+<script src="../resource/plugin/jquery-select/js/select2.min.js"></script>
+<script src="../resource/js/showTreeImg.js"></script>
+<script src="../resource/js/jquery.minicolors2.js"></script>
+<script src="../resource/js/allPsList/station_inverter.js"></script>
+
+
+</body>
+</html>

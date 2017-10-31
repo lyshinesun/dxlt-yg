@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <link rel="stylesheet" href="resource/css/style_blue.css"/>
+    <link rel="stylesheet" href="resource/plugin/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="resource/css/login.css"/>
+</head>
+<body>
+<div class="login" id="modify_pass">
+    <div class="login_wrap">
+        <form>
+            <div class="zn_bj">
+                <h2 class="zn_title2">修改密码</h2>
+
+                <div class="zn_form clearfix">
+                    <ul>
+                        <li>
+                            <input type="password" value="" name="userPswd" class="zn_ipt2" placeholder="请输入原始密码"
+                                   v-model='password'>
+                        </li>
+                        <li>
+                            <input type="password" value="" name="userPswd" class="zn_ipt2" placeholder="请输入新密码"
+                                   v-model='newPassword'>
+                        </li>
+                        <li>
+                            <input type="password" value="" name="userPswd" class="zn_ipt2"
+                                   v-model='newPassword2'
+                                   placeholder="请输入新密码">
+                        </li>
+                        <li style="margin-top: 10px">
+                            <input type="button" class="zn_iub" value="确认修改" @click='modify_pass'>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+<script src="resource/js/jquery-1.10.2.min.js"></script>
+<script src="resource/plugin/jq-cookie/jquery-cookie.js"></script>
+<script src="resource/plugin/base64.js"></script>
+<script src="resource/js/lib/vlm.js"></script>
+<script src="resource/js/lib/vue.js"></script>
+<script src="resource/plugin/layui/lay/dest/layui.all.js"></script>
+<script>
+    new Vue({
+        el: '#modify_pass',
+        data: function () {
+            return {
+                password: "",
+                newPassword: "",
+                newPassword2: "",
+            }
+        },
+        methods: {
+            modify_pass: function () {
+                if (this.password == '') {
+                    parent.layer.open({
+                        title: '提示',
+                        content: '请输入原始密码'
+                    });
+                    return;
+                }
+                if (this.newPassword == '' || this.newPassword2 == '') {
+                    parent.layer.open({
+                        title: '提示',
+                        content: '请输入新密码'
+                    });
+                    return;
+                }
+                if (this.newPassword !== this.newPassword2) {
+                    parent.layer.open({
+                        title: '提示',
+                        content: '两次输入密码不一致'
+                    });
+                    return;
+                }
+                $.ajax({
+                    type: "GET",
+                    url: vlm.serverAddr + 'sys/user/password?password='+this.password+'&newPassword='+this.newPassword,
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.code == 0) {//登录成功
+                            parent.layer.open({
+                                title: '提示',
+                                content: '密码修改成功，请重新登录',
+                                yes: function () {
+                                    location.href = "login.html";
+                                }
+                            });
+                        } else {
+                            parent.layer.open({
+                                title: '提示',
+                                content: res.msg
+                            });
+                        }
+                    }
+                });
+            }
+        },
+        mounted: function () {
+
+        }
+
+    });
+</script>
+
+
+</body>
+</html>

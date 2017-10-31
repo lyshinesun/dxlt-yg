@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>电站信息</title>
+    <link rel="stylesheet" href="../resource/plugin/layer/skin/default/layer.css"/>
+    <link rel="stylesheet" href="../resource/css/style_blue.css"/>
+</head>
+<body>
+
+<div id="power_msg">
+
+    <div id="map_wap_div" class="map_wap">
+        <div class="map_select clearfix single_no_show">
+            <div class="map_select clearfix">
+                <div class="map_select_wrap fl" style="height: 30px;">
+                    <div class="hd" id="map_select_wraphd">
+                        <a href="javascript:void(0)"><i class="map_seicon_1" title="电站名称"></i>
+                            <span class="secondnav_bg4">电站名称<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:void(0)"><i class="map_seicon_2" title="装机功率"></i>
+                            <span class="secondnav_bg4">装机功率<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:void(0)"><i class="map_seicon_3" title="类型"></i>
+                            <span class="secondnav_bg4">类型<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:void(0)"><i class="map_seicon_4" title="并网时间"></i>
+                            <span class="secondnav_bg4">并网时间<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:void(0)"><i class="map_seicon_5" title="地址确定选择"></i>
+                            <span class="secondnav_bg4">地址确定选择<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="contentDiv" class="map_con clearfix" id="psX2detail">
+                <div class="map_con_fl fl" id="liebiao">
+                    <div id="powerList">
+                        <div id="basecolor" class="basecolor" style="display: none"></div>
+                        <!--<ul @click="getPerStation($event)">-->
+                        <!--<li id="gs" class="on"><a href="javascript:;" title="湖北广水II期20MW">湖北广水II期20MW</a></li>-->
+                        <!--<li id="lw"><a href="javascript:;" title="宁夏灵武50MW">宁夏灵武50MW</a></li>-->
+                        <!--<li id="jx"><a href="javascript:;" title="山东莒县40MW">山东莒县40MW</a></li>-->
+                        <!--<li id="hl"><a href="javascript:;" title="四川会理30MW">四川会理30MW</a></li>-->
+                        <!--</ul>-->
+                    </div>
+                    <div class="map_con_fl_page">
+                        <div class="map_con_fl_page_b" id="Pagination"><a class="fl pager_class_color prev"></a><a
+                                class="map_con_fl_pageprev fl prev"></a><a class="fl pager_class_color">1</a><a
+                                class="fl pager_class_color next"></a><a class="map_con_fl_pagenext fl next"></a></div>
+                    </div>
+                    <div id="Searchresult"></div>
+                </div>
+
+                <div class="siteMore tendency_ri fl" style="overflow: auto; height: 100%;">
+                    <div class="siteMore_1 siteMorea">
+                        <div class="siteMore_tit clearfix">
+                            <em class="siteMore_tit_btn fl">
+                                <div class="psuser_image" style="vertical-align:middle;padding-top:35px">
+                                </div>
+
+                            </em>
+                            <span class="fl siteMore_tit_txt">电站概览</span>
+                        </div>
+                        <div class="siteMore_con clearfix siteMore_div">
+                            <div class="siteMore_con_lf fl">
+                                <h1>电站简介:</h1>
+
+                                <div class="siteMore_con_lf_txt" id="ps_des">
+                                    电站位于广水市李店镇高平村附近空闲的荒地，场址距广水市中心约12km，距李店镇镇中心约4公里，场址坐标为N31°32.61′、E113°59.16′，海拔高度为85米。规划开发总容量为20MWp。站址地区海拔高、气候干燥，日照时间长，年日照时数为2100小时；太阳辐射强度高，年太阳辐射量可达4985&nbsp;MJ/m2；太阳能资源丰富，且本站址所处地区地势平坦开阔的丘陵岗地，即非生态保护区，也非候鸟栖息地，具有很好的太阳能开发利用价值。所发电能将通过新建35kV开闭站以1回35kV线路，接入广水35kV变电站并入电网。
+                                </div>
+                            </div>
+                            <div id="slideImg">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="siteMore_2 siteMorea">
+                        <div class="siteMore_tit clearfix">
+                            <em class="siteMore_tit_btn fl">
+                                <div class="psuser_image1" style="vertical-align:middle;padding-top:35px"></div>
+                            </em>
+                            <span class="fl siteMore_tit_txt">基本信息</span>
+                        </div>
+                        <div class="siteMore_2_con siteMore_div">
+                            <table class="siteMore_2_conTable1">
+                                <tbody>
+                                <tr>
+                                    <td class="td1 w85" width="15%">电站名称:</td>
+                                    <td class="td2" width="35%" id="psName" v-text="station_name"></td>
+                                    <td class="td1" width="15%">地址:</td>
+                                    <td class="td2" width="35%" id="ps_address" v-text="fd_city"></td>
+                                </tr>
+                                <tr>
+                                    <td class="td1" width="15%">行政区划:</td>
+                                    <td class="td2" width="35%" id="ps_area" v-text="station_administrative_area"></td>
+                                    <td class="td1" width="15%">经度/纬度:
+                                    </td>
+                                    <td class="td2" width="35%" id="ps_en" v-text="station_latlong">经度113.00 纬度32.61
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td1 w85" width="15%">电站类型:</td>
+                                    <td class="td2" width="35%" id="ps_type_name">地面电站</td>
+                                    <td class="td1" width="15%">系统方案:</td>
+                                    <td class="td2" width="35%" id="ps_system" v-text="fd_sys_solut"></td>
+                                </tr>
+                                <tr>
+                                    <td class="td1" width="15%">资产属性:</td>
+                                    <td class="td2" width="35%" id="ps_to">民营</td>
+                                    <td class="td1" width="15%">调度类型:</td>
+                                    <td class="td2" width="35%" id="ps_dd">省调</td>
+                                </tr>
+                                <tr>
+                                    <td class="td1 w85" width="15%">业主:</td>
+                                    <td class="td2" width="35%" id="ps_owner"></td>
+                                    <td class="td1" width="15%">EPC:</td>
+                                    <td class="td2" width="35%" id="ps_epc"></td>
+                                </tr>
+                                <tr>
+                                    <td class="td1" width="15%">运维商:</td>
+                                    <td class="td2" width="35%" id="ps_oper"></td>
+                                    <td class="td1" width="15%">装机功率:</td>
+                                    <td class="td2" width="35%" id="ps_power" v-text="station_capacity">18.4MWp</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="siteMore_3 siteMorea">
+                        <div class="siteMore_tit clearfix">
+                            <em class="siteMore_tit_btn fl">
+                                <div class="psuser_image1" style="vertical-align:middle;padding-top:35px">
+                                </div>
+                            </em>
+                            <span class="fl siteMore_tit_txt">电站管理人员</span>
+                        </div>
+                        <div class="siteMore_3_con siteMore_div">
+                            <table class="siteMore_3_conTable lch-tableBorder" id="psBlock" width="100%">
+                                <tbody>
+                                <tr>
+                                    <td class="td5">电站管理员：</td>
+                                    <td class="td6">--</td>
+                                    <td class="td5">联系方式：</td>
+                                    <td class="td6">--</td>
+                                </tr>
+                                <tr>
+                                    <td class="td5">电站管理员：</td>
+                                    <td class="td6">--</td>
+                                    <td class="td5">联系方式：</td>
+                                    <td class="td6">--</td>
+                                </tr>
+                                <tr>
+                                    <td class="td5">电站管理员：</td>
+                                    <td class="td6">--</td>
+                                    <td class="td5">联系方式：</td>
+                                    <td class="td6">--</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/template" id="stationList">
+    <ul class="treeDemoId">
+        <% for(var i=0;i< newStationList.length; i++){ %>
+            <% if(i == 0){ %>
+                <li id="<%=newStationList[i].fd_station_code%>" class="on"
+                    data-fd_city="<%=newStationList[i].fd_city%>">
+                    <a href="javascript:;" title="<%=newStationList[i].fd_station_name%>">
+                        <%=newStationList[i].fd_station_name%>
+                    </a>
+                </li>
+            <% }else{ %>
+                <li id="<%=newStationList[i].fd_station_code%>"
+                    data-fd_city="<%=newStationList[i].fd_city%>">
+                    <a href="javascript:;" title="<%=newStationList[i].fd_station_name%>">
+                        <%=newStationList[i].fd_station_name%>
+                    </a>
+                </li>
+            <% } %>
+        <% } %>
+    </ul>
+</script>
+
+
+<script type="text/template" id="station_img_tpl">
+    <div class="siteMore_con_ri fr">
+        <div class="siteMore_con_ri_tit">
+            <ul class="clearfix">
+                <li class="on"></li>
+            </ul>
+        </div>
+        <div class="siteMore_con_ri_wrap"
+             style="width: 480px; position: relative; height: 350px;">
+            <div class="siteMore_con_ri_tog clearfix">
+                <div class="bd fl" id="bigPicture_bdContent">
+                    <div class="tempWrap">
+                        <ul class="clearfix" id="bigPicture">
+                            <%for(var i=0;i< imgLi.length; i++){ %>
+                            <li><a><img src="<%=imgLi[i]%>" alt=""></a></li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+                <div class="hd fr" id="smallPicture_hdContent">
+                    <a class="siteMore_con_ri_togprev"></a>
+
+                    <div class="tempWrap">
+                        <ul class="clearfix" id="smPicture">
+                            <%for(var i=0;i< imgLi.length; i++){ %>
+                            <li><a><img src="<%=imgLi[i]%>" alt=""></a></li>
+                            <% } %>
+                        </ul>
+                    </div>
+                    <a class="siteMore_con_ri_tognext"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/lib/ejs.js"></script>
+<script src="../resource/js/media.js"></script>
+<script src="../resource/js/common/esmpbase.js"></script>
+<script src="../resource/plugin/layer/layer.min.js"></script>
+<script src="../resource/js/jquery.SuperSlide.2.1.1.js"></script>
+<script src="../resource/plugin/jq-cookie/jquery-cookie.js"></script>
+<script src="../resource/js/allPsList/station_msg.js"></script>
+
+</body>
+</html>

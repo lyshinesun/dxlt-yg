@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>故障诊断</title>
+    <link rel="stylesheet" href="../resource/css/style_blue.css"/>
+    <link rel="stylesheet" href="../resource/css/style_2.0_blue.css"/>
+    <link rel="stylesheet" href="../resource/css/pager.css"/>
+    <link rel="stylesheet" href="../resource/css/fault.css"/>
+</head>
+<body>
+<div id="reportList" style="height: 100%;">
+    <!--------首页右下content-------->
+    <div id="map_wap_div" class="map_wap">
+        <div class="map_select clearfix single_no_show">
+            <div class="map_select clearfix">
+                <div class="map_select_wrap fl" style="height: auto;">
+                    <div class="hd" id="map_select_wraphd">
+                        <a href="javascript:;"><i class="map_seicon_1" title="电站名称"></i>
+                            <span class="secondnav_bg4">电站名称<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_2" title="装机功率"></i>
+                            <span class="secondnav_bg4">装机功率<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_3" title="类型"></i>
+                            <span class="secondnav_bg4">类型<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_4" title="并网时间"></i>
+                            <span class="secondnav_bg4">并网时间<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                        <a href="javascript:;"><i class="map_seicon_5" title="地址确定选择"></i>
+                            <span class="secondnav_bg4">地址确定选择<i class="secondnav_bgIcon2"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="contentDiv" class="map_con clearfix">
+            <div class="map_con_fl fl">
+                <div id="powerList" class="treeDemoId" style="height: 93%;">
+                    <!--<ul @click="getPerStation($event)">-->
+                    <!--<li id="gs" class="on"><a href="javascript:;" title="湖北广水II期20MW">湖北广水II期20MW</a></li>-->
+                    <!--<li id="lw"><a href="javascript:;" title="宁夏灵武50MW">宁夏灵武50MW</a></li>-->
+                    <!--<li id="jx"><a href="javascript:;" title="山东莒县40MW">山东莒县40MW</a></li>-->
+                    <!--<li id="hl"><a href="javascript:;" title="四川会理30MW">四川会理30MW</a></li>-->
+                    <!--</ul>-->
+                </div>
+                <div class="map_con_fl_page">
+                    <div class="map_con_fl_page_b" id="Pagination"><a class="fl pager_class_color prev"></a><a class="map_con_fl_pageprev fl prev"></a><a class="fl pager_class_color">1</a><a class="fl pager_class_color next"></a><a class="map_con_fl_pagenext fl next"></a></div>
+                </div>
+            </div>
+
+            <div class="tendency_ri fl clearfix" style="padding-bottom: 50px">
+
+                <div class="tendency_ri_tit clearfix">
+                    <div class="clearfix fl">
+                        <div class="inputbox fl">
+                            <input id="dateInput" type="text" value="" readonly="readonly" class="Wdate fl dateRange"
+                                   style="width: 140px; margin-right: 10px; cursor: pointer;">
+                        </div>
+                        <div class="inputbox fl" style="width:50px;">
+                            <input type="button" class="yg_sub" @click="getFaultList" value="查询">
+                        </div>
+                    </div>
+                    <!--end-->
+                    <div class="form_option fr">
+                        <a href="javascript:;" class="fr yg-daochu" @click="exportFaultList" style="margin-top:4px;">导出</a>
+                    </div>
+                </div>
+
+                <div class="report_box">
+                    <span id="report_name"></span>
+                    <span id="report_rl"></span>
+                </div>
+
+                <div class="task_sub_wrap" >
+                    <div class="task_head_wrap">
+                        <table class="task_table_head">
+                            <thead id="tableHead">
+                                <th class="fault_tr01">汇流箱编号</th>
+                                <th class="fault_tr02">方阵编号</th>
+                                <th class="fault_tr03">逆变器编号</th>
+                                <th class="fault_tr04">组串编号</th>
+                                <th class="fault_tr05">开始时间</th>
+                                <th class="fault_tr06">结束时间</th>
+                                <th class="fault_tr06">故障类型</th>
+                                <th>转工单</th>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="task_bot_table_wrap">
+                        <table class="task_table">
+                            <tbody id="dailyreportbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--分页-->
+                <div id="Paginationother" style="margin-right: 100px" class="pagination Page_other"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <input type="hidden" value="10" id="pageId">
+</div>
+
+<!--电站列表-->
+<script type="text/template" id="stationList">
+    <ul>
+        <% for(var i=0;i< newStationList.length; i++){ %>
+        <% if(i == 0){ %>
+        <li id="<%=newStationList[i].fd_station_code%>" class="on"
+            data-fd_city="<%=newStationList[i].fd_city%>">
+            <a href="javascript:;" title="<%=newStationList[i].fd_station_name%>">
+                <%=newStationList[i].fd_station_name%>
+            </a>
+        </li>
+        <% }else{ %>
+        <li id="<%=newStationList[i].fd_station_code%>"
+            data-fd_city="<%=newStationList[i].fd_city%>">
+            <a href="javascript:;" title="<%=newStationList[i].fd_station_name%>">
+                <%=newStationList[i].fd_station_name%>
+            </a>
+        </li>
+        <% } %>
+        <% } %>
+    </ul>
+</script>
+
+
+<!--故障模板-->
+<script type="text/template" id="stationDefault_tpl">
+    <% for(var i=0;i< faultArr.length; i++){%>
+    <tr>
+        <% if(faultArr[i].boxNum != null){ %>
+            <td class="fault_tr01"><%=faultArr[i].boxNum%></td>
+        <% }else{ %>
+            <td class="fault_tr01">--</td>
+        <% } %>
+        <td class="fault_tr02"><%=faultArr[i].matrix%></td>
+        <td class="fault_tr03"><%=faultArr[i].inverterNum%></td>
+        <td class="fault_tr04"><%=faultArr[i].stringNum%></td>
+        <td class="fault_tr05"><%=faultArr[i].startTime%></td>
+        <td class="fault_tr06"><%=faultArr[i].endTime%></td>
+        <td class="fault_tr06"><%=faultArr[i].fdDesc%></td>
+        <td >
+            <button class="turnOrder">转工单</button>
+            <button class="identify" style="margin-left: 10px">验证</button>
+            <input type="hidden" id="psName" value="<%=faultArr[i].ps%>">
+            <input type="hidden" id="psCode" value="<%=faultArr[i].psCode%>">
+            <input type="hidden" id="faultCode" value="<%=faultArr[i].faultCode%>">
+            <input type="hidden" id="alarmLevel" value="<%=faultArr[i].alarmLevel%>">
+            <input type="hidden" id="fdOrderState" value="<%=faultArr[i].fdOrderState%>">
+            <input type="hidden" id="matrix" value="<%=faultArr[i].matrix%>">
+            <input type="hidden" id="inverterNum" value="<%=faultArr[i].inverterNum%>">
+            <input type="hidden" id="fdDesc" value="<%=faultArr[i].fdDesc%>">
+            <input type="hidden" id="faultId" value="<%=faultArr[i].id%>">
+        </td>
+    </tr>
+    <% }%>
+
+</script>
+
+
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/lib/ejs.js"></script>
+<script src="../resource/js/common/base.js"></script>
+<script src="../resource/js/common/esmpbase.js"></script>
+<script src="../resource/plugin/layer/layer.min.js"></script>
+<script src="../resource/plugin/My97DatePicker/WdatePicker.js"></script>
+<script src="../resource/js/media.js"></script>
+<script src="../resource/js/common/common_zh_CN.js"></script>
+<script src="../resource/js/common/DateUtil.js"></script>
+<script src="../resource/plugin/pager/pager.js"></script>
+<script src="../resource/js/common/table_header.js"></script>
+<script src="../resource/plugin/jq-cookie/jquery-cookie.js"></script>
+<script src="../resource/plugin/validate/jquery.validate.js"></script>
+<script src="../resource/js/power_diagnose/power_diagnose.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title>告警管理弹窗</title>
+    <link rel="stylesheet" href="../resource/plugin/layer/skin/default/layer.css"/>
+    <link rel="stylesheet" href="../resource/css/style1.0.css"/>
+</head>
+<body>
+
+<div id="cancelTicket" class="report_dialog" style="display:block">
+
+    <form action="" id="searchConditionsForm">
+        <div class="report_con1">
+            <p><label for="">故障名称</label><input type="text" class="" readonly="readonly" id="confirmfaultName" name="" value="" style="width: 200px;text-overflow:ellipsis;">
+                <input type="hidden" value="" name="" id="fault_codeId"/>
+            </p>
+            <p><label for="">故障编号</label><input type="text" class="" readonly="readonly" id="confirmfaultCode" name="" value="" style="width: 250px;text-overflow:ellipsis;" ></p>
+            <p><label for="">提醒人员</label><select name="warn_person" id="manage_man"></select></p>
+            <p id="warn_styles"><label for="">提醒方式</label>
+                <input type="checkbox" name="warn_routes" value="1"  checked="">PC&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" name="warn_routes" value="2"  checked="">短信&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" name="warn_routes" value="3"  checked="">邮件&nbsp;</p>
+            <p><label for="">处理意见</label><textarea id="opinion" cols="30" rows="10" class="report_con1_textarea" name="params.opinion"></textarea></p>
+        </div>
+    </form>
+    <a href="javascript:;" class="report_btn" @click="ticket_sure()">确认</a>
+</div>
+
+</body>
+
+
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/powerManage/cancel_ticket.js"></script>
+</html>
+
+
