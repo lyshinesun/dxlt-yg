@@ -390,13 +390,13 @@
 
 <script type="tetx/template" id="station_filter_tpl">
     <%for(var i=0;i< newStationList.length; i++){ %>
-    <% if(i==4){ %>
-    <li id="<%=newStationList[i].fd_station_code.toLowerCase()%>" class="on">
-        <a href="javascript:;" title="<%=newStationList[i].fd_station_name%>" class="sta_tit"><%=newStationList[i].fd_station_name%></a>
+    <% if(i==0){ %>
+    <li id="<%=newStationList[i].fdStationCode.toLowerCase()%>" class="on">
+        <a href="javascript:;" title="<%=newStationList[i].fdStationName%>" class="sta_tit"><%=newStationList[i].fdStationName%></a>
     </li>
     <%}else{ %>
-    <li id="<%=newStationList[i].fd_station_code.toLowerCase()%>">
-        <a href="javascript:;" title="<%=newStationList[i].fd_station_name%>" class="sta_tit"><%=newStationList[i].fd_station_name%></a>
+    <li id="<%=newStationList[i].fdStationCode.toLowerCase()%>">
+        <a href="javascript:;" title="<%=newStationList[i].fdStationName%>" class="sta_tit"><%=newStationList[i].fdStationName%></a>
     </li>
     <%} %>
     <%} %>

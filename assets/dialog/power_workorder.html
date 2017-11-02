@@ -62,33 +62,32 @@
                 <div class="map_con_fl fl">
                     <div id="psDetail">
                         <div id="basecolor" class="basecolor" style="display: none"></div>
+                        <!-- <ul class="treeDemoId" @click="changeStation($event)">
+                            <li v-for="station in stationList" :id="station.fdStationCode" :class="station.fdStationCode == stationId ? 'on' : ''" >
+                            <a href="javascript:;" class="sta_tit" :title="station.fdStationName" v-text="station.fdStationName"></a>
+                            </li>
+                        </ul> -->
                         <ul class="treeDemoId">
                             <li id="lp108816" class="on">
                                 <a href="#" onclick="workOrder.treeAction(this)" title="湖北广水I期20MW">湖北广水I期20MW</a>
-                                <input type="hidden" class="psId" value="gs"><input type="hidden" class="psName"
-                                                                                        value="湖北广水I期20MW">
+                                <input type="hidden" class="psId" value="gs"><input type="hidden" class="psName" value="湖北广水I期20MW">
                                 <ul id="power_sec_Ul" class="ztree"></ul>
                             </li>
                             <li id="lp109189" class="">
                                 <a href="#" onclick="workOrder.treeAction(this)" title="宁夏灵武50MW">宁夏灵武50MW</a>
-                                <input type="hidden" class="psId" value="lw"><input type="hidden" class="psName"
-                                                                                        value="宁夏灵武50MW">
+                                <input type="hidden" class="psId" value="lw"><input type="hidden" class="psName" value="宁夏灵武50MW">
                                 <ul id="tps109189" class="ztree" style="display:none;"></ul>
                             </li>
                             <li id="lp109190" class="">
                                 <a href="#" onclick="workOrder.treeAction(this)" title="山东莒县40MW">山东莒县40MW</a>
-                                <input type="hidden" class="psId" value="jx"><input type="hidden" class="psName"
-                                                                                        value="山东莒县40MW">
+                                <input type="hidden" class="psId" value="jx"><input type="hidden" class="psName" value="山东莒县40MW">
                                 <ul id="tps109190" class="ztree" style="display:none;"></ul>
                             </li>
                             <li id="lp109192" class="">
                                 <a href="#" onclick="workOrder.treeAction(this)" title="四川会理30MW">四川会理30MW</a>
-                                <input type="hidden" class="psId" value="hl"><input type="hidden" class="psName"
-                                                                                        value="四川会理30MW">
+                                <input type="hidden" class="psId" value="hl"><input type="hidden" class="psName" value="四川会理30MW">
                                 <ul id="tps109192" class="ztree" style="display:none;"></ul>
                             </li>
-
-
                         </ul>
                         <input id="totalCount" type="hidden" value="4">
                     </div>

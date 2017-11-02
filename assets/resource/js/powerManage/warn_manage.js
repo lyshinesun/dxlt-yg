@@ -191,7 +191,6 @@ var vm = new Vue({
                 Parameters.parameters.fd_dev_id = id;
                 Parameters.parameters.fd_isdata = isdata;
             }
-
             vlm.loadJson("", JSON.stringify(Parameters), function (res) {
                 var zNodes = res.data;
                 var newNodes = [];
@@ -844,7 +843,7 @@ var vm = new Vue({
         },
 
         //获取电站列表
-        getAllStation: function () {
+        /*getAllStation: function () {
             var _this = this;
             var Parameters = {
                 "parameters": {"stationid": "", "statusstr": ""},
@@ -923,6 +922,33 @@ var vm = new Vue({
                 }
 
             });
+        },*/
+        /*获取电站列表*/
+        getStations: function (res) {
+            var _this = this
+            _this.newStationList = res.list
+
+            var stationList_tpl = $('#station_filter_tpl').html();
+            var stationStr = ejs.render(stationList_tpl, {newStationList: _this.newStationList});
+            $('#station_per_ul').html(stationStr);
+
+            $('#station_per_ul .sta_tit').click(function(e){
+                //更换左侧列表电站
+                $('#station_per_ul >li').removeClass('on');
+                if (!$(this).parent().hasClass('on')) {
+                    $(this).parent().addClass('on');
+                    _this.stationId = $(this).parent().attr('id');
+                    _this.fd_dev_id = "";
+                    _this.firstTreeFlag = true; //重置首次树boolean
+                    $('.ztree').remove(); //清空ztree
+                    _this.showTree(_this.stationId, '0');
+                }
+                _this.curOtherPage = 1;
+                _this.search();
+            });
+            //写死
+            _this.stationId = _this.newStationList[0].fdStationCode.toLowerCase();
+            _this.loadPage();  //初始化页面
         },
 
         loadPage:function(){
@@ -935,8 +961,8 @@ var vm = new Vue({
     }
     ,
     mounted: function () {
-
-        this.getAllStation(); //获取电站列表
+        vlm.getConnectedStations(this.getStations)
+        // this.getAllStation(); 
     }
 });
 

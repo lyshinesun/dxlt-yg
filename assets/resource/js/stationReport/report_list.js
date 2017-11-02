@@ -1,6 +1,7 @@
 new Vue({
     el: '#reportList',
     data: {
+        stationList:[],
         stationId: 'gs', //电站id
         fd_dev_id: '', // 设备id
         reportType: 'day',  //报表日期类型  day  month year
@@ -38,6 +39,11 @@ new Vue({
                 }
             });
 
+        },
+
+        getStations: function (res) {
+            var _this = this
+            _this.stationList = res.list
         },
 
         //更换左侧列表电站
@@ -216,10 +222,9 @@ new Vue({
                 });
             }
             //  设置表格单元格宽度
-//	$("#tableHead").find("th").each(function(i){
+            //	$("#tableHead").find("th").each(function(i){
             //	$(this).width(tableThSizeArray[i]);
-//	});
-
+            //	});
         },
 
         //获取报表数据
@@ -391,6 +396,7 @@ new Vue({
     },
     mounted: function () {
         this.loadPage();   //加载页面
+        vlm.getConnectedStations(this.getStations)
     }
 });
 

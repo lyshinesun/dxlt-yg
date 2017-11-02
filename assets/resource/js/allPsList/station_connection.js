@@ -25,6 +25,11 @@ new Vue({
             $('#map_wap_div').height($(window).height() - 80);
             $('.map_con_fl').height($(window).height() - 80);
             $('#svg_change_color').height($('#map_wap_div').height() - 60);
+            $(window).resize(function () {
+                $('#map_wap_div').height($(window).height() - 80);
+                $('.map_con_fl').height($(window).height() - 80);
+                $('#svg_change_color').height($('#map_wap_div').height() - 60);
+            });
 
             var boxrightWidth = $(".boxlists-right").width();
             var box1Width = $(".boxt1:eq(0)").width();
@@ -38,7 +43,7 @@ new Vue({
 
             this.initColor();
 
-        },。
+        },
 
         initColor: function () {
             var _this = this;
@@ -70,7 +75,6 @@ new Vue({
         getPerSvg: function (e) {
             var target = null;
             if (e == 1) {
-
             } else {
                 if ($(e.target)[0].tagName == 'A') {
                     target = $(e.target).parent();
@@ -149,7 +153,6 @@ new Vue({
 
             for (var i = 0; i < result.length; i++) {
                 if (result[i].fd_html_type == 1) { //boolean 显示隐藏
-
                     if (result[i].fd_value == 0) {
                         var showId = result[i].fd_html_id + '_0';
                         var hideId = result[i].fd_html_id + '_1';
@@ -159,7 +162,6 @@ new Vue({
                                 node.getElementById(hideId).style.display = "none";
                             }
                         }
-
                     } else if (result[i].fd_value == 1) {
                         var showId = result[i].fd_html_id + '_' + result[i].fd_value;
                         var hideId = result[i].fd_html_id + '_0';
