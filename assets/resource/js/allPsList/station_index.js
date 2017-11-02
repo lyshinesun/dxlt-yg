@@ -51,13 +51,11 @@ var index = {
 new Vue({
     el: '#singleDet',
     data: {
-
-        stationId: 'gs',
+        stationId: '',
         firstStationName:'',
 
         faultChart: null,
         refreshInterval: null,
-
 
         fd_all_power_day: '--',    //今日发电
         fd_all_pw: '--',           //当前功率
@@ -84,8 +82,10 @@ new Vue({
         fdboardtemperature: '--',  //环境温度
         fdtemperature: '--', //电池板温度
 
-        newStationList: [] //电站列表
+        newStationList: [],//电站列表
 
+        psPr: 0, //电站pr值
+        prDateStr: '' // 获取当天pr值的时期 eg.2017-11-03
     },
     methods: {
         searchStation: function () {
@@ -180,6 +180,7 @@ new Vue({
                     var stationList_tpl = $('#station_filter_tpl').html();
                     var stationStr = ejs.render(stationList_tpl, {newStationList: _this.newStationList});
                     $('#station_per_ul').html(stationStr);
+                    _this.loadAllMsg()
                 }
             });
         },
@@ -187,7 +188,8 @@ new Vue({
         loadAllMsg: function () {
             this.loadPowerTrendData($("#selqushi").val()); //动态加载发电趋势当日1，当月2，当年3
             this.writeData(); //逆变器发电分析、当年发电计划
-            this.getPsDetailInfo1(); //电池板温度、PR
+            this.getPsDetailInfo1(); //电池板温度
+            this.getDayPr(); //pr值
             this.loadWeather(); //天气预报
             this.loadWarn();       //告警
         },
@@ -251,7 +253,7 @@ new Vue({
                     "starttime": startDateStr,
                     "endtime": endDateStr,
                     "topn": "300",
-                    "stationid": $('.selected_span').attr('data-selCode')
+                    "stationid": _this.stationId
                 },
                 "foreEndType": 2,
                 "code": "20000005"
@@ -267,7 +269,6 @@ new Vue({
                     index.ptChart.hideLoading();
                 }
             });
-
         },
 
         //当年发电计划发送请求
@@ -329,20 +330,22 @@ new Vue({
                         } else if (index.genPlanDateType == 1) {
 
                             var max_month = Number(new Date().getMonth());
-
-                            for (var i = 1; i <= 12; i++) {
-                                planData.push(planArray[i-1].fd_sched_power_mon.toFixed(2)); //每个月发电计划
-                                xData.push(planArray[i-1].fd_year+'/'+planArray[i-1].fd_month);
-                                if (i-1 <= max_month) {
-                                    newActualData.push(planArray[i-1].datapower.toFixed(2));    //当月实际发电
-                                    completionRt.push(planArray[i-1].fd_scheduledata.toFixed(2));    //累计计划完成率
-                                    scheduledata_avg.push(planArray[i-1].fd_scheduledata_avg.toFixed(2));    //当月计划完成率
-                                } else {
-                                    newActualData.push('--');    //每个月实际发电
-                                    completionRt.push('--');    //累计计划完成率
-                                    scheduledata_avg.push('--');    //当月计划完成率
-                                }
+                            if (planArray[i-1]) {
+                                for (var i = 1; i <= 12; i++) {
+                                    planData.push(planArray[i-1].fd_sched_power_mon.toFixed(2)); //每个月发电计划
+                                    xData.push(planArray[i-1].fd_year+'/'+planArray[i-1].fd_month);
+                                    if (i-1 <= max_month) {
+                                        newActualData.push(planArray[i-1].datapower.toFixed(2));    //当月实际发电
+                                        completionRt.push(planArray[i-1].fd_scheduledata.toFixed(2));    //累计计划完成率
+                                        scheduledata_avg.push(planArray[i-1].fd_scheduledata_avg.toFixed(2));    //当月计划完成率
+                                    } else {
+                                        newActualData.push('--');    //每个月实际发电
+                                        completionRt.push('--');    //累计计划完成率
+                                        scheduledata_avg.push('--');    //当月计划完成率
+                                    }
+                                } 
                             }
+                            
                         }
 
                         _this.drawPowerPlanChart(dealEchartBarArr(newActualData), dealEchartBarArr(planData), unit, xData, dealEchartLineArr(completionRt), scheduledata_avg);
@@ -568,7 +571,7 @@ new Vue({
                     "starttime": startDateStr,
                     "endtime": endDateStr,
                     "topn": "1000",
-                    "stationid": $('.selected_span').attr('data-selCode'),
+                    "stationid": _this.stationId,
                     "devid": "",
                     "ischild": "1"
                 },
@@ -734,13 +737,31 @@ new Vue({
             this.loadPlanChart();
 
         },
-
-        //电站温度、PR
+        // 获取电站的pr值，新接口
+        getDayPr: function () {
+            var _this = this
+            psid = _this.stationId
+            $.ajax({
+                url: vlm.serverAddr + "stationInfo/getPerSort",
+                type: "get",
+                dataType: "json",
+                data: {
+                    "date": _this.prDateStr,
+                    "type": 6,
+                    "psid": psid,         //电站id
+                },
+                success: function (res) {
+                    _this.psPr = res.list[0].pr
+                    _this.showCurrentDayPrfu(_this.psPr);
+                }
+            });
+        },
+        //电站温度
         getPsDetailInfo1: function () {
             var _this = this,
                 Parameters = {
                     "parameters": {
-                        "stationid": $('.selected_span').attr('data-selCode')
+                        "stationid": _this.stationId
                     },
                     "foreEndType": 2,
                     "code": "20000010"
@@ -769,17 +790,13 @@ new Vue({
                     _this.fdtemperature = result.fdtemperature.toFixed(1);
                     _this.loadWeather(result.fd_city); //天气调用
 
-
-                    // _this.showYesterDayPrfu(result.pr);//累计PR
-                    _this.showYesterDayPrfu(82.5);//累计PR  写死
-
                 } else {
                     //alert(result.message+1);
                 }
             });
         },
 
-        showYesterDayPrfu: function (val) {
+        showCurrentDayPrfu: function (val) {
             if ($.isNumeric(val)) {
                 val = parseInt(val);
             }
@@ -956,7 +973,7 @@ new Vue({
 
             var Parameters = {
                 "parameters": {
-                    "stationid": $('.selected_span').attr('data-selCode')
+                    "stationid": _this.stationId
                 },
                 "foreEndType": 2,
                 "code": "20000012"
@@ -1701,9 +1718,11 @@ new Vue({
     },
     mounted: function () {
         var _this = this;
+        var dates = new Date()
+        _this.prDateStr = dates.getFullYear() + '-' + (dates.getMonth() + 1) + '-' + dates.getDate(),
         $('#dateInput').val(vlm.Utils.getTrueDate(this.reportType)); //初始化时间
         this.getAllStation(); //获取电站列表
-        this.loadAllMsg();
+        // this.loadAllMsg();
 
         //定时刷新
         //clearInterval(this.refreshInterval);
@@ -1731,6 +1750,8 @@ new Vue({
                 readOnly: true,
                 onpicking: function (dp) {
                     $("#dateInput").val(dp.cal.getNewDateStr());
+                    _this.prDateStr = dp.cal.getNewDateStr().replace(/\//g,"-")
+                    _this.getDayPr();
                     _this.loadPowerTrendData($("#selqushi").val());
                 }
             });
