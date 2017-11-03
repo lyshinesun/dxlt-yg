@@ -59,6 +59,8 @@ new Vue({
         getStations: function (res) {
             var _this = this
             _this.stationList = res.list
+            _this.stationId = _this.stationList[0].fdStationCode
+            this.loadPage();//加载页面
         },
 
         //更换左侧列表电站
@@ -895,15 +897,15 @@ new Vue({
             this.initPageSize();   //初始化尺寸
             this.initTime();   //初始化input 时间
             this.initchart();   //初始化chart
-            this.showTree('gs', '0');   //左侧tree
+            this.showTree(this.stationId, '0');   //左侧tree
             this.showTable();   //右侧table
         }
 
     },
     mounted: function () {
-        this.loadPage();//加载页面
         // this.getStations()   
         vlm.getConnectedStations(this.getStations)
+
     }
 });
 

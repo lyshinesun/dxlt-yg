@@ -1261,8 +1261,8 @@ new Vue({
             //初始化chart
             this.initchart();
             //展示tree
-            //this.showTree(this.stationId, '0');   //tree  根节点id  '0'首次默认不是数据
-            this.showTree('gs', '0');   //tree  根节点id  '0'首次默认不是数据
+            this.showTree(this.stationId, '0');   //tree  根节点id  '0'首次默认不是数据
+            /*this.showTree('gs', '0');*/   //tree  根节点id  '0'首次默认不是数据
         },
 
         //获取电站列表

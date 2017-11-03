@@ -3,7 +3,7 @@ new Vue({
     el: '#stationInverter',
     data: {
         stationList:[],
-        stationId: 'GS', //电站id
+        stationId: '', //电站id
         fd_dev_id: '', // 设备id
         firstTreeFlag: true,  //是否是一级树
 
@@ -59,6 +59,8 @@ new Vue({
         getStations: function (res) {
             var _this = this
             _this.stationList = res.list
+            _this.stationId = _this.stationList[0].fdStationCode
+            _this.loadPage();   //加载页面
         },
         //更换左侧列表电站
         changeStation: function (e) {
@@ -909,7 +911,7 @@ new Vue({
             this.initPageSize();   //初始化尺寸
             this.initTime();   //初始化input 时间
             this.initchart();   //初始化chart
-            this.showTree('gs','0');   //左侧tree
+            this.showTree(this.stationId,'0');   //左侧tree
             this.showTable();   //右侧table
         },
         // 判断是否是由电站首页点击逆变器chart进入给页面
@@ -922,7 +924,7 @@ new Vue({
         }
     },
     mounted: function () {
-        this.loadPage();   //加载页面
+        
         vlm.getConnectedStations(this.getStations)
     }
 });

@@ -110,7 +110,6 @@ new Vue({
                         var result = res.data;
                         //电站简介
                         $('#ps_des').html(result.fd_station_desc);
-
                         //图片展示
                         if (result.fd_station_pic && result.fd_station_pic.length) {
                             var imgLi = result.fd_station_pic;
