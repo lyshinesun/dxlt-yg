@@ -18,6 +18,8 @@ new Vue({
         getStations: function (res) {
             var _this = this
             _this.stationList = res.list
+            _this.stationId = _this.stationList[0].fdStationCode
+            _this.stationName = _this.stationList[0].fdStationName
         },
         //初始化页面尺寸
         initPageSize: function () {
@@ -225,47 +227,55 @@ new Vue({
             var obj = document.createElement("embed");
             obj.id = "mySVG";
             obj.setAttribute("type", "image/svg+xml");
-            obj.setAttribute("src", this.svgPath + this.stationId.toLowerCase() + '.svg');
-            var wid = $("#svg_change_color").width();
-            var hig = $("#svg_change_color").height();
-            obj.setAttribute("style", "width:" + wid + "px;height:" + hig + "px");
-            var container = document.getElementById("svgDiv");
-            container.innerHTML = "";
-            if (this.fileExistFlag) {
-                container.appendChild(obj);
-                clearSetInterval = setInterval(function () {
-                    var svgdoc, root;
-                    svgdoc = document.getElementById("mySVG");
-                    root = svgdoc.getSVGDocument();
-                    if (svgdoc != null && root != null) {
-                        clearInterval(clearSetInterval);
-                        obj.addEventListener("load", _this.loopSelectDetail(result), false);
+            if (this.stationId == 'GS' || this.stationId == 'gs') {
+                obj.setAttribute("src", this.svgPath + this.stationId.toLowerCase() + '.svg');
+                var wid = $("#svg_change_color").width();
+                var hig = $("#svg_change_color").height();
+                obj.setAttribute("style", "width:" + wid + "px;height:" + hig + "px");
+                var container = document.getElementById("svgDiv");
+                container.innerHTML = "";
+                if (this.fileExistFlag) {
+                    container.appendChild(obj);
+                    clearSetInterval = setInterval(function () {
+                        var svgdoc, root;
+                        svgdoc = document.getElementById("mySVG");
+                        root = svgdoc.getSVGDocument();
+                        if (svgdoc != null && root != null) {
+                            clearInterval(clearSetInterval);
+                            obj.addEventListener("load", _this.loopSelectDetail(result), false);
+                        }
+                    }, 1000);
+                }
+                this.toggleNoSvgMessage();
+                //点击全屏
+                $("#change_size").unbind().bind('click', function () {
+                    if (_this.fullScreenflag) {
+                        _this.closeExpand();
+                    } else {
+                        _this.expand();
                     }
-                }, 1000);
+
+                });
+
+                //键盘“Esc”出发消失
+                $(document).keyup(function (event) {
+                    if (this.fullScreenflag == true) {
+                        switch (event.keyCode) {
+                            case 27:
+                                this.closeExpand();
+                                break;
+                            case 96:
+                                break;
+                        }
+                    }
+                });
+            } else {
+                parent.layer.open({
+                    title: '提示',
+                   content: '暂未接入数据'
+                })
             }
-            this.toggleNoSvgMessage();
-            //点击全屏
-            $("#change_size").unbind().bind('click', function () {
-                if (_this.fullScreenflag) {
-                    _this.closeExpand();
-                } else {
-                    _this.expand();
-                }
-
-            });
-
-            //键盘“Esc”出发消失
-            $(document).keyup(function (event) {
-                if (this.fullScreenflag == true) {
-                    switch (event.keyCode) {
-                        case 27:
-                            this.closeExpand();
-                            break;
-                        case 96:
-                            break;
-                    }
-                }
-            });
+            
         },
 
 
@@ -325,9 +335,7 @@ new Vue({
         },
 
         closeExpand: function () {
-
             $('#right2', parent.document).width(this.a).height(this.A);
-
             $('#map_wap_div, #tendencyDiv').height(this.b);
             $('#index_frame', parent.document).height(this.c);
             $('.index_top', parent.document).show();
@@ -362,8 +370,8 @@ new Vue({
     mounted: function () {
 
         this.initPageSize(); //初始化页面尺寸
-        this.getSvgMsg(); //getSvg
         vlm.getConnectedStations(this.getStations)
+        this.getSvgMsg(); //getSvg
     }
 })
 ;
