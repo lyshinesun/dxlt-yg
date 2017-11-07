@@ -8746,7 +8746,6 @@ table.hoverclass tbody tr:hover {
 .webuploader-pick-hover {
     background: #3d88c2 !important;
 }
-
 .WdateDiv .dpButton {
     margin-left: 2px;
     line-height: 16px;
@@ -9625,7 +9624,9 @@ table thead th {
     background: none;
     text-align: left;
 }
-
+.allsite_listTit {
+    width: 99.7%
+}
 #detailList .allsite_listTit td,
 .allsite_list_td td {
     height: 59px;
@@ -10158,6 +10159,7 @@ table tr td {
 
 .dateRange {
     margin-right: 0px !important;
+    margin-left: 10px
 }
 
 .groupstyle td {

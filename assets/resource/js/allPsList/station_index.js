@@ -1699,8 +1699,6 @@ new Vue({
             return woption;
         }
         ,
-
-
         //发电趋势页面点击事件
         powerTrendDateType: function (e) {
             index.powerType = $(e.target).attr('data-dateType');

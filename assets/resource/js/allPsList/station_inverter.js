@@ -59,7 +59,12 @@ new Vue({
         getStations: function (res) {
             var _this = this
             _this.stationList = res.list
-            _this.stationId = _this.stationList[0].fdStationCode
+            if (window.parent.stationId) {
+                /*从电站列表跳到逆变器*/
+                _this.stationId = window.parent.stationId
+            } else {
+                _this.stationId = _this.stationList[0].fdStationCode
+            }
             _this.loadPage();   //加载页面
         },
         //更换左侧列表电站

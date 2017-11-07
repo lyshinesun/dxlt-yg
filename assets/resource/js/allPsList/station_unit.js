@@ -2,7 +2,7 @@ new Vue({
     el: '#stationUnit',
     data: {
         stationList:[],
-        stationId: 'GS', //电站id
+        stationId: '', //电站id
         fd_dev_id: '', // 设备id
         firstTreeFlag: true,  //是否是一级树
 
@@ -59,7 +59,12 @@ new Vue({
         getStations: function (res) {
             var _this = this
             _this.stationList = res.list
-            _this.stationId = _this.stationList[0].fdStationCode
+            if (window.parent.stationId) {
+                /*从电站列表跳到电站单元*/
+                _this.stationId = window.parent.stationId
+            } else {
+                _this.stationId = _this.stationList[0].fdStationCode
+            }
             this.loadPage();//加载页面
         },
 
@@ -234,6 +239,7 @@ new Vue({
         //右侧table
         showTable: function () {
             var _this = this;
+            _this.hasStationId()
             var startStr = $('#new_datetimepicker_mask').val().replace(/[/*]/g, '').substring(0, 8) + '000000';
             var endStr = $('#new_datetimepicker_mask').val().replace(/[/\s:*]/g, '') + '00';
             var Parameters = {
@@ -608,7 +614,7 @@ new Vue({
             this.optionCapacity.color.push(color);
             var startStr = $('#new_datetimepicker_mask').val().replace(/[/*]/g, '').substring(0, 8) + '000000';
             var endStr = $('#new_datetimepicker_mask').val().replace(/[/\s:*]/g, '') + '00';
-
+            _this.hasStationId()
             var Parameters = {
                 "parameters": {
                     "ctype": "2",
@@ -778,7 +784,7 @@ new Vue({
                                 break;
                             }
                         }
-                    });
+                    })
                     _this.myPowerChart.setOption(_this.optionPower);
                     layer.closeAll();
                 }
@@ -899,13 +905,19 @@ new Vue({
             this.initchart();   //初始化chart
             this.showTree(this.stationId, '0');   //左侧tree
             this.showTable();   //右侧table
+        },
+        // 判断是否是由电站首页点击逆变器chart进入给页面,由于getStaions的异步影响，先做判断
+        hasStationId: function () {
+            var _this = this
+            if (window.parent.stationId) {
+                _this.stationId = window.parent.stationId
+                window.parent.stationId = undefined
+            }
         }
-
     },
     mounted: function () {
         // this.getStations()   
         vlm.getConnectedStations(this.getStations)
-
     }
 });
 

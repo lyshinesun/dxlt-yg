@@ -1,9 +1,51 @@
 new Vue({
     el: '#power_list',
     data: {
-        stationId:'gs'
+        // stationId:'',
+        currentDate: '',
+        stationList:[],
+        totalCount:0
     },
     methods: {
+        gotoStationUnit: function(stationCode) {
+            window.parent.stationId = stationCode
+            top.location.hash = '#station_unit';
+            $('#index_frame', parent.document).attr('src', 'dialog/station_unit.html');
+        },
+        datePicker: function () {
+            var _this = this
+            //绑定picker
+            $('#new_datetimepicker_mask').click(function () {
+                WdatePicker({
+                    isShowToday: false,
+                    dateFmt: 'yyyy-MM-dd',
+                    isShowClear: false,
+                    isShowOK: true,
+                    isShowToday: false,
+                    readOnly: true,
+                    maxDate: '%y-%M-%d',
+                    onpicked: function (dp) {
+                        //alert(dp.cal.getNewDateStr());
+                        $("#new_datetimepicker_mask").val(dp.cal.getNewDateStr());
+                        _this.currentDate = dp.cal.getNewDateStr()
+                        _this.getStationList()
+                    }
+                })
+
+            });
+        },
+        initTime: function () {
+            var _this = this;
+            var now = new Date();
+            // var min = now.getMinutes() >= 10 ? now.getMinutes() : ("0" + now.getMinutes());
+            var mon = (now.getMonth() + 1) >= 10 ? (now.getMonth()  + 1) : ("0" + (now.getMonth() + 1));
+            var date = now.getDate() >= 10 ? now.getDate() : ("0" + now.getDate());
+            // var hour = now.getHours() >= 10 ? now.getHours() : ("0" + now.getHours());
+            /*min = getFiveMinutes(min);*/ //取整五分钟
+            _this.currentDate = now.getFullYear() + "-" + mon + "-" + date;
+            $("#new_datetimepicker_mask").val(_this.currentDate);
+        },
+
         initSize: function () {
             $('#contentDiv').height($(window).height() - 100);
             $(window).resize(function () {
@@ -11,7 +53,7 @@ new Vue({
             });
         },
 
-        getStationList: function () {
+        /*getStationList: function () {
 
             var dates = new Date(),
                 _this = this,
@@ -79,12 +121,35 @@ new Vue({
                 }
 
             });
+        },*/
+        getStationList: function () {
+            var _this = this
+            //获取用户权限电站
+            $.ajax({
+                type: "get",
+                url: vlm.serverAddr + "stationbaseinfo/getPsListData",
+                data: {
+                    "logDate": _this.currentDate
+                },
+                dataType: "json",
+                success: function (res) {
+                    if (res.code == 0) {
+                        _this.totalCount = res.list.length
+                        _this.stationList = res.list
+                    }
+                }
+
+            });
         }
     },
     mounted: function () {
-        this.initSize();
-        this.getStationList();
-
+        this.initSize()
+        this.initTime()
+        this.getStationList()
+        this.datePicker()
+    },
+    created: function () {
+        
     }
 });
 

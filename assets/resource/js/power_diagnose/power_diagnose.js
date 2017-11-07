@@ -36,7 +36,7 @@ var vm = new Vue({
         },
 
         //获取电站列表
-        getAllStation: function () {
+        /*getAllStation: function () {
             var _this = this;
             var Parameters = {
                 "parameters": {"stationid": "", "statusstr": ""},
@@ -104,8 +104,24 @@ var vm = new Vue({
                 }
 
             });
+        },*/
+        /*获取电站列表*/
+        getAllStation: function (res) {
+            var _this = this
+            _this.newStationList = res.list
+            _this.stationId = _this.newStationList[0].fdStationCode.toLowerCase()
+            var stationList_tpl = $('#stationList').html();
+            var stationStr = ejs.render(stationList_tpl, {newStationList: _this.newStationList});
+            $('#powerList').html(stationStr);
+            $('#powerList li').click(function () {
+                $(this).addClass('on').siblings().removeClass('on');
+                _this.stationId = $(this).attr('id');
+                _this.getFaultList();
+            });
+            _this.initTime()
+            _this.getFaultList();
+            this.loadPage();//加载页面
         },
-
 
         //绑定datepicker
         bindPicker: function () {
@@ -152,7 +168,6 @@ var vm = new Vue({
                     //"psid": 'gs'		  //电站id
                 },
                 success: function (res) {
-                    console.log(res);
                     layer.closeAll();
                     if (res.code == 0) {
                         var faultArr = res.page.list;
@@ -354,19 +369,18 @@ var vm = new Vue({
         //加载页面
         loadPage: function () {
             this.initPageSize();   //初始化尺寸
-            this.initTime();   //初始化input 时间
-            this.getAllStation();   //获取电站列表
+            /*this.initTime();*/   //初始化input 时间
         }
 
     },
     mounted: function () {
-        this.loadPage();   //加载页面
+        vlm.getConnectedStations(this.getAllStation)
     }
 });
 
-function doChangePage() {
+/*function doChangePage() {
     $('#pageId').val($("#pageNum option:selected").val())
     vm.sizePage = $("#pageNum option:selected").val();
     vm.curOtherPage = 1;
     vm.getFaultList();
-}
+}*/

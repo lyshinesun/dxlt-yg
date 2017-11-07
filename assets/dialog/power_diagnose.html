@@ -112,24 +112,23 @@
     <ul>
         <% for(var i=0;i< newStationList.length; i++){ %>
         <% if(i == 0){ %>
-        <li id="<%=newStationList[i].fd_station_code%>" class="on"
-            data-fd_city="<%=newStationList[i].fd_city%>">
-            <a href="javascript:;" title="<%=newStationList[i].fd_station_name%>">
-                <%=newStationList[i].fd_station_name%>
+        <li id="<%=newStationList[i].fdStationCode%>" class="on"
+            data-fd_city="<%=newStationList[i].fdCity%>">
+            <a href="javascript:;" title="<%=newStationList[i].fdStationName%>">
+                <%=newStationList[i].fdStationName%>
             </a>
         </li>
         <% }else{ %>
-        <li id="<%=newStationList[i].fd_station_code%>"
-            data-fd_city="<%=newStationList[i].fd_city%>">
-            <a href="javascript:;" title="<%=newStationList[i].fd_station_name%>">
-                <%=newStationList[i].fd_station_name%>
+        <li id="<%=newStationList[i].fdStationCode%>"
+            data-fd_city="<%=newStationList[i].fdCity%>">
+            <a href="javascript:;" title="<%=newStationList[i].fdStationName%>">
+                <%=newStationList[i].fdStationName%>
             </a>
         </li>
         <% } %>
         <% } %>
     </ul>
 </script>
-
 
 <!--故障模板-->
 <script type="text/template" id="stationDefault_tpl">

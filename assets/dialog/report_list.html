@@ -51,14 +51,9 @@
                         <li id="jx"><a href="javascript:;" title="山东莒县40MW">山东莒县40MW</a></li>
                         <li id="hl"><a href="javascript:;" title="四川会理30MW">四川会理30MW</a></li>
                         <li id="SDGM"><a href="javascript:;" title="山东高密">山东高密</a></li> -->
-
-
                         <li v-for="station in stationList" :id="station.fdStationCode" :class="station.fdStationCode == stationId ? 'on' : ''" >
                             <a href="javascript:;" class="sta_tit" :title="station.fdStationName" v-text="station.fdStationName"></a>
                         </li>
-
-
-                        
                     </ul>
                 </div>
                 <div class="map_con_fl_page">
