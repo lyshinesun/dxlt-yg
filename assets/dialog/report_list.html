@@ -128,46 +128,68 @@
 <!--日模板-->
 <script type="text/template" id="powerReport_tpl_day">
     <% for(var i=0;i< reportArr.length; i++){%>
-    <% if(i%3 == 0){%>
-    <tr>
-        <td rowspan="3"><%=reportArr[i].dataTime%></td>
-        <td><%=reportArr[i].fdPdcCurr%></td>
-        <td><%=reportArr[i].fdPower%></td>
-        <td><%=reportArr[i].fdPowerCurr%></td>
-        <td><%=reportArr[i].fdRadiaCurr%></td>
-        <td><%=reportArr[i].fdPwCurr%></td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td><%=reportArr[i].fdRadiaReal%></td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-    </tr>
-    <% }else{ %>
-    <tr>
-        <td><%=reportArr[i].fdPdcCurr%></td>
-        <td><%=reportArr[i].fdPower%></td>
-        <td><%=reportArr[i].fdPowerCurr%></td>
-        <td><%=reportArr[i].fdRadiaCurr%></td>
-        <td><%=reportArr[i].fdPwCurr%></td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td><%=reportArr[i].fdRadiaReal%></td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-    </tr>
-    <% } %>
+        <% if(type == 'station'){%>
+            <% if (i % counter == 0) {%> 
+                <tr>
+                    <td rowspan="<%- counter %>"><%=reportArr[i].dataTime%></td>
+                    <td><%=reportArr[i].fdPdcCurr%></td>
+                    <td><%=reportArr[i].fdPower%></td>
+                    <td><%=reportArr[i].fdPowerCurr%></td>
+                    <td><%=reportArr[i].fdRadiaCurr%></td>
+                    <td><%=reportArr[i].fdPwCurr%></td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td><%=reportArr[i].fdRadiaReal%></td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+            <% } else {%> 
+                <tr>
+                    <td><%=reportArr[i].fdPdcCurr%></td>
+                    <td><%=reportArr[i].fdPower%></td>
+                    <td><%=reportArr[i].fdPowerCurr%></td>
+                    <td><%=reportArr[i].fdRadiaCurr%></td>
+                    <td><%=reportArr[i].fdPwCurr%></td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td><%=reportArr[i].fdRadiaReal%></td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+            <%}%>
+        <% }else{ %>
+            <tr>
+                <td><%=reportArr[i].dataTime%></td>
+                <td><%=reportArr[i].fdPdcCurr%></td>
+                <td><%=reportArr[i].fdPower%></td>
+                <td><%=reportArr[i].fdPowerCurr%></td>
+                <td><%=reportArr[i].fdRadiaCurr%></td>
+                <td><%=reportArr[i].fdPwCurr%></td>
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+                <td><%=reportArr[i].fdRadiaReal%></td>
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+            </tr>
+        <% } %>
     <% }%>
 
 </script>
@@ -175,28 +197,41 @@
 <!--月模板-->
 <script type="text/template" id="powerReport_tpl_month">
     <% for(var i=0;i< reportArr.length; i++){ %>
-    <% if(i%3 == 0){%>
-    <tr>
-        <td rowspan="3"><%=reportArr[i].dataTime%></td>
-        <td><%=reportArr[i].fdPdcCurr%></td>
-        <td><%=reportArr[i].fdPower%></td>
-        <td><%=reportArr[i].fdPowerCurr%></td>
-        <td><%=reportArr[i].fdPr1%></td>
-        <td><%=reportArr[i].fdPr2%></td>
-        <td><%=reportArr[i].fdPwCurr%></td>
-        <td><%=reportArr[i].fdRadiaCurr%></td>
-    </tr>
-    <% }else{ %>
-    <tr>
-        <td><%=reportArr[i].fdPdcCurr%></td>
-        <td><%=reportArr[i].fdPower%></td>
-        <td><%=reportArr[i].fdPowerCurr%></td>
-        <td><%=reportArr[i].fdPr1%></td>
-        <td><%=reportArr[i].fdPr2%></td>
-        <td><%=reportArr[i].fdPwCurr%></td>
-        <td><%=reportArr[i].fdRadiaCurr%></td>
-    </tr>
-    <% } %>
+        <% if(type == 'station'){%>
+            <%if (i % counter == 0) {%>
+                <tr>
+                    <td rowspan="<%- counter %>"><%=reportArr[i].dataTime%></td>
+                    <td><%=reportArr[i].fdPdcCurr%></td>
+                    <td><%=reportArr[i].fdPower%></td>
+                    <td><%=reportArr[i].fdPowerCurr%></td>
+                    <td><%=reportArr[i].fdPr1%></td>
+                    <td><%=reportArr[i].fdPr2%></td>
+                    <td><%=reportArr[i].fdPwCurr%></td>
+                    <td><%=reportArr[i].fdRadiaCurr%></td>
+                </tr>
+            <%} else {%>
+                <tr>
+                    <td><%=reportArr[i].fdPdcCurr%></td>
+                    <td><%=reportArr[i].fdPower%></td>
+                    <td><%=reportArr[i].fdPowerCurr%></td>
+                    <td><%=reportArr[i].fdPr1%></td>
+                    <td><%=reportArr[i].fdPr2%></td>
+                    <td><%=reportArr[i].fdPwCurr%></td>
+                    <td><%=reportArr[i].fdRadiaCurr%></td>
+                </tr>
+            <%}%>
+        <% }else{ %>
+            <tr>
+                <td><%=reportArr[i].dataTime%></td>
+                <td><%=reportArr[i].fdPdcCurr%></td>
+                <td><%=reportArr[i].fdPower%></td>
+                <td><%=reportArr[i].fdPowerCurr%></td>
+                <td><%=reportArr[i].fdPr1%></td>
+                <td><%=reportArr[i].fdPr2%></td>
+                <td><%=reportArr[i].fdPwCurr%></td>
+                <td><%=reportArr[i].fdRadiaCurr%></td>
+            </tr>
+        <% } %>
     <% }%>
 
 </script>
@@ -204,19 +239,32 @@
 <!--年模板-->
 <script type="text/template" id="powerReport_tpl_year">
     <% for(var i=0;i< reportArr.length; i++){ %>
-    <% if(i%3 == 0){%>
-        <tr>
-            <td rowspan="3"><%=reportArr[i].dataTime%></td>
-            <td><%=reportArr[i].fdPdcCurr%></td>
-            <td><%=reportArr[i].fdPower%></td>
-            <td><%=reportArr[i].fdPowerCurr%></td>
-            <td><%=reportArr[i].fdPr1%></td>
-            <td><%=reportArr[i].fdPr2%></td>
-            <td><%=reportArr[i].fdPwCurr%></td>
-            <td><%=reportArr[i].fdRadiaCurr%></td>
-        </tr>
+    <% if(type == 'station'){%>
+        <% if(i % counter == 0) {%>
+            <tr>
+                <td rowspan="<%-counter%>"><%=reportArr[i].dataTime%></td>
+                <td><%=reportArr[i].fdPdcCurr%></td>
+                <td><%=reportArr[i].fdPower%></td>
+                <td><%=reportArr[i].fdPowerCurr%></td>
+                <td><%=reportArr[i].fdPr1%></td>
+                <td><%=reportArr[i].fdPr2%></td>
+                <td><%=reportArr[i].fdPwCurr%></td>
+                <td><%=reportArr[i].fdRadiaCurr%></td>
+            </tr>
+        <%} else {%> 
+             <tr>
+                <td><%=reportArr[i].fdPdcCurr%></td>
+                <td><%=reportArr[i].fdPower%></td>
+                <td><%=reportArr[i].fdPowerCurr%></td>
+                <td><%=reportArr[i].fdPr1%></td>
+                <td><%=reportArr[i].fdPr2%></td>
+                <td><%=reportArr[i].fdPwCurr%></td>
+                <td><%=reportArr[i].fdRadiaCurr%></td>
+            </tr>
+        <%}%>
     <% }else{ %>
         <tr>
+            <td><%=reportArr[i].dataTime%></td>
             <td><%=reportArr[i].fdPdcCurr%></td>
             <td><%=reportArr[i].fdPower%></td>
             <td><%=reportArr[i].fdPowerCurr%></td>
@@ -229,8 +277,6 @@
     <% }%>
 
 </script>
-
-
 <script src="../resource/js/jquery-1.8.3.min.js"></script>
 <script src="../resource/js/lib/vlm.js"></script>
 <script src="../resource/js/lib/vue.js"></script>

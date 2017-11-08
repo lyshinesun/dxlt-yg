@@ -7,7 +7,8 @@ new Vue({
         reportType: 'day',  //报表日期类型  day  month year
         startDateStr: '',  //查询开始时间
         stationAll: 'station',  //全站 'station'   单电站时为空
-        urlType: ''  //day month year 请求分地址
+        urlType: '', //day month year 请求分地址
+        devCounter: 0 //每个电站中设备的数量
     },
     methods: {
         //初始化页面尺寸
@@ -58,14 +59,15 @@ new Vue({
             } else {
                 return;
             }
+            $(target).find('a').removeClass('curSelectedNode');
             if (!target.hasClass('on')) {
                 target.addClass('on').siblings().removeClass('on');
                 this.stationId = target.attr('id');
                 $('.ztree').remove(); //清空ztree
                 this.showTree();
-                this.stationAll = 'station';
-                this.getReport();
             }
+            this.stationAll = 'station';
+            this.getReport();
         },
 
         //绑定datepicker
@@ -127,6 +129,7 @@ new Vue({
                 success: function (res) {
                     if (res.code == 0) {
                         var newNodes = res.list;
+                        _this.devCounter = newNodes.length
                         var powerhtml = $('#powerTpl0').html();
                         var powerLi = ejs.render(powerhtml, {newNodes: newNodes});
                         var oUl = $('<ul class="ztree"></ul>');
@@ -358,7 +361,7 @@ new Vue({
                             } else if (_this.reportType == 'year') {
                                 reportStr = $('#powerReport_tpl_year').html();
                             }
-                            var trHtml = ejs.render(reportStr, {reportArr: reportArr});
+                            var trHtml = ejs.render(reportStr, {reportArr: reportArr, type: _this.stationAll, counter: _this.devCounter});
                             $("#dailyreportbody").html(trHtml);
 
                             _this.reDisplayTable("#dailyreport", "#dailyreportbody")
@@ -401,4 +404,3 @@ new Vue({
         vlm.getConnectedStations(this.getStations)
     }
 });
-
