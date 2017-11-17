@@ -37,6 +37,8 @@ new Vue({
 
         //频率
         timetype:"0",
+        //虚曲线线下部的电站table
+        node: {}
     },
     methods: {
 
@@ -204,7 +206,6 @@ new Vue({
             var now = new Date();
             var hour1 = 0;
             var end2 = 0;
-
             if (this.isdata >= 0 && this.isdata <= 3) {
                 var cycle = $("#cycle").val();
                 var end = 60 / cycle;
@@ -258,6 +259,17 @@ new Vue({
                         data.push(startd.toLocaleDateString().replace(LANG["all_station_yearmonth_reg"], "/").replace(LANG["all_station_day_reg"], ""));
                     }
                 } else {
+                    /*---------------问题出现在这里------------*/
+                    var startd1 = $("#quick_date1").html(),
+                    endd1 = $("#quick_date2").html(),
+                    startStr = startd1.replace(/[-:\s]*/ig, ''),
+                    endStr = endd1.replace(/[-:\s]*/ig, '');
+                    /*var q2 = $("#dateHid").val().replace(/-+/g, '');
+                    q2 = q2.split("&");
+                    console.log('q2' + q2)*/
+                    var startd = new Date(startStr.substring(0, 4), startStr.substring(4, 6) - 1, startStr.substring(6, 8), '00', '00', '00');
+                    var endd = new Date(endStr.substring(0, 4), endStr.substring(4, 6) - 1, endStr.substring(6, 8), '23', '59', '59');
+
                     var end = 60 / cycle;
                     for (var z = 0; z <= this.isdata; z++) {
                         if (z == 0) {
@@ -265,7 +277,6 @@ new Vue({
                         } else {
                             startd.setDate(startd.getDate() + 1);
                         }
-
                         if (z == this.isdata && endd > now) {
                             hour1 = now.getHours() + 1;
                             var minutes = now.getMinutes() + 1;
@@ -284,8 +295,9 @@ new Vue({
                                 }
                             }
                         } else {
-                            for (var i = 0; i < 24; i++) {
-                                for (var j = 0; j < end; j++) {
+                            /*这里为了解决选择周的时候x轴渲染日期太短不完整的问题，把数据写死了，将end直接改为了2倍*/
+                            for (var i = 0; i < (end * 2); i++) {
+                                for (var j = 0; j < 6; j++) {
                                     var dTime = i < 10 ? ("0" + i + ":" + ((cycle * j) < 10 ? ("0" + cycle * j) : (cycle * j))) : i + ":" + ((cycle * j) < 10 ? ("0" + cycle * j) : (cycle * j));
                                     data.push(startd.toLocaleDateString().replace(LANG["all_station_yearmonth_reg"], "/").replace(LANG["all_station_day_reg"], "") + " " + dTime);
                                 }
@@ -293,6 +305,7 @@ new Vue({
                         }
                     }
                 }
+
             }
             if (this.isdata > 10 && this.isdata <= 31) {
                 var cycle = $("#cycle").val();
@@ -399,12 +412,10 @@ new Vue({
                 }
             }
 
-
             if (data.length <= 0) {
                 $("#cycle").val("15");
                 return this.getXAxisData();
             }
-
             return data;
         },
 
@@ -509,6 +520,7 @@ new Vue({
                     $("#start").val(vlm.Utils.GetDay().substring(0, 10));
 
                 } else if (index == 1) { //周
+                    /*-------------------------周选择问题-----------------------------------*/
                     _this.section_dateType = 'weekType';
                     var now_day = vlm.Utils.GetDay();
                     var week_year = vlm.Utils.getWeekNumber()[0];
@@ -872,10 +884,9 @@ new Vue({
             vlm.loadJson("", JSON.stringify(Parameters), function (res) {
                 //关闭滚动
                 layer.closeAll();
-
                 if (res.success) {
                     var result = res.data.data;
-                    //console.log(result);
+                    window.parent.curveData.push(result)
                     if (result.length <= 0) {
                         parent.layer.open({
                             title: LANG["all_station_prompt"],
@@ -963,7 +974,7 @@ new Vue({
                     node.fd_station_name = res.data.fd_station_name; //电站名称
                     node.fd_name = res.data.fd_name; //对象名称
                     node.fd_code_name = res.data.fd_code_name; //测点名称
-
+                    
                     _this.addTr(node);
                     var seriesObj1 = {},
                         yAxisIndex = _this.getYAxis(node.unit);  //y轴需要单位;
@@ -1011,6 +1022,7 @@ new Vue({
 
         //添加table
         addTr: function (node) {
+            console.log(node)
             var _this = this;
             var sta_table = [
                 {
@@ -1132,6 +1144,7 @@ new Vue({
         //改变日期时重绘chart
         changedateSel: function () {
             var _this = this;
+            window.parent.curveData = [] //每个查询操作开始前都清空
             setTimeout(function () {
                 _this.initchart();
                 _this.chartnum = 0;  //重置线条数
@@ -1146,7 +1159,7 @@ new Vue({
         psPoint_delAllChart: function () {
             $('#tbody').html('');
             $('.treeDemoId >li.on').find('.onlyOne').attr('data-load_once', 'true');
-
+            window.parent.curveData = []
             this.nodeArray = [];  //重置节点数组
             this.chartnum = 0;  //重置曲线条数
             this.initchart();  //重置chart
@@ -1156,6 +1169,8 @@ new Vue({
         //单条删除
         delChart: function (obj) {
             var index = $(".delA").index(obj) - 1;
+            // console.log(index)
+            window.parent.curveData.splice(index, 1);
             var temp = "";
             //删除记录的单位信息
             var unitarray = this.nodeunit.toString().split(",");
@@ -1342,8 +1357,48 @@ new Vue({
                 }
             });
         },
+        showMsg: function () {
+            $('.tog_table_txt1').css({"display": 'block'})
+        },
+        hideMsg: function () {
+            $('.tog_table_txt1').css({"display": 'none'})
+        },
+        showDataTable: function () {
+            // console.log(window.parent.curveData)
+            if (window.parent.curveData.length) {
+                parent.layer.open({
+                    type: 2,
+                    title: '数据曲线列表',
+                    shadeClose: true,
+                    shade: 0.5,
+                    maxmin: true, //开启最大化最小化按钮
+                    area: ['1380px', '800px'],
+                    content: ['popUp/pop_curve_table.html'],
+                    resize: true,
+                    success:function (layero, index) {
+                        $("#devid", layero.find("iframe")[0].contentWindow.document).val('devid');
+                    }
+                });
+            } else {
+                /*parent.layer.open({
+                    type: 1,
+                    title: '提示',
+                    content: '暂无数据',
+                    area:['260px','160px'],
+                    btn:['确定'],
+                    yes: function (index) {
+                        parent.layer.close(index)
+                    }
+                });*/
+                parent.layer.msg('暂无数据')
+            }
+            
+        }
     }
     ,
+    created:function () {
+        window.parent.curveData = []
+    },
     mounted: function () {
         this.getAllStation(); //获取电站列表
     }

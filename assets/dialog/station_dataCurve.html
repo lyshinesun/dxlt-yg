@@ -102,8 +102,6 @@
                         <!--把quick_date2设为隐藏域-->
                     </div>
                     <span class="date_btn fl"> <img src="../resource/images/date_btn.jpg" alt=""> </span>
-
-
                     <div class="dateWrap dateWrap_tit2_wrap">
                         <div class="dateWrap_tit hd">
                             <h1>快捷选择</h1>
@@ -114,13 +112,11 @@
                                 <li class="nomar">年</li>
                             </ul>
                         </div>
-
                         <div class="bd ate_togg">
                             <ul class="active">
                                 <div class="inputbox">
                                     <div>
-                                        <input id="start" readonly="readonly" class="Wdate" type="text" value=""
-                                               onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false,readOnly:true, maxDate:'%y-%M-%d',lang:'zh_cn'})"
+                                        <input id="start" readonly="readonly" class="Wdate" type="text" value="" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false,readOnly:true, maxDate:'%y-%M-%d',lang:'zh_cn'})"
                                                style="width:95%;">
                                     </div>
                                 </div>
@@ -151,30 +147,35 @@
                         </div>
                         <input type="hidden" name="currenttime" id="currenttime">
                     </div>
-
-            <span class="map_select_2_se select_down1  fl tendencyChart_select2 lch_mss" onclick="selectValue(this)"
-                  style="margin-left:10px;">
-                <a href="javascript:;" class="map_select_2_sea tendencyChart_selecta lch_mssa" map="2" id="dateDef">5min</a>
-                <ul id="dateSel" class="dateSel" @click.stop="changeDateSpace($event)">
-                    <li>
-                        <a href="javascript:;">5min</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;">15min</a>
-                    </li>
-                </ul> </span>
-                    <div class="fr clearfix">
-                        <div class="allsite_dateri fl clearfix allsite_dateri2"
-                             style="border-left: none;border-right: none;margin-right:0px;padding-right:0px;">
-                            <input type="checkbox" class="fl allsite_dateriCheckbox" id="setTime_point">
-                            <span class="fl reshdate">刷新时间</span>
-                            <span id="allsite_dateYear1" class="fl abcd">
-                                <em><i id="point_time">5</i>min</em>
-                                <a href="javascript:;" class="allsite_dateUpBtn1"></a>
-                                <a href="javascript:;" class="allsite_dateDownBtn1"></a>
-                            </span>
-                        </div>
+                <span class="map_select_2_se select_down1  fl tendencyChart_select2 lch_mss" onclick="selectValue(this)" style="margin-left:10px;">
+                    <a href="javascript:;" class="map_select_2_sea tendencyChart_selecta lch_mssa" map="2" id="dateDef">5min</a>
+                    <ul id="dateSel" class="dateSel" @click.stop="changeDateSpace($event)">
+                        <li>
+                            <a href="javascript:;">5min</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;">15min</a>
+                        </li>
+                    </ul> 
+                </span>
+                <div class="fr clearfix">
+                    <div class="clearfix fl">
+                        <a href="javascript:void(0);" class="fl tog_table1 lch_tog_table1" @mouseOver='showMsg' @mouseLeave="hideMsg">
+                            <div class="charts_img" @click="showDataTable"></div>
+                            <span class="tog_table_txt1" style="width: 133px; left: 50%; margin-left: -80px;"><i style="left: 50%;"></i>查看表格数据</span>
+                        </a>
                     </div>
+                    <div class="allsite_dateri fl clearfix allsite_dateri2"
+                         style="border-left: none;border-right: none;margin-right:0px;padding-right:0px;">
+                        <input type="checkbox" class="fl allsite_dateriCheckbox" id="setTime_point">
+                        <span class="fl reshdate">刷新时间</span>
+                        <span id="allsite_dateYear1" class="fl abcd">
+                            <em><i id="point_time">5</i>min</em>
+                            <a href="javascript:;" class="allsite_dateUpBtn1"></a>
+                            <a href="javascript:;" class="allsite_dateDownBtn1"></a>
+                        </span>
+                    </div>
+                </div>
                 </div>
                 <div class="tendencyChart">
                     <!--图表-->

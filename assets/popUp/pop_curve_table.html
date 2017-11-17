@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html style="overflow-y: scroll;">
+<head lang="en" >
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../resource/css/style_blue.css"/>
+</head>
+<body>
+<div id="popCurve" class="hddd clearfix">
+    <div class="map_con clearfix">
+        <div id="bingMapId">
+            <div id="siteMoreDiv" >
+                <div class="problem_con clearfix" >
+                    <div style="margin: 0 auto; padding: 20px;">
+                        <div id="psBoxTable">
+                            <input type="hidden" value="" id="devid"/>
+                            <table id="showCurvetable" style="width: 100%">
+                                <thead>
+                                    <tr class="border-hlx" style="background:#E9E7E7 !important;">
+                                        <th><a href="javascript:;">时间</a></th>
+                                        <th v-for="itemData in curveData">
+                                            <a href="javascript:;" v-if="itemData[0]" v-text="itemData[0].fd_name"></a>
+                                            <!-- <a href="javascript:;" v-else v-text="--"></a> -->
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody style="width:100%;" id="dataTable">
+                                   <tr class="border-hlx" v-for="itemData in newData">
+                                       <td v-for="item in itemData">
+                                           <p v-text="item"></p>
+                                       </td>
+                                   </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/allPsList/pop_curve_table.js"></script>
+
+</body>
+</html>
+
+
