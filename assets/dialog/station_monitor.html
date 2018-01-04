@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>电站实时监测</title>
+  <link rel="stylesheet" href="../resource/plugin/layer/skin/default/layer.css"/>
+  <link rel="stylesheet" href="../resource/plugin/easydialog/easydialog.css"/>
+  <link rel="stylesheet" href="../resource/plugin/asyncbox/skins/default.css"/>
+  <link rel="stylesheet" href="../resource/css/zoom-detect.css"/>
+  <link rel="stylesheet" href="../resource/css/style_blue.css"/>
+  <link rel="stylesheet" href="../resource/plugin/jquery-autocomplete/jquery.autocomplete.css">
+  <link rel="stylesheet" href="../resource/plugin/JQueryzTree/css/zTreeStyle/zTreeStyle.css"/>
+  <link rel="stylesheet" href="../resource/plugin/jquery-select/css/select2.css"/>
+  <!-- <link rel="stylesheet" href="../resource/css/jquery.minicolors.css"/> -->
+  <link rel="stylesheet" href="../resource/css/style_2.0_blue.css"/>
+  <link rel="stylesheet" href="../resource/css/realtime_monitor/realtime_monitor.css"/>
+</head>
+<body>
+<div id="station_monitor" style="height: 100%;">
+  <div id="map_wap_div" class="map_wap clearfix">
+    <div id="inverter_page" class="fl clearfix" style="width: 100%;">
+      <div class="inverter_page_wrapper">
+        <section class="inverte_list_desc">
+          <span>电站列表（ 采集时间：</span>
+          <span v-text="currDate + '）'"></span>
+          <div class="clearfix">
+            <div class="banner_left fl">
+              <ul>
+                <li>
+                  <i class="all_normal"></i>
+                  <span>正常（通讯中）</span>
+                </li>
+                <li>
+                  <i class="part_zero"></i>
+                  <span>异常（通讯中断、断网或电站停止运行、当前未检测到发电量）</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class="station_content">
+          <ul class="station_list clearfix">
+            <li class="station_item fl" v-for="station in stationList">
+              <div class="inverter_title">
+                
+                <p class="station_dev dev_id" v-text="station.stationName" style="display: inline-block;"></p>
+                <a class="station_state_cir green_cir" :class="station.dayPower == 0 ? 'red_cir':'green_cir'"></a>
+              </div>
+              <div class="station_container" :class="station.dayPower == 0 ? 'station_container_red':''">
+                <div class="station_info_wrapper">
+                  <!-- <div class="inverter_info_title">
+                    <span >正常</span>
+                    <span style="width: 16px; height: 16px; background-color: blue"></span>
+                  </div> -->
+                    <div class="station_content_info clearfix">
+                      <div class="station_li_left fl">
+                        <img class="fl station_li_img" src="../resource/images/realtime_monitor/station_pic.png" @click="gotoInverterMonitor(station.stationCode, station.fdCity)" style="cursor:pointer">
+                      </div>
+                      <ul class="fl">
+                        <li>当日发电量：
+                          <a href="javascript:;" :title="station.dayPower.toFixed(2) + 'kwh'" v-text="station.dayPower.toFixed(2) + 'kwh'"></a> 
+                        </li>
+                        <li>累计发电量：
+                          <a href="javascript:;" :title="station.allPower.toFixed(1) + '万kwh'" v-text="station.allPower.toFixed(1) + '万kwh'"></a> 
+                        </li>
+                        <li>累计功率：
+                          <a href="javascript:;" :title="station.allPw.toFixed(2) + 'kw'" v-text="station.allPw.toFixed(2) + 'kw'"></a> 
+                        </li>
+                        <li>累计辐照：
+                          <a href="javascript:;" :title="station.radia.toFixed(2) + 'MJ/㎡'" v-text="station.radia.toFixed(2) + 'MJ/㎡'"></a> 
+                        </li>
+                      </ul>
+                    </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/common/base.js"></script>
+<script src="../resource/js/common/esmpbase.js"></script>
+<script src="../resource/plugin/layer/layer.min.js"></script>
+<script src="../resource/js/media.js"></script>
+<script src="../resource/js/common/DateUtil.js"></script>
+<script src="../resource/plugin/easydialog/easydialog.min.js"></script>
+<script src="../resource/js/realtime_monitor/station_monitor.js"></script>
+</body>
+</html>

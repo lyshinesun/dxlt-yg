@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>逆变器实时监测</title>
+  <link rel="stylesheet" href="../resource/plugin/layer/skin/default/layer.css"/>
+  <link rel="stylesheet" href="../resource/plugin/easydialog/easydialog.css"/>
+  <link rel="stylesheet" href="../resource/plugin/asyncbox/skins/default.css"/>
+  <link rel="stylesheet" href="../resource/css/zoom-detect.css"/>
+  <link rel="stylesheet" href="../resource/css/style_blue.css"/>
+  <link rel="stylesheet" href="../resource/plugin/jquery-autocomplete/jquery.autocomplete.css">
+  <link rel="stylesheet" href="../resource/plugin/JQueryzTree/css/zTreeStyle/zTreeStyle.css"/>
+  <link rel="stylesheet" href="../resource/plugin/jquery-select/css/select2.css"/>
+  <!-- <link rel="stylesheet" href="../resource/css/jquery.minicolors.css"/> -->
+  <link rel="stylesheet" href="../resource/css/style_2.0_blue.css"/>
+  <link rel="stylesheet" href="../resource/css/realtime_monitor/realtime_monitor.css"/>
+</head>
+<body>
+<div id="inverter_monitor" style="height: 100%;">
+  <div id="map_wap_div" class="map_wap">
+    <div class="map_select clearfix single_no_show">
+      <div class="map_select clearfix">
+        <div class="map_select_wrap fl" style="height: auto;">
+            <div class="hd" id="map_select_wraphd">
+              <a href="javascript:;"><i class="map_seicon_1" title="电站名称"></i>
+                <span class="secondnav_bg4">电站名称<i class="secondnav_bgIcon2"></i></span>
+              </a>
+              <a href="javascript:;"><i class="map_seicon_2" title="装机功率"></i>
+                <span class="secondnav_bg4">装机功率<i class="secondnav_bgIcon2"></i></span>
+              </a>
+              <a href="javascript:;"><i class="map_seicon_3" title="类型"></i>
+                <span class="secondnav_bg4">类型<i class="secondnav_bgIcon2"></i></span>
+              </a>
+              <a href="javascript:;"><i class="map_seicon_4" title="并网时间"></i>
+                <span class="secondnav_bg4">并网时间<i class="secondnav_bgIcon2"></i></span>
+              </a>
+              <a href="javascript:;"><i class="map_seicon_5" title="地址确定选择"></i>
+                <span class="secondnav_bg4">地址确定选择<i class="secondnav_bgIcon2"></i></span>
+              </a>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div id="contentDiv" class="map_con clearfix" style="height: ">
+      <div class="map_con clearfix">
+        <!-- <div id="Searchresult"></div>
+        <div id="hiddenresult" style="display: none;"></div> -->
+        <div class="map_con_fl fl">
+          <div id="psDetail">
+            <!-- <div id="basecolor" class="basecolor" style="display: none"></div> -->
+            <ul class="" @click="changeStation($event)">
+              <li v-for="station in stationList" :id="station.fdStationCode" :class="station.fdStationCode == stationId ? 'on' : ''" :data-city="station.fdCity">
+                <a href="javascript:;" class="sta_tit" :title="station.fdStationName" v-text="station.fdStationName"></a>
+              </li>
+            </ul>
+            <!-- <input id="totalCount" type="hidden" value="4"> -->
+          </div>
+          <!-- <div class="map_con_fl_page">
+            <div class="map_con_fl_page_b" id="Pagination">
+              <a class="fl pager_class_color prev"></a>
+              <a class="map_con_fl_pageprev fl prev"></a>
+              <a class="fl pager_class_color">1</a>
+              <a class="fl pager_class_color next"></a>
+              <a class="map_con_fl_pagenext fl next"></a>
+            </div>
+          </div> -->
+        </div>
+        <div id="inverter_page" class="tendency_ri fl clearfix">
+          <div class="inverter_page_wrapper">
+            <!-- <section class="clearfix">
+              <div class="fr rightC_handller">
+                <span class="connection_handller"><a href="javascript:" id="connection">一次接线图</a></span>
+                <span class="refresh_handller"><a href="javascript:" id="refresh">刷新</a></span>
+              </div>
+            </section> -->
+            <section class="ps_detail_box">
+              <ul class="clearfix">
+                <li class="fl pw_info">
+                  <p class="longData">运行状态</p>
+                  <div class="psData longData">
+                    <span class="ps_detail_desc">正常:<span v-text="totalCount2" class="inverter_count" style="margin-right: 2px"></span></span>
+                    <span class="ps_detail_desc">异常:<span v-text="totalCount1" class="inverter_count" style="margin-right: 2px"></span></span>
+                    <span class="ps_detail_desc">故障:<span v-text="totalCount0" class="inverter_count"></span></span>
+                  </div>
+                </li>
+                <li class="fl pw_info">
+                  <p>累计发电量</p>
+                  <div class="psData">
+                    <span class="ps_detail_desc" v-text="totalPower"></span>
+                  </div>
+                </li>
+                <li class="fl pw_info">
+                  <p>日发电量</p>
+                  <div class="psData">
+                    <span class="ps_detail_desc"  v-text="dayPower"></span>
+                  </div>
+                </li>
+                <li class="fl pw_info">
+                  <p>当前功率</p>
+                  <div class="psData">
+                    <span class="ps_detail_desc"  v-text="currP"></span>
+                  </div>
+                </li>
+                
+                <li class="fl pw_info">
+                  <p>环境温度</p>
+                  <div class="psData">
+                    <span class="ps_detail_desc"  v-text="temperature"></span>
+                  </div>
+                </li>
+                <li class="fl pw_info">
+                  <p>电池板温度</p>
+                  <div class="psData">
+                    <span class="ps_detail_desc"  v-text="BBT"></span>
+                  </div>
+                </li>
+              </ul>
+            </section>
+            <section class="inverte_list_desc">
+              <span v-text="'逆变器列表(采集时间：' + currDate + ')'"></span>
+              <div class="clearfix">
+                <div class="banner_left fl">
+                  <ul>
+                    <!-- <li>
+                      <i class="all_zero"></i>
+                      <span>有支路所电流为零</span>
+                    </li> -->
+                    <li>
+                      <i class="part_zero"></i>
+                      <span>组串电流为零</span>
+                    </li>
+                    <li>
+                      <i class="part_low"></i>
+                      <span>组串电流偏低</span>
+                    </li>
+                    <li>
+                      <i class="all_normal"></i>
+                      <span>组串电流正常</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="filter_box fr">
+                  <a href="javascript:">默认</a>
+                    <select  v-model="selectFilter">
+                      <option value="0">全部</option>
+                      <option value="1">所有支路正常</option>
+                      <option value="2">所有支路电流为零</option>
+                      <option value="3">存在电流为零支路</option>
+                    </select>
+                </div>
+              </div>
+            </section>
+            <section class="inverter_content" v-show="inverterFilterList.length">
+              <ul class="inverter_list clearfix">
+                <li class="inverter_item fl" v-for=" inverter in inverterFilterList ">
+                  <div class="inverter_title">
+                    <p><a href="javascript:;" :title="inverter.fdDevDesc" v-text="inverter.fdDevDesc"></a></p>
+                    <p class="dev_id"><a href="javascript:;" :title="inverter.fdDevId" v-text="inverter.fdDevId"></a></p>
+                  </div>
+                  <div class="inverter_info_wrapper">
+                    <div class="inverter_info_title">
+                      <span v-text="inverter.stuta == 2 ? '正常运行' : '故障'"></span>
+                      <span style="width: 16px; height: 16px; background-color: blue"></span>
+                    </div>
+                    <div class="inverter_content_info clearfix">
+                      <div class="invertr_li_left fl">
+                        <img class="fl invertr_li_img" :src="inverter.src">
+                      </div>
+                      <ul class="fl">
+                        <li>
+                          <a href="javascript:;" title="当日发电量" v-text="inverter.fdPower"></a> 
+                        </li>
+                        <li>
+                          <a href="javascript:;" title="累计发电量" v-text="inverter.fdPowerCurr"></a> 
+                        </li>
+                        <li>
+                          <a href="javascript:;" title="交流功率" v-text="inverter.fdPwCurr + 'kw'" ></a> 
+                        </li>
+                        <li>
+                          <a href="javascript:;" title="直流功率" v-text="inverter.fdPdcCurr + 'kw'"></a> 
+                        </li>
+                        <li>
+                           <a href="javascript:;" title="系统效率" v-text="inverter.fdPr1.toFixed(2) + '%'"></a> 
+                        </li>
+                        <!-- <li>
+                          20°
+                        </li> -->
+                      </ul>
+                    </div>
+                    <div>
+                      <ul class="clearfix">
+                        <li class="fl" v-for="warnItem in inverter.warningList">
+                          <a href="javascript:;" class="inverter_state_cir" :class="warnItem==0 ? 'green_cir' : 'red_cir'" :id="inverter.fdDevId" @click="showCurve($event)"></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input type="hidden" value="psFaultPage" id="pageId">
+  </div>
+</div>
+<script src="../resource/js/jquery-1.8.3.min.js"></script>
+<script src="../resource/js/lib/vlm.js"></script>
+<script src="../resource/js/lib/vue.js"></script>
+<script src="../resource/js/lib/ejs.js"></script>
+<script src="../resource/js/common/base.js"></script>
+<script src="../resource/js/common/esmpbase.js"></script>
+<script src="../resource/js/slide-js.js"></script>
+<script src="../resource/plugin/layer/layer.min.js"></script>
+<script src="../resource/js/common/common.js"></script>
+<script src="../resource/js/common/echarts.min.js"></script>
+<script src="../resource/plugin/My97DatePicker/WdatePicker.js"></script>
+<script src="../resource/js/media.js"></script>
+<script src="../resource/js/common/common_zh_CN.js"></script>
+<script src="../resource/js/common/DateUtil.js"></script>
+<script src="../resource/plugin/easydialog/easydialog.min.js"></script>
+<script src="../resource/plugin/jquery-select/js/select2.min.js"></script>
+<script src="../resource/js/showTreeImg.js"></script>
+<script src="../resource/js/jquery.minicolors2.js"></script>
+<script src="../resource/js/common/table_header.js"></script>
+<script src="../resource/plugin/jq-cookie/jquery-cookie.js"></script>
+<script src="../resource/js/realtime_monitor/inverter_monitor.js"></script>
+</body>
+</html>

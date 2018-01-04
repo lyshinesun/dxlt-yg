@@ -13,6 +13,7 @@ new Vue({
         b: '',
         c: '',
     },
+    
     methods: {
         /*获取电站列表*/
         getStations: function (res) {
@@ -144,7 +145,6 @@ new Vue({
                 }
             })
         },
-
         //循环查询gs.svg
         loopSelectDetail: function (result) {
             var _this = this;
@@ -177,7 +177,6 @@ new Vue({
                     if (node.getElementById(showId)) {
                         node.getElementById(showId).textContent = result[i].fd_value;
                     }
-
                 } else if (result[i].fd_html_type == 3) { //赋值和显示隐藏
                     var showId = result[i].fd_html_id + '_' + result[i].fd_value;
                     if (node.getElementById(showId)) {

@@ -658,15 +658,17 @@ new Vue({
                 var unitCapacityarr = [],capacityDates = [];
                 if(_this.pointId_cap == "ac_pw"){  //普通交流功率
                     for (var i = 0; i < data.length; i++) {
-                        unitCapacityarr.push(data[i].fd_pdc_curr);  //y
+                        unitCapacityarr.push(data[i].fd_pw_curr);  //y
                         capacityDates.push(data[i].fd_datetime.substring(11, 16));   //x
                     }
+                    // console.log(capacityDates)
                 }else if(_this.pointId_cap == "ac_pw_one"){
                     //归一化
                     for (var i = 0; i < data.length; i++) {
-                        unitCapacityarr.push(data[i].fd_pdc_curr_one);  //y
+                        unitCapacityarr.push(data[i].fd_pw_curr_one);  //y
                         capacityDates.push(data[i].fd_datetime.substring(11, 16));   //x
                     }
+
                 }
                 _this.optionCapacity.xAxis = [{
                     type: 'category', // 坐标轴类型，横轴默认为类目轴，数值轴则参考yAxis说明
@@ -737,7 +739,7 @@ new Vue({
                             }
                         }
                     });
-                    //console.log(_this.optionCapacity);
+                    // console.log(_this.optionCapacity.series);
                     _this.myCapacityChart.setOption(_this.optionCapacity);
                     layer.closeAll();
                 }

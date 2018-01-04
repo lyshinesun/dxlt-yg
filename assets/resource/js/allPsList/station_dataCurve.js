@@ -93,7 +93,11 @@ new Vue({
                             res += obj.seriesName + ":" + ydata;
                             //添加非空判断
                             if (nodearray[n] != undefined && "undefined" != nodearray[n] && null != nodearray[n] && "" != nodearray[n]) {
-                                res += "(" + nodearray[n] + ")" + "<br/>";
+                                if (obj.seriesName == '累积发电量' || obj.seriesName == '逆变器累积发电量') {
+                                     res += "(万" + nodearray[n] + ")" + "<br/>";
+                                } else {
+                                    res += "(" + nodearray[n] + ")" + "<br/>";
+                                }
                             } else {//如果没有单位的话 则不显示单位 直接换行
                                 res += "<br/>";
                             }
@@ -830,8 +834,8 @@ new Vue({
             //     return;
             // }
 
-
-            if (legendData.length > 14) {
+            /*数据曲线的数量*/
+            if (legendData.length > 199) {
                 parent.layer.open({
                     title: LANG["login_prompt"],
                     content: LANG["all_station_numlimit"]
@@ -910,7 +914,15 @@ new Vue({
                         startIndex = 0;
                     for (var i = 0; i < result.length; i++) {
                         nameArr.push(result[i].fd_name);
-                        ydata.push(result[i].fd_value.replace(/,*/g, '').toFixed(2));
+                        if (node.fd_code == 'station_power') {
+                            /*将日发电量的值修改为kwh*/
+                            ydata.push(result[i].fd_value.replace(/,*/g, '').toFixed(2)*10000);
+                        } else if (node.fd_code == 'station_dev_power_curr') {
+                            /*将逆变器累积发电量改为万千瓦时*/
+                            ydata.push((result[i].fd_value.replace(/,*/g, '')/10000).toFixed(2));
+                        } else {
+                            ydata.push(result[i].fd_value.replace(/,*/g, '').toFixed(2));
+                        }
                         if (i + 1 < result.length) {
                             var start = result[i].fd_datetime.substring(0, 10);
                             var startUp = result[i + 1].fd_datetime.substring(0, 10);
@@ -1022,7 +1034,7 @@ new Vue({
 
         //添加table
         addTr: function (node) {
-            console.log(node)
+            // console.log(node)
             var _this = this;
             var sta_table = [
                 {
@@ -1281,65 +1293,6 @@ new Vue({
         },
 
         //获取电站列表
-        /*getAllStation: function () {
-            var _this = this;
-            var Parameters = {
-                "parameters": {"stationid": "", "statusstr": ""},
-                "foreEndType": 2,
-                "code": "20000006"
-            };
-            vlm.loadJson("", JSON.stringify(Parameters), function (res) {
-                if (res.success) {
-                    var stationRes = res.data,
-                        resArr = [];
-
-                    $.each(stationRes, function (key, value) {
-                        if (value.fd_station_status == 2) {
-                            resArr.push(value);
-                        }
-                    });
-
-                    //获取用户权限电站
-                    $.ajax({
-                        type: "get",
-                        url: vlm.serverAddr + "sys/user/info/" + $.cookie('userId'),
-                        data: "",
-                        dataType: "json",
-                        success: function (res) {
-                            if (res.code == 0) {
-
-                                if (res.user.psList === null || res.user.psList.length < 1) {
-
-                                } else if (res.user.psList.length >= 1) {
-                                    if (res.user.psList[0] == "all") {
-                                        _this.newStationList = resArr;
-                                    } else {
-                                        var info_station_arr = res.user.psList;
-                                        for (var i = 0; i < resArr.length; i++) {
-                                            for (var j = 0; j < info_station_arr.length; j++) {
-                                                if (resArr[i].fd_station_code.toLowerCase() == info_station_arr[j]) {
-                                                    _this.newStationList.push(resArr[i]);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-
-                                var stationList_tpl = $('#station_filter_tpl').html();
-                                var stationStr = ejs.render(stationList_tpl, {newStationList: _this.newStationList});
-                                $('#station_per_ul').html(stationStr);
-
-                                _this.stationId = _this.newStationList[0].fd_station_code.toLowerCase();
-                                _this.loadPage();  //初始化页面
-
-                            }
-                        }
-
-                    });
-                }
-
-            });
-        },*/
         getAllStation: function () {
             var _this = this
             $.ajax({

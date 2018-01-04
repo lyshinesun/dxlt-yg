@@ -331,6 +331,9 @@ h6 {
 .nav_icon.analysis {
     background: url(../images/nav/1_analysis.png) no-repeat;
 }
+.nav_icon.realtime_mornitor {
+    background: url(../images/nav/1_realtime_mornitor.png) no-repeat;
+}
 
 .sub_nav {
     display: none;
@@ -8716,6 +8719,10 @@ table.hoverclass tbody tr:hover {
     background: url('../images/images_blue/userCenter.png') no-repeat;
     display: inline-block;
     cursor: pointer;
+}
+.userCenter.sn {
+    height: 19px;
+     background: url('../images/images_blue/lock.png') no-repeat;
 }
 
 .foot_img {

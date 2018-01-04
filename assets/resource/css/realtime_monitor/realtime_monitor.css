@@ -1,0 +1,334 @@
+.inverter_page_wrapper {
+  height: 100%
+}
+.tendency_ri {
+  background-color: #e2e3df;
+  /*height: 93%*/
+}
+.pw_info {
+  width: 12.6%;
+  padding-left: 4%;
+  border-right: 1px solid #d2d2d2;
+}
+.ps_detail_box li:last-child {
+  border: none; 
+}
+.ps_detail_desc {
+  font-size: 1.4em
+}
+.psData {
+  margin-top: 6px
+}
+.longData {
+  margin-left: -33px
+}
+/*.rightC_handller {
+  margin-bottom: 20px
+}*/
+.inverter_count {
+  color: #3ab5dd;
+  font-size: 18px
+
+}
+.rightC_handller a {
+  color: #20cddf
+}
+.connection_handller {
+  margin-right: 20px
+}
+.inverte_list_desc {
+  margin-top: 20px;
+  padding: 5px 10px;
+  background-color: #e2e5ee;
+  border-radius: 3px
+}
+.banner_left ul, .banner_left ul li, .filter_box select{
+  display: inline-block;
+}
+.ps_detail_box {
+  background-color: #fff;
+  padding: 16px 0;
+  border: 1px solid #d2d2d2;
+}
+.filter_box select:first-child {
+  width: 140px;
+}
+.filter_box select:last-child {
+  width: 140px;
+}
+.filter_box select, .filter_box input {
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  height: 1.5em;
+  background-color: #fff;
+}
+.filter_box input {
+  width: 60px;
+}
+.banner_left i {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    /*background-color: red;*/
+    border-radius: 50%; 
+}
+.banner_left i.all_zero {
+  background-color: gray;
+}
+.banner_left i.part_zero {
+  background-color: red;
+}
+.banner_left i.part_low {
+  background-color: orange;
+}
+.banner_left i.all_normal {
+  background-color: #4ad94a;
+}
+.banner_left span {
+  margin-right: 10px
+}
+.banner_left, .filter_box {
+  margin: 8px 0
+}
+.inverter_title {
+  border-left: 2px solid #113661
+}
+.inverter_title > p {
+  margin-left: 4px; 
+  padding-bottom: 2px;
+  white-space:nowrap; 
+  text-overflow:ellipsis;
+  overflow: hidden;
+  -o-text-overflow:ellipsis;
+}
+/*.inverter_title .dev_id {
+  white-space:nowrap; 
+  text-overflow:ellipsis;
+  overflow: hidden;
+  -o-text-overflow:ellipsis;
+}*/
+.inverter_info_wrapper {
+  background-color: #DCDEDD;
+  border-radius: 2px;
+  padding: 4px 8px
+} 
+.inverter_content {
+  height: 77%;
+  background-color: #fff;
+  /*overflow-y: auto;*/
+}
+.inverter_info_title, .inverter_content_info {
+  border-bottom: 1px solid #D2D3D5;
+  padding: 4px 0;
+}
+
+.invertr_li_img {
+  /*background-color: #bfa;*/
+  width: 52px;
+  height: 84px;
+  margin-right: 6px 
+}
+.inverter_state_cir {
+  display: inline-block;
+  /*position: relative;*/
+  /*top: -5px;*/
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left:4px 
+}
+.station_state_cir {
+  display: inline-block;
+  position: relative;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 8px 
+}
+.green_cir {
+  background-color: #4ad94a 
+}
+.gray_cir {
+  background-color: gray 
+}
+.red_cir {
+  background-color: red 
+}
+.orange_cir {
+  background-color: orange 
+}
+.inverter_list {
+  overflow-y: auto;
+  /*height: 100%*/
+}
+.inverter_list .inverter_item {
+  margin: .5% 1.25%;
+  width: 10%;
+}
+
+/*电站实时监测的样式*/
+.station_list {
+  overflow-y: auto;
+  /*height: 100%*/
+}
+.station_list .station_item {
+  padding: 47px;
+  /*margin-right: -1px;
+  margin-bottom: -1px; */
+  width: 20%;
+  border-bottom: 1px solid #c1c1c1;
+  border-right: 1px solid #c1c1c1;
+}
+.station_list .station_item:nth-child(-n+4) {
+  border-top: 1px solid #c1c1c1;
+}
+.station_list .station_item:nth-child(4n+1) {
+  border-left: 1px solid #c1c1c1;
+}
+.station_container {
+  margin-top: 6px;
+  padding: 10px;
+  border: 1px solid #444343;
+}
+
+.station_container_red {
+  background: rgba(235,140,140,.5);
+  animation: flash 1s linear infinite
+}
+@keyframes flash {
+    from {
+        background: rgba(235,140,140,.5);
+    }
+    to {
+        background: rgba(235,140,140,0);
+    }
+}
+.station_info_wrapper {
+  /*border: 1px solid #ddd;*/
+  margin: 2px 0;
+}
+.station_content_info ul{
+  margin-left: 10px
+}
+.station_content_info ul li{
+  margin-bottom: 14px
+}
+.station_content_info ul a{
+  font-size: 14px;
+}
+.station_dev.dev_id {
+  font-size: 16px;
+} 
+.station_li_left {
+  width: 48%
+}
+.station_content_info ul li{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.station_li_left img {
+  width: 100%
+}
+
+
+@media only screen and (max-width: 1800px) and (min-width: 1600px) {
+  .inverter_list .inverter_item {
+    margin: .5% 1.25%;
+    width: 10%;
+  }
+  /*电站实时监测的样式*/
+  .station_list .station_item {
+    padding: 33px;
+    width: 21.1%
+  }
+  .station_li_left {
+    width: 47%;
+  }
+  .station_li_left img{
+    width: 100%;
+  }
+  .station_content {
+    height: 95%;
+  }
+  .station_content_info ul {
+    margin-top: 6px;
+  }
+  .station_content_info ul li{
+    margin-bottom: 10px
+  }
+  .station_content_info ul a{
+    font-size: 14px
+  }
+}
+
+@media only screen and (max-width: 1600px) and (min-width: 1400px) {
+  .inverter_list .inverter_item {
+    margin: .5% 1.25%;
+    width: 10%;
+  }
+
+  /*电站实时监测的样式*/
+  .station_list .station_item {
+    padding: 37px;
+    width: 20%
+  }
+  .station_li_left {
+    width: 36%;
+  }
+  .station_li_left img{
+    width: 100%;
+  }
+  .station_content_info ul {
+    margin-left: 4px
+  }
+  .station_content_info ul li{
+    margin-bottom: 2px
+  }
+  .station_content_info ul a{
+    font-size: 14px
+  }
+}
+
+@media only screen and (max-width: 1400px) and (min-width: 1200px) {
+  .inverter_list .inverter_item {
+    margin: .5% .8%;
+    width: 10%;
+  }
+}
+
+/*2016 08 05 添加样式  修改报表高度*/
+@media only screen and (max-width: 1400px) and (min-width: 1000px) {
+  .inverter_list .inverter_item {
+    margin: .5% .8%;
+    width: 15%;
+  }
+  .pw_info {
+    width: 12.4%;
+  }
+  .inverter_count, .ps_detail_desc {
+    font-size: .7em
+  }
+  /*电站实时监测的样式*/
+  .station_list .station_item {
+    padding: 28px;
+    /*width: 20%*/
+  }
+  .station_li_left {
+    width: 48%;
+  }
+  .station_li_left img{
+    width: 100%;
+  }
+  .station_content_info ul {
+    width: 50%;
+    margin-left: 3px
+  }
+  .station_content_info ul li{
+    margin-bottom: 5px
+  }
+  .station_content_info ul a{
+    font-size: 12px
+  }
+}

@@ -6,8 +6,9 @@
  * ver:1.0
  */
 (function (e, t) {
-    var n = n || (function (n) { //192.168.2.214:8001/api/GetServiceApiResult
-            var _api = location.protocol + "//192.168.2.214:8001/api/GetServiceApiResult",
+    var n = n || (function (n) {
+                // var _api = location.protocol + "//223.71.146.194:8006/api/GetServiceApiResult",
+                var _api = location.protocol + "//192.168.2.214:8001/api/GetServiceApiResult",
                 // serverAddr = "http://223.71.146.194:8003/dxsky/",
                 serverAddr = "http://192.168.2.214:8011/dxsky/",
                 lStorage = window.localStorage,
@@ -376,7 +377,19 @@
                             callback(page_id);
                         }
 
-                    }
+                    },
+                    //数据数量级和单位匹配处理
+                    computeNumberLength (n) {
+                        try {
+                            var avgLth = parseInt(Math.abs(n)).toString().length;
+                            if (avgLth < 4) return {number: n.toFixed(2), unit: '万kwh', full: n.toFixed(2) + '万kwh'};
+                            if (avgLth < 8) return {number: (n / 10000).toFixed(2), unit: '亿kwh', full: (n / 10000).toFixed(2) + '亿kwh'};
+                            // if (avgLth < 12) return {number: (n / 100000000).toFixed(2), unit: '亿kwh', full: (n / 100000000).toFixed(2) + '亿kwh'};
+                            // if (avgLth < 16) return {number: (n / 1000000000000).toFixed(2), unit: '万亿kwh', full: (n / 1000000000000).toFixed(2) + '万亿元'}
+                        } catch (err) {
+                            console.log('计算单位出错,错误信息:', err)
+                        }
+                    },
                 },
                 loadJson = function (url, data, mycallback, async, encryption, isShowLoading) {
 

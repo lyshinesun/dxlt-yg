@@ -278,7 +278,6 @@ new Vue({
                         top.location.hash = '#station_inverter';
                         $('#index_frame', parent.document).attr('src', 'dialog/station_inverter.html');
                     });
-
                         //分页
                         _this.chooseTotNum = res.data.fddatacount;
                         if (_this.chooseTotNum > 0) {
@@ -637,17 +636,17 @@ new Vue({
             vlm.loadJson("", JSON.stringify(Parameters), function (res) {
                 var data = res.data.data1;
 
-                //交流功率chart
+                //交流功率charts
                 var unitCapacityarr = [], capacityDates = [];
                 if (_this.pointId_cap == "ac_pw") {  //普通交流功率
                     for (var i = 0; i < data.length; i++) {
-                        unitCapacityarr.push(data[i].fd_pdc_curr);  //y
+                        unitCapacityarr.push(data[i].fd_pw_curr);  //y
                         capacityDates.push(data[i].fd_datetime.substring(11, 16));   //x
                     }
                 } else if (_this.pointId_cap == "ac_pw_one") {
                     //归一化
                     for (var i = 0; i < data.length; i++) {
-                        unitCapacityarr.push(data[i].fd_pdc_curr_one);  //y
+                        unitCapacityarr.push(data[i].fd_pw_curr_one);  //y
                         capacityDates.push(data[i].fd_datetime.substring(11, 16));   //x
                     }
                 }

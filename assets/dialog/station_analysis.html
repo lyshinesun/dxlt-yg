@@ -111,15 +111,15 @@
         <% if(i == 0){ %>
         <li id="<%=stationList[i].fdStationCode%>" class="on"
             data-fd_city="<%=stationList[i].fdCity%>">
-            <a href="javascript:;" title="<%=stationList[i].fdFullStationName%>">
-                <%=stationList[i].fdFullStationName%>
+            <a href="javascript:;" title="<%=stationList[i].fdStationName%>">
+                <%=stationList[i].fdStationName%>
             </a>
         </li>
         <% }else{ %>
         <li id="<%=stationList[i].fd_station_code%>"
             data-fd_city="<%=stationList[i].fdCity%>">
-            <a href="javascript:;" title="<%=stationList[i].fdFullStationName%>">
-                <%=stationList[i].fdFullStationName%>
+            <a href="javascript:;" title="<%=stationList[i].fdStationName%>">
+                <%=stationList[i].fdStationName%>
             </a>
         </li>
         <% } %>

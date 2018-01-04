@@ -21,7 +21,7 @@ var index = {
     powerNumChart: null,
     planChart: null,
     prGuage: null,
-    genPlanDateType: '1',//1:当年 2:当月   发电计划
+    genPlanDateType: '2',//1:当年 2:当月   发电计划
     curPsID: '', //
     curPsName: '', //
     inverterDtTp: "2",//1:日; 2:月; 3: 年
@@ -47,6 +47,7 @@ var index = {
         }
     }
 };
+
 
 new Vue({
     el: '#singleDet',
@@ -910,15 +911,14 @@ new Vue({
                         _this.temprature_high = tempArr[0];
                         _this.temprature_low = tempArr[1].replace('℃', '');
                         _this.windToday = todayWthObj.wind;
-
-                        _this.fdboardtemperature = weatherArr[0].date.match(/\d*℃/ig)[0].replace('℃', '');
+                        _this.fdboardtemperature = weatherArr[0].date.match(/(\-?)\d*℃/ig)[0].replace('℃', '');
 
                         //未来三天天气
                         var newWeatherArr = [], imgType = '', weather = '', wind = '', monthNum = '', dayNum = '';
-
-                        for (var i = 1; i < weatherArr.length; i++) {
+                        // console.log(weatherArr)
+                        for (var i = 0; i < weatherArr.length-1; i++) {
                             var wthObj = weatherArr[i];
-                            date.addDays(1);
+                            
                             monthNum = date.getMonth() + 1;
                             dayNum = date.getDate();
                             var tempArr = wthObj.temperature.split('~');
@@ -944,11 +944,12 @@ new Vue({
                                 weather: weather,
                                 wind: wind
                             });
+                            date.addDays(1);
                         }
-
                         var weatherStr = $('#weatherTpl').html();
                         var weatherLi = ejs.render(weatherStr, {newWeatherArr: newWeatherArr});
                         $('#weatherUl').html(weatherLi);
+                        // console.log(newWeatherArr)
                     }
                 },
                 error: function (res) {
