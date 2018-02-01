@@ -416,11 +416,7 @@ var vm = new Vue({
   el: '#workOrder',
   data: {
     stationList:[],
-    stationId: '',
-    totalCount: 0;
-    var pageSize = 10;
-    var totalPage = 0;
-    var currPage = 1;
+    stationId: ''
   },
   methods: {
     getStations: function (res) {

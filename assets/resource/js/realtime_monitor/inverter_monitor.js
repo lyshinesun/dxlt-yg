@@ -68,9 +68,9 @@ new Vue({
                            // 累计总发电量 返回数据匹配单位：万千瓦时
                             _this.totalPower = (data.fdPowerCurr || data.fdPowerCurr==0) ? _this.computeNumberLength(data.fdPowerCurr).full : '无'
                             // 日发电量 返回数据匹配单位：千瓦时
-                            _this.dayPower = (data.fdPowerDay ||data.fdPowerDay==0) ? (Number(data.fdPowerDay) * 10000).toFixed(2)  + 'kwh' : '无'
+                            _this.dayPower = (data.fdPowerDay ||data.fdPowerDay==0) ? (Number(data.fdPowerDay) * 10000).toFixed(2)  + 'kWh' : '无'
                             // 当前功率 返回数据匹配单位：kw
-                            _this.currP = (data.fdPwCurr || data.fdPwCurr==0) ? Number(data.fdPwCurr).toFixed(2) + 'kw' : '无' 
+                            _this.currP = (data.fdPwCurr || data.fdPwCurr==0) ? Number(data.fdPwCurr).toFixed(2) + 'kW' : '无' 
                         } else {
                             _this.totalPower = '无' //总发电量
                             _this.dayPower ='无' // 日发电量
@@ -118,8 +118,8 @@ new Vue({
                             if (item.fdPr1 > 100) {
                                 item.fdPr1 = Number(item.fdPr1.toString().substring(0,2))
                             }
-                            item.fdPower = _this.computeNumberLength(item.fdPower).number + 'kwh'
-                            item.fdPowerCurr = _this.computeNumberLength(item.fdPowerCurr).number.toFixed(1) + '万kwh'
+                            item.fdPower = _this.computeNumberLength(item.fdPower).number + 'kWh'
+                            item.fdPowerCurr = _this.computeNumberLength(item.fdPowerCurr).number.toFixed(1) + '万kWh'
                             item.warningList = _this.handleInverterData(state,pvSize,resWarningList)
                             switch (item.stuta)
                             {
@@ -253,8 +253,8 @@ new Vue({
         computeNumberLength (n) {
             try {
                 var avgLth = parseInt(Math.abs(n)).toString().length;
-                if (avgLth < 4) return {number: n.toFixed(2), unit: '万kwh', full: n.toFixed(2) + '万kwh'};
-                if (avgLth < 8) return {number: (n / 10000).toFixed(2), unit: '亿kwh', full: (n / 10000).toFixed(2) + '亿kwh'};
+                if (avgLth < 4) return {number: n.toFixed(2), unit: '万kWh', full: n.toFixed(2) + '万kWh'};
+                if (avgLth < 8) return {number: (n / 10000).toFixed(2), unit: '亿kWh', full: (n / 10000).toFixed(2) + '亿kWh'};
                 // if (avgLth < 12) return {number: (n / 100000000).toFixed(2), unit: '亿kwh', full: (n / 100000000).toFixed(2) + '亿kwh'};
                 // if (avgLth < 16) return {number: (n / 1000000000000).toFixed(2), unit: '万亿kwh', full: (n / 1000000000000).toFixed(2) + '万亿元'}
             } catch (err) {

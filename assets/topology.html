@@ -1,38 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>接线图绘制</title>
-    <link rel="stylesheet" href="resource/css/style_blue.css">
-    <link rel="stylesheet" href="resource/css/topology_style/topology.css"/>
+  <meta charset="UTF-8">
+  <title>接线图绘制</title>
+  <link rel="stylesheet" href="resource/css/style_blue.css">
+  <link rel="stylesheet" href="resource/css/topology_style/topology.css"/>
 </head>
 <body>
   <div id="stationTopology" style="height: 100%;">
     <div class="wrapper">
-      <div class="leftSide">
+      <div class="leftSide" style="background:cadetblue; background-color: cadetblue;">
+        <section id='bind_dialog' v-show="diagVisible">
+          <div class="dia_body">
+            <header class="dia_head clearfix">
+              <div class="dia_title fl" id="title_div" v-text="dia_title"></div>
+              <span class="fr close_btn" @click="cancelBind">×</span>
+            </header>
+              <div class="dia_content">
+              <div class="content_wrap">
+                <section v-if="isBindNode">
+                <span>请输入点的名称</span><input type="text" name="nodeInfo" v-model="nodeInfo"> </br>
+                </section>
+                <section v-else>
+                  <span>请输入文本内容</span><input type="text" id="content" v-model="nodeInfo"/>
+                  <span>请选择文本字体大小</span>
+                  <select id="size_text">
+                   <option value="0">14</option>
+                   <option value="1">16</option>
+                   <option value="2">18</option>
+                   <option value="3">20</option>
+                   <option value="4">22</option>
+                   <option value="5">24</option>
+                   <option value="6">26</option>
+                   <option value="7">28</option>
+                   <option value="8">30</option>
+                   </select> </br>
+                   <span>请选择文本颜色</span><input type="text" id="color">
+                </section>
+              </div>
+            </div>
+            <div class="confirm_footer per_style">
+              <span class="cancel" @click="cancelBind">取消</span>
+              <span class="conf_btn" @click="confirmBind">确定</span>
+            </div>
+          </div>
+        </section>
+        <section class="handller">
+          <select class="station_select">
+            <option v-for=" item in stationList" v-text="item.fdStationName" :value="item.fdStationCode"></option>
+          </select>
+          <ul class="fr">
+            <li class="fl"><span class="save_btn">保存</span></li>
+            <li class="fl"><span class="copy_btn">复制</span></li>
+            <li class="fl"><span class="past_btn">粘贴</span></li>
+          </ul>
+        </section>
         <section class="topologyContaner" @contextmenu="showContextMenu($event)" @click="stopContextMenu">
-          
+          <canvas id="canvas" width="1280" height="1900"></canvas>
         </section>
       </div>
       <div class="rightSide">
         <section class="shapesMap">
           <ul class="clearfix" id='shapeContain'>
-            <li class="fl"><img src="./resource/images/topology/dev01.png"></li>
-            <li class="fl"><img src="./resource/images/topology/dev02.png"></li>
-            <li class="fl"><img src="./resource/images/topology/dev03.png"></li>
+            <li class="fl" value="0"><img src="./resource/images/topology/dlq_red.png" data-type="4" data-width="18" data-height="40"></li>
+            <li class="fl" value="0"><img src="./resource/images/topology/sc_green.png" data-type="3" data-width="20" data-height="105"></li>
+            <li class="fl" value="0"><img src="./resource/images/topology/gldz_red.png" data-type="2" data-width="20" data-height="23"></li>
+           <li class="fl" value="0"><img src="./resource/images/topology/jddz_red.png" data-type="1" data-width="14" data-height="57"></li>
+            <li class="fl" value="1"><img src="./resource/images/topology/line01.png" data-type="0" ></li>
           </ul>
         </section>
+        </div>
       </div>
-    </div>
-    <section id="contextMenu" :style="'visibility:'+ contextMenuVisible +';top:'+ contextMenuPos.top + ';left:' + contextMenuPos.left" >
-      <ul>
-        <li v-for="item in contextMenus" ><a href="javascript:;" v-text="item.option" @click="selectOption"></a></li>
-      </ul>
-    </section>
+      <section id="contextMenu" :style="'visibility:'+ contextMenuVisible +';top:'+ contextMenuPos.top + ';left:' + contextMenuPos.left+ ';height:57px'" >
+        <ul>
+          <li v-for="(item, index) in contextMenus" ><a href="javascript:;" id="index" v-text="item.option" @click="selectOption($event,index)"></a></li> 
+        </ul>
+      </section>
   </div>
   <script src="resource/js/jquery-1.8.3.min.js"></script>
   <script src="resource/js/lib/vlm.js"></script>
   <script src="resource/js/lib/vue.js"></script>
+  <script src="resource/plugin/layer/layer.min.js"></script>
   <script src="resource/js/topology/topology.js"></script>
+  <script src="resource/js/topology/device/Device.js"></script>
+  <script src="resource/js/topology/device/Text.js"></script>
+  <script src="resource/js/topology/common/operatorMR.js"></script>
+  <script src="resource/js/topology/right.js"></script>
+  <script src="resource/js/topology/topo.js"></script>
+  <script src="resource/js/topology/common/canvasUtils.js"></script>
 </body>
 </html>

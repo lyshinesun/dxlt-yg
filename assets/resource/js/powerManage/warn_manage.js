@@ -194,7 +194,8 @@ var vm = new Vue({
             vlm.loadJson("", JSON.stringify(Parameters), function (res) {
                 var zNodes = res.data;
                 var newNodes = [];
-                for (var i = 0; i < zNodes.length; i++) {
+                if (zNodes) {
+                    for (var i = 0; i < zNodes.length; i++) {
                     showTreeNodeImageByDeviceType(zNodes[i]); //code图标转换
                     if (zNodes[i].fd_dev_class_id == 10) {  //非特殊图标eg：svg文件夹
                         zNodes[i].icon = "";
@@ -223,6 +224,8 @@ var vm = new Vue({
 
                     newNodes.push(obj);
                 }
+                }
+                
 
                 var powerhtml = $('#powerTpl0').html();
                 var powerLi = ejs.render(powerhtml, {newNodes: newNodes});

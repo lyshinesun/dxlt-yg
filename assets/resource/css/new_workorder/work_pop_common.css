@@ -98,3 +98,22 @@ textarea{
     padding: 5px 0;
     border: 1px solid #ccc;
 }
+.confirm_sub {
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    background: #3d88c2;
+    border-radius: 3px;
+    border: none;
+    font-family: "Microsoft YaHei";
+    font-size: 12px;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+.confirm_sub:hover {
+    opacity: 0.9;
+}

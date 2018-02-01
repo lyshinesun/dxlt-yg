@@ -58,16 +58,17 @@
                       </div>
                       <ul class="fl">
                         <li>当日发电量：
-                          <a href="javascript:;" :title="station.dayPower.toFixed(2) + 'kwh'" v-text="station.dayPower.toFixed(2) + 'kwh'"></a> 
+                          <a href="javascript:;" :title="station.dayPower.toFixed(1) + 'kWh'" v-text="station.dayPower.toFixed(1) + 'kWh'"></a> 
+                        </li>
+                        
+                        <li>实时功率：
+                          <a href="javascript:;" :title="station.allPw.toFixed(2) + 'kW'" v-text="station.allPw.toFixed(2) + 'kW'"></a> 
+                        </li>
+                        <li>日累计辐照：
+                          <a href="javascript:;" :title="station.radia.toFixed(2) + 'MJ/㎡'" v-text="station.radia.toFixed(2) + 'MJ/㎡'"></a> 
                         </li>
                         <li>累计发电量：
-                          <a href="javascript:;" :title="station.allPower.toFixed(1) + '万kwh'" v-text="station.allPower.toFixed(1) + '万kwh'"></a> 
-                        </li>
-                        <li>累计功率：
-                          <a href="javascript:;" :title="station.allPw.toFixed(2) + 'kw'" v-text="station.allPw.toFixed(2) + 'kw'"></a> 
-                        </li>
-                        <li>累计辐照：
-                          <a href="javascript:;" :title="station.radia.toFixed(2) + 'MJ/㎡'" v-text="station.radia.toFixed(2) + 'MJ/㎡'"></a> 
+                          <a href="javascript:;" :title="station.allPower.toFixed(1) + '万kWh'" v-text="station.allPower.toFixed(1) + '万kWh'"></a> 
                         </li>
                       </ul>
                     </div>

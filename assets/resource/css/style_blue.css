@@ -425,13 +425,13 @@ h6 {
 }
 
 .active ul {
-    width: 230px;
+    width: 150px;
     height: 20px;
 }
 
 .active ul li {
     height: 20px;
-    width: 230px;
+    width: 150px;
     line-height: 20px;
     white-space: nowrap;
     overflow: hidden;
@@ -8722,7 +8722,11 @@ table.hoverclass tbody tr:hover {
 }
 .userCenter.sn {
     height: 19px;
-     background: url('../images/images_blue/lock.png') no-repeat;
+    background: url('../images/images_blue/lock.png') no-repeat;
+}
+.userCenter.intelligentManager {
+    height: 19px;
+    background: url('../images/images_blue/exchange1.png') no-repeat;
 }
 
 .foot_img {

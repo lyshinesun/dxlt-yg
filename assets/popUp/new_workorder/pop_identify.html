@@ -11,13 +11,13 @@
 </head>
 <body>
 <div id="pop_identify" class="pop_identify">
-    <input id="iden_start" type="text" readonly="readonly" placeholder="开始时间"/>
+    <input id="iden_start" type="text"  placeholder="开始时间"  v-model="currentDate"/>
     <input id="iden_end" type="text" readonly="readonly" placeholder="结束时间"/>
     <input type="hidden" id="psCode" value="">
     <input type="hidden" id="faultId" value="">
-    <a href="javascript:;" @click="getIdentify" style="margin-left: 20px">确定</a>
-
-    <div class="identify_table">
+    <a href="javascript:;" @click="getIdentify" style="margin-left: 20px" class="confirm_sub">确定</a>
+    <div class="identify_table" id="myCurveChart" style="height: 460px"></div>
+    <!-- <div class="identify_table">
         <table class="task_table">
             <thead>
             <th class="fault_tr01">记录时间</th>
@@ -28,35 +28,21 @@
         </table>
         <div class="no_result">无查询结果！</div>
     </div>
-
-    <!--分页-->
+    
     <div class="clearfix">
         <div id="Paginationother" style="margin-right: 20px;" class="pagination fr Page_other"></div>
     </div>
-
-    <input type="hidden" value="10" id="pageId">
+    <input type="hidden" value="10" id="pageId"> -->
 </div>
 
 </body>
-
-<!--故障模板-->
-<script type="text/template" id="default_tpl">
-    <% for(var i=0;i< resList.length; i++){%>
-    <tr>
-        <td class="fault_tr02"><%=resList[i].fdLogDate%></td>
-        <td class="fault_tr03"><%=resList[i].fdTagName%></td>
-        <td class="fault_tr02"><%=resList[i].fdAvgvalue%></td>
-    </tr>
-    <% }%>
-
-</script>
-
 
 <script src="../../resource/js/jquery-1.10.2.min.js"></script>
 <script src="../../resource/js/lib/vlm.js"></script>
 <script src="../../resource/js/lib/vue.js"></script>
 <script src="../../resource/js/lib/ejs.js"></script>
 <script src="../../resource/js/common/esmpbase.js"></script>
+<script src="../../resource/js/common/echarts.min.js"></script>
 <script src="../../resource/plugin/layer/layer.min.js"></script>
 <script src="../../resource/js/common/common_zh_CN.js"></script>
 <script src="../../resource/plugin/pager/pager.js"></script>
@@ -71,6 +57,9 @@
             curOtherPage: 1,
             sizePage: 10,
             chooseTotNum: 0, //总条数
+            currentDate: "",
+            myCurveChart: null,  //功率chart
+            option: null,  //功率chart参数
         },
         methods: {
             getIdentify: function () {
@@ -85,14 +74,13 @@
 
                 $('.no_result').hide();
                 layer.load(0, 2);
-
                 $.ajax({
                     url: vlm.serverAddr + "tbdatastatyc201707/list",	//请求地址
                     dataType: "json",
                     type: "GET",
                     data: {
-                        page: this.curOtherPage,
-                        limit: this.sizePage,
+                        // page: "",
+                        // limit: "",
                         startTime: $('#iden_start').val(),
                         endTime: $('#iden_end').val(),
                         faultId: $('#faultId').val(),
@@ -101,83 +89,147 @@
                     },
                     success: function (result) {
                         layer.closeAll();
-                        if (result.page.list.length < 1) {
-                            $('.no_result').show();
+                        if (result.code == 0) {
+                            if (result.page.length < 1) {
+                                $('.no_result').show();
+                            } else {
+                                //故障曲线
+
+                                var option_Series_Data = [] //曲线的信息
+                                var option_xAxis = [] //x轴的日期值
+                                var data = result.page
+                                var option_title =  data[0].fdTagName
+                                // console.log((data[0].list)[1])
+                                for (var i = 0; i < data.length; i++) {
+                                    option_xAxis.push(data[i].fdLogDate)
+                                    option_Series_Data.push(data[i].fdAvgvalue)
+                                }
+                                _this.initChart(option_title,option_Series_Data, option_xAxis)
+                            }
+
                         }
-
-                        var default_tpl = $('#default_tpl').html();
-                        var newStr = ejs.render(default_tpl, {resList: result.page.list});
-                        $('#faultList').html(newStr);
-
-                        _this.chooseTotNum = result.page.totalCount;
-                        _this.startPageFlag = false;
-
-                        if (_this.curOtherPage > 1 && _this.chooseTotNum <= (_this.curOtherPage - 1) * _this.sizePage) {//总数小于页数*当前页码，页码自动减一
-                            _this.curOtherPage = _this.curOtherPage - 1;
-                        }
-
-                        _this.pageList();
                     }
                 });
             },
+            setCurveOption (option_title,option_Series_Data, option_xAxis) {
+                var _this = this
+                 this.option = {
+                   title: {
+                        text: option_title + "号逆变器发电量",
+                        left: 'center',
+                        textStyle: {
+                            color: "#666",
+                            fontSize: 16
+                        }
 
-            //创建分页
-            pageList: function () {
-                var _this = this;
-                this.sizePage = $('#pageId').val();
-                var num_entries = this.chooseTotNum;
-                var paramArray = [];
-                paramArray.push(num_entries);
-                paramArray.push(this.sizePage);
-                // 创建分页
-                $("#Paginationother").pagination(num_entries, {
-                    num_edge_entries: 1,
-                    //边缘页数
-                    current_page: _this.curOtherPage - 1,
-                    num_display_entries: 4,
-                    //主体页数
-                    callback: pageselectCallback,
-                    items_per_page: _this.sizePage,
-                    //每页显示1项
-                    prev_text: LANG["all_station_previouspage"],
-                    next_text: LANG["all_station_nextpage"],
-                    /**start 2016 07 06 wangli 添加跳页操作**/
-                    page_jump: formatString(LANG["common_pagejump"]),
-                    page_confirm: formatString(LANG["common_confirm"]),
-                    page_message: formatString(LANG["common_pagemessage"], paramArray, _this.sizePage)
 
-                });
-
-                function pageselectCallback(page_index) {
-
-                    _this.curOtherPage = page_index + 1;
-                    if (_this.startPageFlag) { //不是点击分页按钮的时候不调用search方法
-                        $("#pageChange").val(_this.curOtherPage);
-                        _this.getIdentify();
-                    }
-                    _this.startPageFlag = true;
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    /*symbolList: ['circle', 'rectangle', 'triangle', 'diamond',
+                     'emptyCircle', 'emptyRectangle', 'emptyTriangle', 'emptyDiamond'],*/
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    toolbox: {
+                        show: false,
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        axisLine: {
+                            lineStyle: {
+                                color: '#4488bb'
+                            }
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: 'black'
+                            }
+                        },
+                        // data: ['周一','周二','周三','周四','周五','周六','周日']
+                        data: option_xAxis
+                    },
+                    yAxis: {
+                        name: LANG["all_station_unit"] + 'A',
+                        position: 'left',
+                        type: 'value',
+                        axisTick: {
+                            show: false
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#4488bb'
+                            }
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: 'black'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: "电流",
+                        data: option_Series_Data,
+                        type:"line"
+                    }]
+                };
+                this.myCurveChart.setOption(this.option);
+                window.onresize = function () {
+                    _this.myCurveChart.resize();
                 }
-
-                $("#pageChange").val(_this.curOtherPage);
-                $('#goPage').click(function () {
-                    _this.curOtherPage = $("#pageChange").val();
-                    _this.getIdentify();
-                });
-
             },
+             //初始化图表
+            initChart (option_title,option_Series_Data, option_xAxis) {
+                // console.log(option_Series_Data, option_xAxis)
+                if (this.myCurveChart == null) {
+                    this.myCurveChart = echarts.init(document.getElementById('myCurveChart'));
+
+                } else {
+                    this.myCurveChart.clear();
+                }
+                this.setCurveOption(option_title,option_Series_Data, option_xAxis);
+            },
+            initTime: function () {
+                var _this = this;
+                var now = new Date();
+                var min = now.getMinutes() >= 10 ? now.getMinutes() : ("0" + now.getMinutes());
+                var mon = (now.getMonth() + 1) >= 10 ? (now.getMonth()  + 1) : ("0" + (now.getMonth() + 1));
+                var date = now.getDate() >= 10 ? now.getDate() : ("0" + now.getDate());
+                var hour = now.getHours() >= 10 ? now.getHours() : ("0" + now.getHours());
+                _this.currentDate = now.getFullYear() + "-" + mon + "-" + date + " " + "00" + ":" + "00" + ":"+ "00" ;
+                $("#iden_start").val(_this.currentDate);
+            },
+            setDatePicker: function () {
+                $("#iden_start, #iden_end").click(function () {
+                    WdatePicker({
+                        dateFmt: 'yyyy-MM-dd HH:mm:ss',
+                        maxDate: '%y/%M/%d',
+                        isShowClear: false,
+                        readOnly: true,
+                        onpicking: function (dp) {
+                            console.log(dp.cal.getDateStr(), dp.cal.getNewDateStr())
+                            //_this.dateChanged(dp.cal.getDateStr(), dp.cal.getNewDateStr());
+                        }
+                    });
+                });
+            }
         },
         mounted: function () {
-            $("#iden_start, #iden_end").click(function () {
-                WdatePicker({
-                    dateFmt: 'yyyy-MM-dd HH:mm:ss',
-                    maxDate: '%y/%M/%d',
-                    isShowClear: false,
-                    readOnly: true,
-                    onpicking: function (dp) {
-                        //_this.dateChanged(dp.cal.getDateStr(), dp.cal.getNewDateStr());
-                    }
-                });
-            });
+            var _this = this
+            this.initTime()
+            setTimeout(function () {
+                _this.getIdentify()
+            },1000)
+            // this.getIdentify()
+            this.setDatePicker ()
         }
     });
 
