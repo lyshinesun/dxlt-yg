@@ -35,76 +35,6 @@ var vm = new Vue({
 
         },
 
-        //获取电站列表
-        /*getAllStation: function () {
-            var _this = this;
-            var Parameters = {
-                "parameters": {"stationid": "", "statusstr": ""},
-                "foreEndType": 2,
-                "code": "20000006"
-            };
-            vlm.loadJson("", JSON.stringify(Parameters), function (res) {
-                if (res.success) {
-                    var stationRes = res.data,
-                        resArr = [];
-
-                    $.each(stationRes, function (key, value) {
-                        if (value.fd_station_status == 2) {
-                            resArr.push(value);
-                        }
-                    });
-
-                    //获取用户权限电站
-                    $.ajax({
-                        type: "get",
-                        url: vlm.serverAddr + "sys/user/info/" + $.cookie('userId'),
-                        data: "",
-                        dataType: "json",
-                        success: function (res) {
-                            if (res.code == 0) {
-
-                                if (res.user.psList === null || res.user.psList.length < 1) {
-
-                                } else if (res.user.psList.length >= 1) {
-                                    if (res.user.psList[0] == "all") {
-                                        _this.newStationList = resArr;
-                                    } else {
-                                        var info_station_arr = res.user.psList;
-                                        for (var i = 0; i < resArr.length; i++) {
-                                            for (var j = 0; j < info_station_arr.length; j++) {
-                                                if (resArr[i].fd_station_code.toLowerCase() == info_station_arr[j]) {
-                                                    _this.newStationList.push(resArr[i]);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-
-
-                                var stationList_tpl = $('#stationList').html();
-                                var stationStr = ejs.render(stationList_tpl, {newStationList: _this.newStationList});
-                                $('#powerList').html(stationStr);
-
-                                _this.stationId = _this.newStationList[0].fd_station_code.toLowerCase();
-
-                                $('#powerList li').click(function () {
-                                    $(this).addClass('on').siblings().removeClass('on');
-                                    _this.stationId = $(this).attr('id');
-                                    _this.getFaultList();
-
-                                });
-
-                                _this.getFaultList();
-
-                            }
-                        }
-
-                    });
-
-                }
-
-            });
-        },*/
         /*获取电站列表*/
         getAllStation: function (res) {
             var _this = this
@@ -298,6 +228,7 @@ var vm = new Vue({
                                         var iframeO = layero.find("iframe")[0].contentWindow.document;
                                         $('#psCode', iframeO).val(psCode);
                                         $('#faultId', iframeO).val(faultId);
+                                        $('#iden_start', iframeO).val(_this.startDateStr);
                                     }
                                 });
                             });
@@ -306,9 +237,24 @@ var vm = new Vue({
                     } else {
                         parent.layer.open({
                             title: LANG["all_station_prompt"],
-                            content: '数据有误'
+                            content: '数据有误',
+                            yes: function () {
+                                parent.layer.closeAll();
+                                parent.layer.closeAll('loading');
+                            }
                         });
+                        
                     }
+                },
+                error: function () {
+                    parent.layer.open({
+                        title: LANG["all_station_prompt"],
+                        content: '数据有误',
+                        yes: function () {
+                            parent.layer.closeAll();
+                            layer.closeAll('loading');
+                        }
+                    });
                 }
             });
         },

@@ -5369,6 +5369,12 @@ div.date_togg1 {
         min-height: 144px;
     }
 }
+@media only screen and (-webkit-min-device-pixel-ratio:2), only screen and (min-device-pixel-ratio: 2) {
+    .tendency_ri {
+        width: 1510px;
+        margin-left: 10px;
+    }
+}
 
 /*2015年5月20日10:43:57  lch新加class*/
 .proTriangle {
